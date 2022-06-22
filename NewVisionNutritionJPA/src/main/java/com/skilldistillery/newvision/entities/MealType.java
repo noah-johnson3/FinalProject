@@ -8,15 +8,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Gender {
+public class MealType {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	private String name;
-	
-	public Gender() {}
+
+	public MealType() {
+		super();
+	}
 
 	public int getId() {
 		return id;
@@ -47,16 +49,8 @@ public class Gender {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Gender other = (Gender) obj;
+		MealType other = (MealType) obj;
 		return id == other.id;
 	}
 
-	@Override
-	public String toString() {
-		return "Gender [id=" + id + ", name=" + name + "]";
-	}
-	
-	
-	
-	
 }

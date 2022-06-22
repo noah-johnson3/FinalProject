@@ -1,6 +1,5 @@
 package com.skilldistillery.newvision.entities;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -9,47 +8,61 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.CreationTimestamp;
+import javax.xml.ws.soap.MTOM;
 
 @Entity
-@Table(name="tracked_day")
-public class TrackedDay {
+public class Meal {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@CreationTimestamp
-	private LocalDateTime day;
-	
-	@ManyToOne
-	@JoinColumn(name="user_id")
-	private User user;
-	
 
-	
-	public TrackedDay() {
+	@ManyToOne
+	@JoinColumn(name = "track_day_id")
+	private TrackedDay trackDay;
+
+	@JoinColumn(name = "meal_type_id")
+	@ManyToOne
+	private MealType mealType;
+
+	@JoinColumn(name = "recipe_id")
+	@ManyToOne
+	private Recipe recipe;
+
+	public Meal() {
+		super();
 	}
 
 	public int getId() {
 		return id;
 	}
 
-
 	public void setId(int id) {
 		this.id = id;
 	}
 
-
-	public LocalDateTime getDay() {
-		return day;
+	public TrackedDay getTrackDay() {
+		return trackDay;
 	}
 
+	public void setTrackDay(TrackedDay trackDay) {
+		this.trackDay = trackDay;
+	}
 
-	public void setDay(LocalDateTime day) {
-		this.day = day;
+	public MealType getMealType() {
+		return mealType;
+	}
+
+	public void setMealType(MealType mealType) {
+		this.mealType = mealType;
+	}
+
+	public Recipe getRecipe() {
+		return recipe;
+	}
+
+	public void setRecipe(Recipe recipe) {
+		this.recipe = recipe;
 	}
 
 	@Override
@@ -65,13 +78,8 @@ public class TrackedDay {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TrackedDay other = (TrackedDay) obj;
+		Meal other = (Meal) obj;
 		return id == other.id;
 	}
-	
-	
-	
-	
-	
-	
+
 }

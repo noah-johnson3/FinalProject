@@ -18,7 +18,7 @@ public class Meal {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "track_day_id")
+	@JoinColumn(name = "tracked_day_id")
 	private TrackedDay trackDay;
 
 	@JoinColumn(name = "meal_type_id")

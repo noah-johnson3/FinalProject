@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` TEXT NOT NULL,
   `team_id` INT NULL,
   `role` VARCHAR(45) NOT NULL,
-  `create_at` DATETIME NOT NULL,
+  `created_at` DATETIME NOT NULL,
   `image_url` TEXT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_gender1_idx` (`gender_id` ASC),
@@ -522,9 +522,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `nutritiondb`;
-INSERT INTO `user` (`id`, `height`, `weight`, `date_of_birth`, `active`, `first_name`, `last_name`, `email`, `gender_id`, `username`, `password`, `team_id`, `role`, `create_at`, `image_url`) VALUES (1, 67, 150, '1995-03-21 ', 1, 'Katherine', 'Remick', 'remick.ka@gmail.com', 1, 'kate', '$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC', 1, 'ROLE_ADMIN', '2022-06-21 03:20:20', NULL);
-INSERT INTO `user` (`id`, `height`, `weight`, `date_of_birth`, `active`, `first_name`, `last_name`, `email`, `gender_id`, `username`, `password`, `team_id`, `role`, `create_at`, `image_url`) VALUES (2, 65, 145, '1100-04-05', 1, 'Kiera', 'Metz', 'kmetz@witcher.game', 1, 'kiera', '$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC', 1, 'ROLE_STANDARD', '2022-06-21 03:20:20', NULL);
-INSERT INTO `user` (`id`, `height`, `weight`, `date_of_birth`, `active`, `first_name`, `last_name`, `email`, `gender_id`, `username`, `password`, `team_id`, `role`, `create_at`, `image_url`) VALUES (3, 74, 200, '1050-7-12', 1, 'Geralt', 'of Rivia', 'grivia@witcher.game', 2, 'geralt', '$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC', 1, 'ROLE_STANDARD', '2022-06-21 03:20:20', NULL);
+INSERT INTO `user` (`id`, `height`, `weight`, `date_of_birth`, `active`, `first_name`, `last_name`, `email`, `gender_id`, `username`, `password`, `team_id`, `role`, `created_at`, `image_url`) VALUES (1, 67, 150, '1995-03-21 ', 1, 'Katherine', 'Remick', 'remick.ka@gmail.com', 1, 'kate', '$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC', 1, 'ROLE_ADMIN', '2022-06-21 03:20:20', NULL);
+INSERT INTO `user` (`id`, `height`, `weight`, `date_of_birth`, `active`, `first_name`, `last_name`, `email`, `gender_id`, `username`, `password`, `team_id`, `role`, `created_at`, `image_url`) VALUES (2, 65, 145, '1100-04-05', 1, 'Kiera', 'Metz', 'kmetz@witcher.game', 1, 'kiera', '$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC', 1, 'ROLE_STANDARD', '2022-06-21 03:20:20', NULL);
+INSERT INTO `user` (`id`, `height`, `weight`, `date_of_birth`, `active`, `first_name`, `last_name`, `email`, `gender_id`, `username`, `password`, `team_id`, `role`, `created_at`, `image_url`) VALUES (3, 74, 200, '1050-7-12', 1, 'Geralt', 'of Rivia', 'grivia@witcher.game', 2, 'geralt', '$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC', 1, 'ROLE_STANDARD', '2022-06-21 03:20:20', NULL);
 
 COMMIT;
 
@@ -657,6 +657,26 @@ START TRANSACTION;
 USE `nutritiondb`;
 INSERT INTO `chat` (`id`, `content`, `user_id`, `created_at`, `team_id`) VALUES (1, 'So, what\'s the best way to kill a wyvern?', 3, '2022-06-22 09:22:22', 1);
 INSERT INTO `chat` (`id`, `content`, `user_id`, `created_at`, `team_id`) VALUES (2, 'Rip its head off?', 2, '2022-06-22 10:22:22', 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `topic`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `nutritiondb`;
+INSERT INTO `topic` (`id`, `name`, `description`) VALUES (1, 'Test Topic', 'blah blah blah');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `blog_topic`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `nutritiondb`;
+INSERT INTO `blog_topic` (`topic_id`, `blog_id`) VALUES (1, 1);
 
 COMMIT;
 

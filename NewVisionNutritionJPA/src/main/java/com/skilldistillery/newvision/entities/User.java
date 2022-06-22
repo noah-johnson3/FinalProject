@@ -10,10 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User {
@@ -34,7 +38,8 @@ public class User {
 
 	private double weight;
 
-	private int age;
+	@Column(name="date_of_birth")
+	private LocalDateTime dateOfBirth;
 
 	private boolean active;
 
@@ -58,6 +63,23 @@ public class User {
 	@OneToMany(mappedBy = "user")
 	private List<Goal> goals;
 	
+	@OneToMany(mappedBy="user")
+	private List<Blog> blogs;
+	
+	@OneToMany(mappedBy="user")
+	private List<Comment> comments;
+
+	@OneToMany(mappedBy="user")
+	private List<TrackedDay> trackedDays;
+	
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name="user_recipe", joinColumns=@JoinColumn(name="user_id"),
+	inverseJoinColumns = @JoinColumn(name="recipe_id"))
+	private List <Recipe> recipes;
+	
+	@OneToMany(mappedBy="user")
+	private List<Recipe> createdRecipes;
 	
 
 	// Object Mappings!! :
@@ -134,12 +156,54 @@ public class User {
 		this.weight = weight;
 	}
 
-	public int getAge() {
-		return age;
+	
+
+	public LocalDateTime getDateOfBirth() {
+		return dateOfBirth;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setDateOfBirth(LocalDateTime dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public List<Blog> getBlogs() {
+		return blogs;
+	}
+
+	public void setBlogs(List<Blog> blogs) {
+		this.blogs = blogs;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public List<TrackedDay> getTrackedDays() {
+		return trackedDays;
+	}
+
+	public void setTrackedDays(List<TrackedDay> trackedDays) {
+		this.trackedDays = trackedDays;
+	}
+
+	public List<Recipe> getRecipes() {
+		return recipes;
+	}
+
+	public void setRecipes(List<Recipe> recipes) {
+		this.recipes = recipes;
+	}
+
+	public List<Recipe> getCreatedRecipes() {
+		return createdRecipes;
+	}
+
+	public void setCreatedRecipes(List<Recipe> createdRecipes) {
+		this.createdRecipes = createdRecipes;
 	}
 
 	public boolean isActive() {
@@ -206,13 +270,7 @@ public class User {
 		this.imageUrl = imageUrl;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", height=" + height + ", weight=" + weight + ", age=" + age + ", active=" + active + ", username="
-				+ username + ", password=" + password + ", role=" + role + ", createAt=" + createAt + ", imageUrl="
-				+ imageUrl + ", gender=" + gender + ", goals=" + goals + "]";
-	}
+	
 	
 	
 

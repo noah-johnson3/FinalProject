@@ -28,18 +28,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `role`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `role` ;
-
-CREATE TABLE IF NOT EXISTS `role` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `team`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `team` ;
@@ -67,23 +55,17 @@ CREATE TABLE IF NOT EXISTS `user` (
   `last_name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `gender_id` INT NOT NULL,
-  `role_id` INT NOT NULL,
   `username` VARCHAR(45) NOT NULL,
   `password` TEXT NOT NULL,
   `team_id` INT NULL,
+  `role` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_user_gender1_idx` (`gender_id` ASC),
-  INDEX `fk_user_role1_idx` (`role_id` ASC),
   INDEX `fk_user_team1_idx` (`team_id` ASC),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC),
   CONSTRAINT `fk_user_gender1`
     FOREIGN KEY (`gender_id`)
     REFERENCES `gender` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_role1`
-    FOREIGN KEY (`role_id`)
-    REFERENCES `role` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_team1`
@@ -503,17 +485,6 @@ COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `role`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `nutritiondb`;
-INSERT INTO `role` (`id`, `name`) VALUES (1, 'admin');
-INSERT INTO `role` (`id`, `name`) VALUES (2, 'user');
-
-COMMIT;
-
-
--- -----------------------------------------------------
 -- Data for table `team`
 -- -----------------------------------------------------
 START TRANSACTION;
@@ -529,9 +500,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `nutritiondb`;
-INSERT INTO `user` (`id`, `height`, `weight`, `age`, `active`, `first_name`, `last_name`, `email`, `gender_id`, `role_id`, `username`, `password`, `team_id`) VALUES (1, 67, 150, 27, 1, 'Katherine', 'Remick', 'remick.ka@gmail.com', 1, 1, 'kate', 'password', 1);
-INSERT INTO `user` (`id`, `height`, `weight`, `age`, `active`, `first_name`, `last_name`, `email`, `gender_id`, `role_id`, `username`, `password`, `team_id`) VALUES (2, 65, 145, 25, 1, 'Kiera', 'Metz', 'kmetz@witcher.game', 1, 2, 'kiera', 'password', 1);
-INSERT INTO `user` (`id`, `height`, `weight`, `age`, `active`, `first_name`, `last_name`, `email`, `gender_id`, `role_id`, `username`, `password`, `team_id`) VALUES (3, 74, 200, 60, 1, 'Geralt', 'of Rivia', 'grivia@witcher.game', 2, 2, 'geralt', 'password', 1);
+INSERT INTO `user` (`id`, `height`, `weight`, `age`, `active`, `first_name`, `last_name`, `email`, `gender_id`, `username`, `password`, `team_id`, `role`) VALUES (1, 67, 150, 27, 1, 'Katherine', 'Remick', 'remick.ka@gmail.com', 1, 'kate', '$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC', 1, 'ROLE_ADMIN');
+INSERT INTO `user` (`id`, `height`, `weight`, `age`, `active`, `first_name`, `last_name`, `email`, `gender_id`, `username`, `password`, `team_id`, `role`) VALUES (2, 65, 145, 25, 1, 'Kiera', 'Metz', 'kmetz@witcher.game', 1, 'kiera', '$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC', 1, 'ROLE_STANDARD');
+INSERT INTO `user` (`id`, `height`, `weight`, `age`, `active`, `first_name`, `last_name`, `email`, `gender_id`, `username`, `password`, `team_id`, `role`) VALUES (3, 74, 200, 60, 1, 'Geralt', 'of Rivia', 'grivia@witcher.game', 2, 'geralt', '$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC', 1, 'ROLE_STANDARD');
 
 COMMIT;
 

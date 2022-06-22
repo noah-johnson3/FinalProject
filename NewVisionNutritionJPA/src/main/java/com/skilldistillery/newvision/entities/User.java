@@ -39,9 +39,7 @@ public class User {
 	
 	private String password;
 	
-	@ManyToOne
-	@JoinColumn(name="role_id")
-	private Role role;
+	private String role;
 	
 	@ManyToOne
 	@JoinColumn(name="gender_id")
@@ -103,15 +101,34 @@ public class User {
 
 
 
-	public Role getRole() {
+
+
+
+
+
+	public String getRole() {
 		return role;
 	}
 
 
 
 
-	public void setRole(Role role) {
+	public void setRole(String role) {
 		this.role = role;
+	}
+
+
+
+
+	public List<Goal> getGoals() {
+		return goals;
+	}
+
+
+
+
+	public void setGoals(List<Goal> goals) {
+		this.goals = goals;
 	}
 
 

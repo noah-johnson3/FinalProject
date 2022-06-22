@@ -7,6 +7,9 @@
     
     <!-- begin entities  -->
 	<class>com.skilldistillery.newvision.entities.User</class>
+	<class>com.skilldistillery.newvision.entities.Role</class>
+	<class>com.skilldistillery.newvision.entities.Gender</class>
+	<class>com.skilldistillery.newvision.entities.Goal</class>
 
     
     <!-- end entities  -->

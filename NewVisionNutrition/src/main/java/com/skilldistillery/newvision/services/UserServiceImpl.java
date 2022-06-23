@@ -1,5 +1,6 @@
 package com.skilldistillery.newvision.services;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateUser(User user, int id) {
+	public User updateUser(User user, int id, String username) {
 		Optional<User> op = userRepo.findById(id);
 		if(op.isPresent()) {
 			user.setId(id);

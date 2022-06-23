@@ -1,12 +1,13 @@
 package com.skilldistillery.newvision.controllers;
 
+import java.security.Principal;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -55,13 +56,31 @@ public class UserController {
 //		}
 		
 		@PutMapping("users/{id}")
-		public User updateUser(@RequestBody User user, @PathVariable int id, HttpServletResponse res) {
-			user = userService.updateUser(user, id);
-			if(user == null) {
-				res.setStatus(404);
+		public User updateUser(@RequestBody User user, @PathVariable int id, HttpServletResponse res, Principal principal) {
+			try {
+				user = userService.updateUser(user, id, principal.getName());
+				if(user == null) {
+					res.setStatus(404);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				res.setStatus(400);
 			}
 			return user;
 		}
 		
-		
+		@DeleteMapping("users/{id}")
+		public void deactivate(@PathVariable int id, HttpServletResponse res, Principal principal) {
+			try {
+				if(!userService.deactivate(principal.getName(), id)) {
+					res.setStatus(500);
+				}else {
+					res.setStatus(200);
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				res.setStatus(400);
+			}
+		}
 }

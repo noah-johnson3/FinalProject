@@ -11,5 +11,6 @@ public interface UserService {
 	boolean deactivate(String username, int id);
 	User updateUser(User user, int id, String username);
 	List<User> index();
+	User findByUsernameEquals(String username);
 	
 }

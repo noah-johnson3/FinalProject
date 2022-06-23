@@ -14,5 +14,8 @@ public interface BlogRepository extends JpaRepository<Blog, Integer>{
 	
 	@Query("SELECT b FROM Blog b JOIN b.topics bt WHERE bt.name = :topicName ")
 	List<Blog> findBlogByTopicName(@Param("topicName")String topicName);
-
+	
+	List<Blog> findByUser_UsernameEquals(@Param("username")String username);
+	
+	
 }

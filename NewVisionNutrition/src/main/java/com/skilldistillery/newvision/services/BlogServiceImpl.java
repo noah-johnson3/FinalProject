@@ -16,7 +16,7 @@ public class BlogServiceImpl implements BlogService {
 
 	@Override
 	public List<Blog> findByTopic(String topicName) {
-		return null;
+		return blogRepo.findBlogByTopicName(topicName);
 	}
 
 }

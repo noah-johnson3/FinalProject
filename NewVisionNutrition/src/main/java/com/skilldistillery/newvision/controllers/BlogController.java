@@ -23,8 +23,9 @@ public class BlogController {
 	@GetMapping("blogs/{topicName}")
 	public List<Blog> findByTopic(HttpServletResponse res, @PathVariable String topicName) {
 		List<Blog> blogs = null;
-		
+		System.out.println("IN find By topic ***********************");
 		try {
+			System.out.println(topicName);
 			blogs = blogService.findByTopic(topicName);
 			
 		} catch (Exception e) {

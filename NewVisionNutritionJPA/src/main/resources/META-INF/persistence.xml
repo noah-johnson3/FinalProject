@@ -6,10 +6,17 @@
     </provider>
     
     <!-- begin entities  -->
-	<class>com.skilldistillery.newvision.entities.User</class>
-	<class>com.skilldistillery.newvision.entities.Role</class>
+	<class>com.skilldistillery.newvision.entities.Blog</class>
+	<class>com.skilldistillery.newvision.entities.Comment</class>
 	<class>com.skilldistillery.newvision.entities.Gender</class>
 	<class>com.skilldistillery.newvision.entities.Goal</class>
+	<class>com.skilldistillery.newvision.entities.Ingredient</class>
+	<class>com.skilldistillery.newvision.entities.Meal</class>
+	<class>com.skilldistillery.newvision.entities.MealType</class>
+	<class>com.skilldistillery.newvision.entities.Recipe</class>
+	<class>com.skilldistillery.newvision.entities.Topic</class>
+	<class>com.skilldistillery.newvision.entities.TrackedDay</class>
+	<class>com.skilldistillery.newvision.entities.User</class>
 
     
     <!-- end entities  -->

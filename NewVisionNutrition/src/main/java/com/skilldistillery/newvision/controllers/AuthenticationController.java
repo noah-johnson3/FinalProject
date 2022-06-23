@@ -33,6 +33,7 @@ public class AuthenticationController {
 
 	@RequestMapping(path = "/authenticate", method = RequestMethod.GET)
 	public User authenticate(Principal principal) {
+		System.out.println("***************** Authenticating");
 	    return as.getUserByUsername(principal.getName());
 	}
 }

@@ -2,12 +2,15 @@ package com.skilldistillery.newvision.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,4 +44,24 @@ public class UserController {
 			List<User> users = userService.index();
 			return users;
 		}
+		
+//		@PutMapping("users/{id}")
+//		public User updateUser(@RequestBody User user,
+//		 @PathVariable int id, HttpServletResponse res, HttpServletRequest req) {
+//			userService.updateUser(user, id);
+//			res.setStatus(HttpServletResponse.SC_OK);
+//			res.setHeader("location", req.getRequestURI() + "/" + user.getId());
+//			return user;
+//		}
+		
+		@PutMapping("users/{id}")
+		public User updateUser(@RequestBody User user, @PathVariable int id, HttpServletResponse res) {
+			user = userService.updateUser(user, id);
+			if(user == null) {
+				res.setStatus(404);
+			}
+			return user;
+		}
+		
+		
 }

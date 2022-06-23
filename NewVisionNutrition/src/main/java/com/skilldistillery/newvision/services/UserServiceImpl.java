@@ -27,13 +27,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean deactivate(String username, int id) {
-		boolean isDeleted = false;
+		boolean isActive = true;
 		Optional<User> op = userRepo.findById(id);
 		if(op.isPresent()) {
-			userRepo.deleteById(id);
-			isDeleted = true;
+			User deactivatedUser = op.get();
+			deactivatedUser.setActive(false);
+			userRepo.saveAndFlush(deactivatedUser);
+			isActive = false;
 		}
-		return isDeleted;
+		return isActive;
 	}
 
 	@Override

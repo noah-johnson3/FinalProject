@@ -33,6 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll() // For CORS, the preflight request
         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()     // will hit the OPTIONS on the route
         .antMatchers(HttpMethod.GET, "/api/**").permitAll()     // Allow readonly access to our API
+        .antMatchers(HttpMethod.PUT, "/api/**").permitAll()     // Allow readonly access to our API
+        .antMatchers(HttpMethod.DELETE, "/api/**").permitAll()     // Allow readonly access to our API
+        .antMatchers(HttpMethod.POST, "/api/**").permitAll()     // Allow readonly access to our API
         .antMatchers("/api/**").authenticated() // All other request for our API must be authorized.
         .anyRequest().permitAll()               // All other requests are allowed without authentication.
         .and()

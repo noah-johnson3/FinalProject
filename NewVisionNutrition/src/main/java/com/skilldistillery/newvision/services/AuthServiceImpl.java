@@ -31,6 +31,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public User getUserByUsername(String username) {
+		System.out.println("Authinticating - in service *************");
 		return ur.findByUsernameEquals(username);
 	}
 

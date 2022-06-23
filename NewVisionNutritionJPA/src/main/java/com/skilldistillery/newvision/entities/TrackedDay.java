@@ -1,6 +1,7 @@
 package com.skilldistillery.newvision.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,6 +29,9 @@ public class TrackedDay {
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
+	
+	@OneToMany(mappedBy="trackDay")
+	private List<Meal> meals;
 	
 
 	
@@ -50,6 +55,24 @@ public class TrackedDay {
 
 	public void setDay(LocalDateTime day) {
 		this.day = day;
+	}
+
+	
+	
+	public List<Meal> getMeals() {
+		return meals;
+	}
+
+	public void setMeals(List<Meal> meals) {
+		this.meals = meals;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

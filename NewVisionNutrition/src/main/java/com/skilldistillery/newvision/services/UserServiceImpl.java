@@ -1,5 +1,6 @@
 package com.skilldistillery.newvision.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,12 @@ import com.skilldistillery.newvision.repositories.UserRepository;
 public class UserServiceImpl implements UserService {
 	
 	@Autowired
-	private UserRepository ur;
+	private UserRepository userRepo;
 
 	@Override
 	public User getUserById(int id) {
 		User user = null;
-		Optional<User> op = ur.findById(id);
+		Optional<User> op = userRepo.findById(id);
 		if(op.isPresent()) {
 			user = op.get();
 		}
@@ -25,14 +26,31 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User deactivateUser(User user) {
-		return null;
+	public boolean deactivate(String username, int id) {
+		boolean isDeleted = false;
+		Optional<User> op = userRepo.findById(id);
+		if(op.isPresent()) {
+			userRepo.deleteById(id);
+			isDeleted = true;
+		}
+		return isDeleted;
 	}
 
 	@Override
 	public User updateUser(User user, int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<User> op = userRepo.findById(id);
+		if(op.isPresent()) {
+			user.setId(id);
+			userRepo.saveAndFlush(user);
+		}else {
+			user = null;
+		}
+		return user;
+	}
+
+	@Override
+	public List<User> index() {
+		return userRepo.findAll();
 	}
 	
 	

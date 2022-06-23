@@ -50,7 +50,7 @@ public class User {
 	private String role;
 
 	@CreationTimestamp
-	@Column(name = "created_at")
+	@Column(name = "create_at")
 	private LocalDateTime createAt;
 
 	@Column(name = "image_url")

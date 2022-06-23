@@ -1,5 +1,7 @@
 package com.skilldistillery.newvision.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +34,11 @@ public class UserController {
 			}
 			
 			return user;
+		}
+		
+		@GetMapping("users")
+		public List<User> index(HttpServletResponse res) {
+			List<User> users = userService.index();
+			return users;
 		}
 }

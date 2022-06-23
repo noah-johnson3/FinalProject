@@ -2,10 +2,10 @@ package com.skilldistillery.newvision.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.skilldistillery.newvision.entities.Blog;
+import com.skilldistillery.newvision.entities.Comment;
 
-public interface CommentRepository extends JpaRepository<CommentRepository, Integer>{
+public interface CommentRepository extends JpaRepository<Comment, Integer>{
 	
-	CommentRepository findCommentBy_BlogId(int id);
+	CommentRepository findCommentByBlog_Id(int id);
 
 }

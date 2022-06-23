@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class User {
@@ -50,7 +51,7 @@ public class User {
 	private String role;
 
 	@CreationTimestamp
-	@Column(name = "create_at")
+	@Column(name = "created_at")
 	private LocalDateTime createAt;
 
 	@Column(name = "image_url")
@@ -60,9 +61,11 @@ public class User {
 	@JoinColumn(name = "gender_id")
 	private Gender gender;
 
+	@JsonIgnoreProperties({"user"})
 	@OneToMany(mappedBy = "user")
 	private List<Goal> goals;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private List<Blog> blogs;
 	
@@ -70,6 +73,7 @@ public class User {
 	@OneToMany(mappedBy="user")
 	private List<Comment> comments;
 
+	@JsonIgnoreProperties({"user"})
 	@OneToMany(mappedBy="user")
 	private List<TrackedDay> trackedDays;
 	

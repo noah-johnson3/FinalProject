@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.skilldistillery.newvision.entities.Goal;
 import com.skilldistillery.newvision.entities.User;
 import com.skilldistillery.newvision.repositories.GoalRepository;
 import com.skilldistillery.newvision.repositories.UserRepository;
 
+@Service
 public class GoalServiceImpl implements GoalService {
 
 	@Autowired

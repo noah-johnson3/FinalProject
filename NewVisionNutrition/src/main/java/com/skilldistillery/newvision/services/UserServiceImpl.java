@@ -23,6 +23,17 @@ public class UserServiceImpl implements UserService {
 		}
 		return user;
 	}
+
+	@Override
+	public User deactivateUser(User user) {
+		return null;
+	}
+
+	@Override
+	public User updateUser(User user, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 

@@ -66,6 +66,7 @@ public class User {
 	@OneToMany(mappedBy="user")
 	private List<Blog> blogs;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private List<Comment> comments;
 
@@ -78,6 +79,7 @@ public class User {
 	inverseJoinColumns = @JoinColumn(name="recipe_id"))
 	private List <Recipe> recipes;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private List<Recipe> createdRecipes;
 	

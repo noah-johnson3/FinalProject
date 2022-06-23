@@ -6,6 +6,7 @@ import com.skilldistillery.newvision.entities.User;
 public interface UserRepository  extends JpaRepository<User, Integer>{
 
 	User findByUsernameEquals(String username);
+	
 
 	
 	

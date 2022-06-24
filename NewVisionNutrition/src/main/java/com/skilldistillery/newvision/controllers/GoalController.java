@@ -75,7 +75,7 @@ public class GoalController {
 	}
 	
 	@GetMapping("goals/{achieved}")
-	public List<Goal> goalAchievment(HttpServletResponse res, @PathVariable boolean achieved,
+	public List<Goal> findByGoalAchievment(HttpServletResponse res, @PathVariable boolean achieved,
 			Principal principal) {
 		List<Goal> goals = null;
 		try {

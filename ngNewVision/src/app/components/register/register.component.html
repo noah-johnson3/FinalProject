@@ -1,1 +1,33 @@
-<p>register works!</p>
+<main class="container-fluid">
+  <div class="row">
+    <div clas="col-sm-4"></div>
+    <div clas="col-sm-4">
+      <form name="login">
+        <label for="username">Username: </label>
+        <input type="text" name="username" [(ngModel)]="newUser.username"/>
+        <label for="password">Password: </label>
+        <input type="password" name="password" [(ngModel)]="newUser.password"/><br>
+        <label for="firstName">First Name</label>
+        <input class="col form-control" type="text" name="firstName" [(ngModel)]="newUser.firstName" placeholder="First Name" /><br>
+        <label for="lastName">Last Name</label>
+        <input class="col form-control" type="text" name="lastName" [(ngModel)]="newUser.lastName" placeholder="Last Name"/><br>
+        <label for="email">Email Address</label>
+        <input class="col form-control" type="text" name="email" [(ngModel)]="newUser.email" placeholder="Email Address"/><br>
+        <label for="height">Height in Inches</label>
+        <input class="col form-control" type="number" name="height" [(ngModel)]="newUser.height" placeholder="Height in Inches"/><br>
+        <label for="weight">Weight in lbs</label>
+        <input class="col form-control" type="number" name="weight" [(ngModel)]="newUser.weight" placeholder="Weight in lbs" /><br>
+        <label for="dateOfBirth">Date of Birth</label>
+        <input class="col form-control" type="date" name="dateOfBirth" [(ngModel)]="newUser.dateOfBirth" /><br>
+        <label for="gender">Gender</label>
+        <select name="gender" [(ngModel)]="newUser.gender">
+          <option *ngFor="let gender of genders" [ngValue]="gender">{{gender.name}}</option>
+        </select><br>
+        <button (click)="register(newUser)">Register</button>
+      </form>
+    </div>
+    <div clas="col-sm-4"></div>
+
+  </div>
+
+</main>

@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.skilldistillery.newvision.entities.Gender;
 import com.skilldistillery.newvision.repositories.GenderRepository;
 
+@Service
 public class GenderServiceImpl implements GenderService {
 
 	@Autowired

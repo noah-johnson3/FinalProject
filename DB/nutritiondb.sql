@@ -161,7 +161,6 @@ CREATE TABLE IF NOT EXISTS `tracked_day` (
   `day` DATE NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `date_UNIQUE` (`day` ASC),
   INDEX `fk_tracked_day_User1_idx` (`user_id` ASC),
   CONSTRAINT `fk_tracked_day_User1`
     FOREIGN KEY (`user_id`)

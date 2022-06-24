@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Comment {
@@ -28,11 +29,12 @@ public class Comment {
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
+	@JsonIgnoreProperties({"trackedDays"})
 	@JoinColumn(name = "user_id")
 	@ManyToOne
 	private User user;
 
-	@JsonIgnore
+	@JsonIgnoreProperties({"comments", "createdAt", "user", "topics"})
 	@JoinColumn(name = "blog_id")
 	@ManyToOne
 	private Blog blog;

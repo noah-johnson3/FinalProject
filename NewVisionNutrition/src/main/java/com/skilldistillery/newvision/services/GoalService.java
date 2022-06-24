@@ -11,6 +11,7 @@ public interface GoalService {
 	List<Goal> findByUser(int id, String username);
 	List<Goal> accomplishedGoal(String username, boolean achieved);
 	boolean deleteGoal(String username, int id);
+	Goal achieveGoal(Goal goal, String username, int id);
 	
 
 }

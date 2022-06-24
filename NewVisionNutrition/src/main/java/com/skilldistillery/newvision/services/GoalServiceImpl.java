@@ -35,13 +35,27 @@ public class GoalServiceImpl implements GoalService {
 	public Goal updateGoal(Goal goal, String username, int id) {
 		User user = userRepo.findByUsernameEquals(username);
 		Goal updatedGoal = null;
-		if(goal.getUser() == user) {
+		if(goal.getUser().equals(user)) {
 			Optional<Goal> op = goalRepo.findById(id);
 			if(op.isPresent()) {
 				updatedGoal = op.get();
 				updatedGoal.setWeight(goal.getWeight());
 				updatedGoal.setDescription(goal.getDescription());
 				updatedGoal.setName(goal.getName());
+				updatedGoal = goalRepo.saveAndFlush(updatedGoal);
+			}
+		}
+		return updatedGoal;
+	}
+	@Override
+	public Goal achieveGoal(Goal goal, String username, int id) {
+		User user = userRepo.findByUsernameEquals(username);
+		Goal updatedGoal = null;
+		if(goal.getUser().equals(user)) {
+			Optional<Goal> op = goalRepo.findById(id);
+			if(op.isPresent()) {
+				updatedGoal = op.get();
+				updatedGoal.setAchieved(goal.isAchieved());
 				updatedGoal = goalRepo.saveAndFlush(updatedGoal);
 			}
 		}

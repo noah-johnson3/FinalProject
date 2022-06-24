@@ -70,7 +70,7 @@ public class MealController {
 			if (meal == null) {
 				res.setStatus(404);
 			} else {
-				res.setStatus(200);
+				res.setStatus(201);
 			}
 
 		} catch (Exception e) {

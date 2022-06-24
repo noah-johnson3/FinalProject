@@ -56,7 +56,10 @@ public class BlogServiceImpl implements BlogService {
 	public Blog updateBlog(Blog blog, String username, int id) {
 		User user = userRepo.findByUsernameEquals(username);
 		Blog updatedBlog = null;
-		if (blog.getUser() == user) {
+		System.out.println(username);
+		System.out.println(blog.getUser().getUsername());
+		if (blog.getUser().equals(user)) {
+			System.out.println("User authorized");
 			Optional<Blog> op = blogRepo.findById(id);
 			if (op.isPresent()) {
 				updatedBlog = op.get();

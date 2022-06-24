@@ -32,7 +32,7 @@ public class TrackedDayController {
 			if (td == null) {
 				res.setStatus(404);
 			} else {
-				res.setStatus(200);
+				res.setStatus(201);
 			}
 
 		} catch (Exception e) {
@@ -61,11 +61,11 @@ public class TrackedDayController {
 		return td;
 	}
 	
-	@GetMapping("trackedDay/user/{id}")
-	public TrackedDay findByUserId(@PathVariable int id, HttpServletResponse res, Principal principal) {
-		TrackedDay td = null;
+	@GetMapping("trackedDay/user")
+	public List<TrackedDay> findByUserId( HttpServletResponse res, Principal principal) {
+		List<TrackedDay> td = null;
 		try {
-			td = tds.findByUserId(id, principal.getName());
+			td = tds.findByUser(principal.getName());
 			if (td == null) {
 				res.setStatus(404);
 			} else {

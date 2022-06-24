@@ -8,9 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.xml.ws.soap.MTOM;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Meal {
@@ -19,7 +18,7 @@ public class Meal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@JsonIgnore
+	@JsonIgnoreProperties({"meals", "user"})
 	@ManyToOne
 	@JoinColumn(name = "tracked_day_id")
 	private TrackedDay trackDay;

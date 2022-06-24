@@ -63,6 +63,7 @@ public class User {
 
 	@JsonIgnoreProperties({"user"})
 	@OneToMany(mappedBy = "user")
+	@JsonIgnore
 	private List<Goal> goals;
 	
 	@JsonIgnore

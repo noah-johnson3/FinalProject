@@ -32,6 +32,7 @@ public class TopicServiceImpl implements TopicService {
 
 	@Override
 	public Topic findByName(String name) {
+		System.out.println("searching by name");
 		return topicRepo.findByNameEquals(name);
 	}
 
@@ -51,5 +52,11 @@ public class TopicServiceImpl implements TopicService {
 		
 		return topicRepo.findbyKeyword(keyword, keyword);
 	}
+
+	@Override
+	public List<Topic> findAll() {
+		return topicRepo.findAll();
+	}
+	
 
 }

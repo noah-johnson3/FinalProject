@@ -31,7 +31,7 @@ public class TopicController {
 			if (topic == null) {
 				res.setStatus(404);
 			} else {
-				res.setStatus(200);
+				res.setStatus(201);
 			}
 
 		} catch (Exception e) {
@@ -42,7 +42,7 @@ public class TopicController {
 
 	}
 	
-	@GetMapping("topic/name")
+	@GetMapping("topics/search/{name}")
 	public Topic findByTopicName(HttpServletResponse res, @PathVariable String name) {
 		Topic topic = null;
 		try {
@@ -54,7 +54,7 @@ public class TopicController {
 		return topic;
 	}
 	
-	@GetMapping("topic/{id}")
+	@GetMapping("topics/idSearch/{id}")
 	public Topic findById(@PathVariable int id, HttpServletResponse res) {
 		Topic topic = null;
 		try {
@@ -72,7 +72,7 @@ public class TopicController {
 		return topic;
 	}
 	
-	@GetMapping("topic/{keyword}")
+	@GetMapping("topics/keySearch/{keyword}")
 	public List<Topic> findByKeyword(@PathVariable String keyword, HttpServletResponse res) {
 		List<Topic> topics = null;
 		try {
@@ -83,6 +83,23 @@ public class TopicController {
 				res.setStatus(200);
 			}
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setStatus(400);
+		}
+		return topics;
+	}
+	@GetMapping("topics")
+	public List<Topic> findAll( HttpServletResponse res) {
+		List<Topic> topics = null;
+		try {
+			topics = topicServ.findAll();
+			if (topics == null) {
+				res.setStatus(404);
+			} else {
+				res.setStatus(200);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setStatus(400);

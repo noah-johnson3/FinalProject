@@ -25,7 +25,7 @@ public class BlogController {
 	@Autowired
 	private BlogService blogService;
 
-	@GetMapping("blogs/{topicName}")
+	@GetMapping("blogs/Topic/{topicName}")
 	public List<Blog> findByTopic(HttpServletResponse res, @PathVariable String topicName) {
 		List<Blog> blogs = null;
 		try {
@@ -38,7 +38,7 @@ public class BlogController {
 
 	}
 
-	@GetMapping("blogs/{username}")
+	@GetMapping("blogs/Author/{username}")
 	public List<Blog> findByAuthor(@PathVariable String username, HttpServletResponse res) {
 		List<Blog> blogs = null;
 		try {
@@ -82,7 +82,7 @@ public class BlogController {
 			if (blog == null) {
 				res.setStatus(404);
 			} else {
-				res.setStatus(200);
+				res.setStatus(201);
 			}
 
 		} catch (Exception e) {

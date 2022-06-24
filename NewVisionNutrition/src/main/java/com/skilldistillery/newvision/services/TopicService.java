@@ -11,6 +11,7 @@ public interface TopicService {
 	Topic findByName(String name);
 	Topic findById(int id);
 	List<Topic> findByKeyWord(String keyword);
-	
+	List<Topic> findAll();
+ 	
 
 }

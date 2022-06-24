@@ -46,10 +46,7 @@ public class TrackedDayServiceImpl implements TrackedDayService {
 		return updatedDay;
 	}
 
-	@Override
-	public TrackedDay findByUserId(int id, String username) {
-		return tdr.findByUser_UsernameEquals(username);
-	}
+	
 
 	@Override
 	public TrackedDay findById(int id) {
@@ -62,9 +59,12 @@ public class TrackedDayServiceImpl implements TrackedDayService {
 	}
 
 	@Override
-	public List<TrackedDay> findAll() {
-		return tdr.findAll();
+	public List<TrackedDay> findByUser(String username) {
+		
+		return tdr.findByUser_UsernameEquals(username);
 	}
+
+	
 
 	
 	

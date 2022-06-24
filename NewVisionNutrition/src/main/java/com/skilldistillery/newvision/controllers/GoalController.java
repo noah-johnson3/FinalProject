@@ -46,7 +46,7 @@ public class GoalController {
 			if (goal == null) {
 				res.setStatus(400);
 			} else {
-				res.setStatus(200);
+				res.setStatus(201);
 			}
 
 		} catch (Exception e) {
@@ -56,7 +56,7 @@ public class GoalController {
 		return goal;
 	}
 	
-	@PutMapping("goal/{id}")
+	@PutMapping("goals/{id}")
 	public Goal updateGoal(HttpServletResponse res, @PathVariable int id, @RequestBody Goal goal,
 			Principal principal) {
 		try {
@@ -73,8 +73,25 @@ public class GoalController {
 		}
 		return goal;
 	}
+	@PutMapping("goals/achieve/{id}")
+	public Goal achieveGoal(HttpServletResponse res, @PathVariable int id, @RequestBody Goal goal,
+			Principal principal) {
+		try {
+			goal = goalService.achieveGoal(goal, principal.getName(), id);
+			if (goal == null) {
+				res.setStatus(401);
+			} else {
+				res.setStatus(200);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setStatus(404);
+		}
+		return goal;
+	}
 	
-	@GetMapping("goals/{achieved}")
+	@GetMapping("goals/filter/{achieved}")
 	public List<Goal> findByGoalAchievment(HttpServletResponse res, @PathVariable boolean achieved,
 			Principal principal) {
 		List<Goal> goals = null;

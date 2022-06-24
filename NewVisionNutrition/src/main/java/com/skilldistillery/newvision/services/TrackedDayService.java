@@ -8,7 +8,6 @@ public interface TrackedDayService {
 	
 	TrackedDay createTrackedDay(TrackedDay day, String username);
 	TrackedDay updateDay(TrackedDay day, int id, String username);
-	TrackedDay findByUserId(int id, String username);
 	TrackedDay findById(int id);
-	List<TrackedDay> findAll();
+	List<TrackedDay> findByUser(String username);
 }

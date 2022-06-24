@@ -1,0 +1,1843 @@
+{
+	"info": {
+		"_postman_id": "331a08a4-94f1-40a9-ba1c-a94b9a8507a8",
+		"name": "Final Project Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User/Gender",
+			"item": [
+				{
+					"name": "List All Genders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n     {\n        \"name\": \"tester\",\n        \"description\": \"blah blah blah\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/genders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"genders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Gender by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n     {\n        \"name\": \"tester\",\n        \"description\": \"blah blah blah\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/genders/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"genders",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Recipe/Ingredient",
+			"item": [
+				{
+					"name": "List Recipes by time",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/api/recipes/time/15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"recipes",
+								"time",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Recipes by ingredient",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"protein\": 20.0,\n        \"carbs\": 10.0,\n        \"fats\": 9.0,\n        \"sodium\": 20,\n        \"sugar\": 0,\n        \"calories\": 300.0\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/recipes/ingredient/egg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"recipes",
+								"ingredient",
+								"egg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Recipes by Nutrients",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"protein\": 20.0,\n        \"carbs\": 10.0,\n        \"fats\": 9.0,\n        \"sodium\": 20,\n        \"sugar\": 0,\n        \"calories\": 300.0\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/recipes/nutrition",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"recipes",
+								"nutrition"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Recipes by Author",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"protein\": 20.0,\n        \"carbs\": 10.0,\n        \"fats\": 9.0,\n        \"sodium\": 20,\n        \"sugar\": 0,\n        \"calories\": 300.0\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/recipes/author/kate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"recipes",
+								"author",
+								"kate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Recipes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"protein\": 20.0,\n        \"carbs\": 10.0,\n        \"fats\": 9.0,\n        \"sodium\": 20,\n        \"sugar\": 0,\n        \"calories\": 300.0\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/recipes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Recipe",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"link\": null,\n        \"timeRequired\": 10,\n        \"recipeText\": \"Test Recipe\",\n        \"name\": \"Test Test Test\",\n        \"protein\": 20.0,\n        \"carbs\": 10.0,\n        \"fats\": 9.0,\n        \"sodium\": 20,\n        \"sugar\": 0,\n        \"calories\": 300.0,\n        \"createdAt\": \"2022-06-21T02:20:20\",\n        \"updatedAt\": null,\n        \"imageUrl\": null,\n        \"user\": {\n            \"id\": 1,\n            \"firstName\": \"Katherine\",\n            \"lastName\": \"Remick\",\n            \"email\": \"remick.ka@gmail.com\",\n            \"height\": 67.0,\n            \"weight\": 150.0,\n            \"dateOfBirth\": \"1995-03-21T00:00:00\",\n            \"active\": true,\n            \"username\": \"kate\",\n            \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n            \"role\": \"ROLE_ADMIN\",\n            \"createAt\": \"2022-06-21T02:20:20\",\n            \"imageUrl\": null,\n            \"gender\": {\n                \"id\": 1,\n                \"name\": \"Female\"\n            },\n            \"trackedDays\": []\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/recipes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Recipe",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\":2,\n        \"link\": null,\n        \"timeRequired\": 10,\n        \"recipeText\": \"Test Recipe Update\",\n        \"name\": \"Test Test Test\",\n        \"protein\": 20.0,\n        \"carbs\": 10.0,\n        \"fats\": 9.0,\n        \"sodium\": 20,\n        \"sugar\": 0,\n        \"calories\": 300.0,\n        \"createdAt\": \"2022-06-21T02:20:20\",\n        \"updatedAt\": null,\n        \"imageUrl\": null,\n        \"user\": {\n            \"id\": 1,\n            \"firstName\": \"Katherine\",\n            \"lastName\": \"Remick\",\n            \"email\": \"remick.ka@gmail.com\",\n            \"height\": 67.0,\n            \"weight\": 150.0,\n            \"dateOfBirth\": \"1995-03-21T00:00:00\",\n            \"active\": true,\n            \"username\": \"kate\",\n            \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n            \"role\": \"ROLE_ADMIN\",\n            \"createAt\": \"2022-06-21T02:20:20\",\n            \"imageUrl\": null,\n            \"gender\": {\n                \"id\": 1,\n                \"name\": \"Female\"\n            },\n            \"trackedDays\": []\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/recipes/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"recipes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recipe AddUser",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\":2,\n        \"link\": null,\n        \"timeRequired\": 10,\n        \"recipeText\": \"Test Recipe Update\",\n        \"name\": \"Test Test Test\",\n        \"protein\": 20.0,\n        \"carbs\": 10.0,\n        \"fats\": 9.0,\n        \"sodium\": 20,\n        \"sugar\": 0,\n        \"calories\": 300.0,\n        \"createdAt\": \"2022-06-21T02:20:20\",\n        \"updatedAt\": null,\n        \"imageUrl\": null,\n        \"user\": {\n            \"id\": 1,\n            \"firstName\": \"Katherine\",\n            \"lastName\": \"Remick\",\n            \"email\": \"remick.ka@gmail.com\",\n            \"height\": 67.0,\n            \"weight\": 150.0,\n            \"dateOfBirth\": \"1995-03-21T00:00:00\",\n            \"active\": true,\n            \"username\": \"kate\",\n            \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n            \"role\": \"ROLE_ADMIN\",\n            \"createAt\": \"2022-06-21T02:20:20\",\n            \"imageUrl\": null,\n            \"gender\": {\n                \"id\": 1,\n                \"name\": \"Female\"\n            },\n            \"trackedDays\": []\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/recipes/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"recipes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Recipe",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/api/recipes/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"recipes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Blog/Comment/Topic",
+			"item": [
+				{
+					"name": "List Blogs by topic",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/api/blogs/Topic/Test%20Topic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"blogs",
+								"Topic",
+								"Test%20Topic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Blogs By Author",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/api/blogs/Author/kate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"blogs",
+								"Author",
+								"kate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create Blog",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n    \"content\": \"Test test 1 2 3 \",\n    \"imageLink\": null,\n    \"createdAt\": \"2022-06-21T19:51:21\",\n    \"title\": \"Blog 2 TEST\",\n    \"user\": {\n        \"id\": 1,\n        \"firstName\": \"Katherine\",\n        \"lastName\": \"Remick\",\n        \"email\": \"remick.ka@gmail.com\",\n        \"height\": 67.0,\n        \"weight\": 150.0,\n        \"dateOfBirth\": \"1995-03-21T00:00:00\",\n        \"active\": true,\n        \"username\": \"kate\",\n        \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n        \"role\": \"ROLE_ADMIN\",\n        \"createAt\": \"2022-06-21T02:20:20\",\n        \"imageUrl\": null,\n        \"gender\": {\n            \"id\": 1,\n            \"name\": \"Female\"\n        },\n        \"goals\": [],\n        \"trackedDays\": []\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/blogs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"blogs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Blog",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n    \"content\": \"Test test 1 2 3 4\",\n    \"imageLink\": null,\n    \"createdAt\": \"2022-06-21T19:51:21\",\n    \"title\": \"Blog 2 TEST\",\n    \"user\": {\n        \"id\": 1,\n        \"firstName\": \"Katherine\",\n        \"lastName\": \"Remick\",\n        \"email\": \"remick.ka@gmail.com\",\n        \"height\": 67.0,\n        \"weight\": 150.0,\n        \"dateOfBirth\": \"1995-03-21T00:00:00\",\n        \"active\": true,\n        \"username\": \"kate\",\n        \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n        \"role\": \"ROLE_ADMIN\",\n        \"createAt\": \"2022-06-21T02:20:20\",\n        \"imageUrl\": null,\n        \"gender\": {\n            \"id\": 1,\n            \"name\": \"Female\"\n        },\n        \"goals\": [],\n        \"trackedDays\": []\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/blogs/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"blogs",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Blog",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n    \"content\": \"Test test 1 2 3 4\",\n    \"imageLink\": null,\n    \"createdAt\": \"2022-06-21T19:51:21\",\n    \"title\": \"Blog 2 TEST\",\n    \"user\": {\n        \"id\": 1,\n        \"firstName\": \"Katherine\",\n        \"lastName\": \"Remick\",\n        \"email\": \"remick.ka@gmail.com\",\n        \"height\": 67.0,\n        \"weight\": 150.0,\n        \"dateOfBirth\": \"1995-03-21T00:00:00\",\n        \"active\": true,\n        \"username\": \"kate\",\n        \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n        \"role\": \"ROLE_ADMIN\",\n        \"createAt\": \"2022-06-21T02:20:20\",\n        \"imageUrl\": null,\n        \"gender\": {\n            \"id\": 1,\n            \"name\": \"Female\"\n        },\n        \"goals\": [],\n        \"trackedDays\": []\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/blogs/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"blogs",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Blogs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n    \"content\": \"Test test 1 2 3 4\",\n    \"imageLink\": null,\n    \"createdAt\": \"2022-06-21T19:51:21\",\n    \"title\": \"Blog 2 TEST\",\n    \"user\": {\n        \"id\": 1,\n        \"firstName\": \"Katherine\",\n        \"lastName\": \"Remick\",\n        \"email\": \"remick.ka@gmail.com\",\n        \"height\": 67.0,\n        \"weight\": 150.0,\n        \"dateOfBirth\": \"1995-03-21T00:00:00\",\n        \"active\": true,\n        \"username\": \"kate\",\n        \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n        \"role\": \"ROLE_ADMIN\",\n        \"createAt\": \"2022-06-21T02:20:20\",\n        \"imageUrl\": null,\n        \"gender\": {\n            \"id\": 1,\n            \"name\": \"Female\"\n        },\n        \"goals\": [],\n        \"trackedDays\": []\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/blogs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"blogs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Comment By id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/api/comments/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"comments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Comment",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n    {\n        \"content\": \"Test Comment\",\n         \"blog\": {\n            \"id\": 1,\n            \"content\": \"This is a test CAN YOU HEAR ME FROM IN HERE?\",\n            \"imageLink\": null,\n            \"title\": \"Blog 1 TEST\"\n        },\n        \"user\": {\n            \"id\": 1,\n            \"firstName\": \"Katherine\",\n            \"lastName\": \"Remick\",\n            \"email\": \"remick.ka@gmail.com\",\n            \"height\": 67.0,\n            \"weight\": 150.0,\n            \"dateOfBirth\": \"1995-03-21T00:00:00\",\n            \"active\": true,\n            \"username\": \"kate\",\n            \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n            \"role\": \"ROLE_ADMIN\",\n            \"createAt\": \"2022-06-21T02:20:20\",\n            \"imageUrl\": null,\n            \"gender\": {\n                \"id\": 1,\n                \"name\": \"Female\"\n            }\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/comments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Comment",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n    {\n        \"id\": 4,\n        \"content\": \"Test Comment Update\",\n         \"blog\": {\n            \"id\": 1,\n            \"content\": \"This is a test CAN YOU HEAR ME FROM IN HERE?\",\n            \"imageLink\": null,\n            \"title\": \"Blog 1 TEST\"\n        },\n        \"user\": {\n            \"id\": 1,\n            \"firstName\": \"Katherine\",\n            \"lastName\": \"Remick\",\n            \"email\": \"remick.ka@gmail.com\",\n            \"height\": 67.0,\n            \"weight\": 150.0,\n            \"dateOfBirth\": \"1995-03-21T00:00:00\",\n            \"active\": true,\n            \"username\": \"kate\",\n            \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n            \"role\": \"ROLE_ADMIN\",\n            \"createAt\": \"2022-06-21T02:20:20\",\n            \"imageUrl\": null,\n            \"gender\": {\n                \"id\": 1,\n                \"name\": \"Female\"\n            }\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/comments/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"comments",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n    {\n        \"id\": 4,\n        \"content\": \"Test Comment Update\",\n         \"blog\": {\n            \"id\": 1,\n            \"content\": \"This is a test CAN YOU HEAR ME FROM IN HERE?\",\n            \"imageLink\": null,\n            \"title\": \"Blog 1 TEST\"\n        },\n        \"user\": {\n            \"id\": 1,\n            \"firstName\": \"Katherine\",\n            \"lastName\": \"Remick\",\n            \"email\": \"remick.ka@gmail.com\",\n            \"height\": 67.0,\n            \"weight\": 150.0,\n            \"dateOfBirth\": \"1995-03-21T00:00:00\",\n            \"active\": true,\n            \"username\": \"kate\",\n            \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n            \"role\": \"ROLE_ADMIN\",\n            \"createAt\": \"2022-06-21T02:20:20\",\n            \"imageUrl\": null,\n            \"gender\": {\n                \"id\": 1,\n                \"name\": \"Female\"\n            }\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/comments/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"comments",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Topics",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n    {\n        \"content\": \"Test Comment\",\n         \"blog\": {\n            \"id\": 1,\n            \"content\": \"This is a test CAN YOU HEAR ME FROM IN HERE?\",\n            \"imageLink\": null,\n            \"title\": \"Blog 1 TEST\"\n        },\n        \"user\": {\n            \"id\": 1,\n            \"firstName\": \"Katherine\",\n            \"lastName\": \"Remick\",\n            \"email\": \"remick.ka@gmail.com\",\n            \"height\": 67.0,\n            \"weight\": 150.0,\n            \"dateOfBirth\": \"1995-03-21T00:00:00\",\n            \"active\": true,\n            \"username\": \"kate\",\n            \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n            \"role\": \"ROLE_ADMIN\",\n            \"createAt\": \"2022-06-21T02:20:20\",\n            \"imageUrl\": null,\n            \"gender\": {\n                \"id\": 1,\n                \"name\": \"Female\"\n            }\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/topics",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"topics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Topic",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n     {\n        \"name\": \"tester\",\n        \"description\": \"blah blah blah\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/topics",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"topics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Topic By Name",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n     {\n        \"name\": \"tester\",\n        \"description\": \"blah blah blah\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/topics/search/tester",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"topics",
+								"search",
+								"tester"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Topic By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n     {\n        \"name\": \"tester\",\n        \"description\": \"blah blah blah\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/topics/idSearch/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"topics",
+								"idSearch",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Topic By Keyword",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "kate",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n     {\n        \"name\": \"tester\",\n        \"description\": \"blah blah blah\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/topics/keySearch/test",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"topics",
+								"keySearch",
+								"test"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Goal",
+			"item": [
+				{
+					"name": "Find By User id",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/api/goals/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"goals",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Goal",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\": \"Test Goal\",\n        \"weight\": 200.0,\n        \"achieved\": false,\n        \"description\": null,\n        \"dateAchieved\": null,\n        \"createAt\": \"2022-06-21T02:20:20\",\n        \"user\": {\n            \"id\": 3,\n            \"firstName\": \"Geralt\",\n            \"lastName\": \"of Rivia\",\n            \"email\": \"grivia@witcher.game\",\n            \"height\": 74.0,\n            \"weight\": 200.0,\n            \"dateOfBirth\": \"1050-07-12T00:00:00\",\n            \"active\": true,\n            \"username\": \"geralt\",\n            \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n            \"role\": \"ROLE_STANDARD\",\n            \"createAt\": \"2022-06-21T02:20:20\",\n            \"imageUrl\": null,\n            \"gender\": {\n                \"id\": 2,\n                \"name\": \"Male\"\n            }\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/goals",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"goals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Goal",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\":3,\n        \"name\": \"Test Goal Edit\",\n        \"weight\": 200.0,\n        \"achieved\": false,\n        \"description\": null,\n        \"dateAchieved\": null,\n        \"createAt\": \"2022-06-21T02:20:20\",\n        \"user\": {\n            \"id\": 3,\n            \"firstName\": \"Geralt\",\n            \"lastName\": \"of Rivia\",\n            \"email\": \"grivia@witcher.game\",\n            \"height\": 74.0,\n            \"weight\": 200.0,\n            \"dateOfBirth\": \"1050-07-12T00:00:00\",\n            \"active\": true,\n            \"username\": \"geralt\",\n            \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n            \"role\": \"ROLE_STANDARD\",\n            \"createAt\": \"2022-06-21T02:20:20\",\n            \"imageUrl\": null,\n            \"gender\": {\n                \"id\": 2,\n                \"name\": \"Male\"\n            }\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/goals/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"goals",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Achieve Goal",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\":3,\n        \"name\": \"Test Goal Edit\",\n        \"weight\": 200.0,\n        \"achieved\": true,\n        \"description\": null,\n        \"dateAchieved\": null,\n        \"createAt\": \"2022-06-21T02:20:20\",\n        \"user\": {\n            \"id\": 3,\n            \"firstName\": \"Geralt\",\n            \"lastName\": \"of Rivia\",\n            \"email\": \"grivia@witcher.game\",\n            \"height\": 74.0,\n            \"weight\": 200.0,\n            \"dateOfBirth\": \"1050-07-12T00:00:00\",\n            \"active\": true,\n            \"username\": \"geralt\",\n            \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n            \"role\": \"ROLE_STANDARD\",\n            \"createAt\": \"2022-06-21T02:20:20\",\n            \"imageUrl\": null,\n            \"gender\": {\n                \"id\": 2,\n                \"name\": \"Male\"\n            }\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/goals/achieve/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"goals",
+								"achieve",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Goals by achieved",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\":3,\n        \"name\": \"Test Goal Edit\",\n        \"weight\": 200.0,\n        \"achieved\": true,\n        \"description\": null,\n        \"dateAchieved\": null,\n        \"createAt\": \"2022-06-21T02:20:20\",\n        \"user\": {\n            \"id\": 3,\n            \"firstName\": \"Geralt\",\n            \"lastName\": \"of Rivia\",\n            \"email\": \"grivia@witcher.game\",\n            \"height\": 74.0,\n            \"weight\": 200.0,\n            \"dateOfBirth\": \"1050-07-12T00:00:00\",\n            \"active\": true,\n            \"username\": \"geralt\",\n            \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n            \"role\": \"ROLE_STANDARD\",\n            \"createAt\": \"2022-06-21T02:20:20\",\n            \"imageUrl\": null,\n            \"gender\": {\n                \"id\": 2,\n                \"name\": \"Male\"\n            }\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/goals/filter/true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"goals",
+								"filter",
+								"true"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Goal",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/api/goals/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"goals",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TrackedDay/Meal/MealType",
+			"item": [
+				{
+					"name": "List day by user",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/api/trackedDay/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"trackedDay",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List day by Id",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/api/trackedDay/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"trackedDay",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Day",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 2,\n    \"day\": \"2022-06-23T22:18:33.09\",\n    \"user\": {\n        \"id\": 3,\n        \"firstName\": \"Geralt\",\n        \"lastName\": \"of Rivia\",\n        \"email\": \"grivia@witcher.game\",\n        \"height\": 74.0,\n        \"weight\": 200.0,\n        \"dateOfBirth\": \"1050-07-12T00:00:00\",\n        \"active\": true,\n        \"username\": \"geralt\",\n        \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n        \"role\": \"ROLE_STANDARD\",\n        \"createAt\": \"2022-06-21T02:20:20\",\n        \"imageUrl\": null,\n        \"gender\": {\n            \"id\": 2,\n            \"name\": \"Male\"\n        }\n    },\n    \"meals\": [\n        {\n            \"id\": 1,\n            \"mealType\": {\n                \"id\": 1,\n                \"name\": \"Breakfast\"\n            }\n        },\n        {\n            \"id\": 1,\n            \"mealType\": {\n                \"id\": 2,\n                \"name\": \"Lunch\"\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/trackedDay/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"trackedDay",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Day",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"day\": \"2022-06-26T00:00:00\",\n        \"meals\": [\n            {\n                \"id\": 1,\n                \"mealType\": {\n                    \"id\": 1,\n                    \"name\": \"Breakfast\"\n                }\n            }\n        ]\n    }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/trackedDay",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"trackedDay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find meal by day",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"day\": \"2022-06-26T00:00:00\",\n        \"meals\": [\n            {\n                \"id\": 1,\n                \"mealType\": {\n                    \"id\": 1,\n                    \"name\": \"Breakfast\"\n                }\n            }\n        ]\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/meals/byDay",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"meals",
+								"byDay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Meal",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"mealType\": {\n            \"id\": 2,\n            \"name\": \"Lunch\"\n        },\n        \"trackDay\":{\n            \"id\": 2\n        },\n        \"recipe\": {\n            \"id\": 1,\n            \"link\": null,\n            \"timeRequired\": 10,\n            \"recipeText\": \"2 Eggs, 1 cup frozen hash brown mix, 1 tbsp vegetable oil: Add oil and hashbrowns to pan, set to medium heat. Beat eggs, add seasoning to taste. When hashbrowns begin to brown add in eggs. Stir and serve when at desired firmness.\",\n            \"name\": \"Easy Morning Hash\",\n            \"protein\": 20.0,\n            \"carbs\": 10.0,\n            \"fats\": 9.0,\n            \"sodium\": 20,\n            \"sugar\": 0,\n            \"calories\": 300.0,\n            \"createdAt\": \"2022-06-21T02:20:20\",\n            \"updatedAt\": null,\n            \"imageUrl\": null,\n            \"user\": {\n                \"id\": 1,\n                \"firstName\": \"Katherine\",\n                \"lastName\": \"Remick\",\n                \"email\": \"remick.ka@gmail.com\",\n                \"height\": 67.0,\n                \"weight\": 150.0,\n                \"dateOfBirth\": \"1995-03-21T00:00:00\",\n                \"active\": true,\n                \"username\": \"kate\",\n                \"password\": \"$2a$10$BksOLP0ikdH575YcbXXmIOpDYCbuoULmmTLWkQ8galzRaiC3PWpgC\",\n                \"role\": \"ROLE_ADMIN\",\n                \"createAt\": \"2022-06-21T02:20:20\",\n                \"imageUrl\": null,\n                \"gender\": {\n                    \"id\": 1,\n                    \"name\": \"Female\"\n                }\n            }\n        }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8089/api/meals",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"meals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Meal",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/api/meals/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"meals",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Meal By id",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/api/meals/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"meals",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All mealtypes",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/api/mealTypes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"mealTypes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find mealtype by id",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "geralt",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8089/api/mealTypes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"api",
+								"mealTypes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "smoke test user by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"username\": \"shaun\",\n    \"password\": \"$2a$10$4SMKDcs9jT18dbFxqtIqDeLEynC7MUrCEUbv1a/bhO.x9an9WGPvm\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8089/api/blogs/Test%20Topic",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"blogs",
+						"Test%20Topic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"Kate\",\n    \"lastName\": \"TestFile\",\n    \"email\": \"remick.ka@gmail.com\",\n    \"height\": 67.0,\n    \"weight\": 150.0,\n    \"age\": 27,\n    \"active\": true,\n    \"username\": \"TEMP1\",\n    \"password\": \"password\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Female\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8089/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authorize",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "kate",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8089/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

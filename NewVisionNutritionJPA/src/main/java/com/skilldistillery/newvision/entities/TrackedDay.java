@@ -15,6 +15,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="tracked_day")
 public class TrackedDay {
@@ -26,10 +28,12 @@ public class TrackedDay {
 	@CreationTimestamp
 	private LocalDateTime day;
 	
+	@JsonIgnoreProperties({"trackedDays"})
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;
 	
+	@JsonIgnoreProperties({"recipe"})
 	@OneToMany(mappedBy="trackDay")
 	private List<Meal> meals;
 	

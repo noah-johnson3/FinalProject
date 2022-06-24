@@ -6,8 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.skilldistillery.newvision.entities.Blog;
 import com.skilldistillery.newvision.entities.Comment;
 import com.skilldistillery.newvision.entities.User;
+import com.skilldistillery.newvision.repositories.BlogRepository;
 import com.skilldistillery.newvision.repositories.CommentRepository;
 import com.skilldistillery.newvision.repositories.UserRepository;
 
@@ -19,10 +21,18 @@ public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private BlogRepository blogRepo;
 
 	@Override
 	public Comment createComment(Comment comm, String username) {
 		User user = userRepo.findByUsernameEquals(username);
+		System.out.println(comm.getBlog());
+		Optional<Blog> op = blogRepo.findById(comm.getBlog().getId());
+		if(op.isPresent()) {
+			comm.setBlog(op.get());
+		}
 		if (user != null) {
 			comm.setUser(user);
 			comm = commRepo.saveAndFlush(comm);
@@ -40,7 +50,7 @@ public class CommentServiceImpl implements CommentService {
 	public Comment updateComment(Comment comm, String username, int id) {
 		User user = userRepo.findByUsernameEquals(username);
 		Comment updatedComm = null;
-		if (comm.getUser() == user) {
+		if (comm.getUser().equals(user)) {
 			Optional<Comment> op = commRepo.findById(id);
 			if (op.isPresent()) {
 				updatedComm = op.get();

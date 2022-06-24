@@ -16,6 +16,16 @@ export class TopicService {
 
   constructor( private http: HttpClient, private auth: AuthService) { }
 
+  getHttpOptions() {
+    let options = {
+      headers: {
+        Authorization: 'Basic ' + this.auth.getCredentials(),
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    };
+    return options;
+  }
+
   listAllTopics(): Observable<Topic[]> {
     return this.http.get<Topic[]>(this.url).pipe(
       catchError((err: any) => {

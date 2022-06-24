@@ -16,6 +16,16 @@ export class CommentService {
 
   constructor( private http: HttpClient, private auth: AuthService) { }
 
+  getHttpOptions() {
+    let options = {
+      headers: {
+        Authorization: 'Basic ' + this.auth.getCredentials(),
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    };
+    return options;
+  }
+
   index(blogId: number): Observable<Comment[]> {
     return this.http.get<Comment[]>(this.url + "/" +blogId).pipe(
       catchError((err: any) => {

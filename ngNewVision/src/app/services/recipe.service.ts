@@ -17,6 +17,17 @@ export class RecipeService {
 
   constructor( private http: HttpClient, private auth: AuthService) { }
 
+  getHttpOptions() {
+    let options = {
+      headers: {
+        Authorization: 'Basic ' + this.auth.getCredentials(),
+        'X-Requested-With': 'XMLHttpRequest',
+      },
+    };
+    return options;
+  }
+
+
   listAllRecipes(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(this.url).pipe(
       catchError((err: any) => {

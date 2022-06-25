@@ -84,7 +84,7 @@ export class RecipeService {
 
 
   createRecipe(recipe: Recipe): Observable<Recipe> {
-    return this.http.post<Recipe>(this.url, recipe).pipe(
+    return this.http.post<Recipe>(this.url, recipe, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(
@@ -94,7 +94,7 @@ export class RecipeService {
     );
   }
   updateRecipe(recipe: Recipe): Observable<Recipe> {
-    return this.http.put<Recipe>(`${this.url}/${recipe.id}`, recipe).pipe(
+    return this.http.put<Recipe>(`${this.url}/${recipe.id}`, recipe, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(
@@ -104,7 +104,7 @@ export class RecipeService {
     );
   }
   addUser(recipe: Recipe, recipeId: number): Observable<Recipe> {
-    return this.http.put<Recipe>(`${this.url}` + "/adduser/" + recipeId , recipe).pipe(
+    return this.http.put<Recipe>(`${this.url}` + "/adduser/" + recipeId , recipe, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(
@@ -115,7 +115,7 @@ export class RecipeService {
   }
 
   destroyRecipe(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}/${id}`).pipe(
+    return this.http.delete<void>(`${this.url}/${id}`, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(

@@ -27,7 +27,7 @@ export class GoalService {
   }
 
   indexByUser(userId: number): Observable<Goal[]> {
-    return this.http.get<Goal[]>(this.url + "/" + userId).pipe(
+    return this.http.get<Goal[]>(this.url + "/" + userId, this.getHttpOptions()).pipe(
       catchError((err: any) => {
       console.log(err);
       return throwError(
@@ -37,7 +37,7 @@ export class GoalService {
     );
   }
   listGoalsByAchieved(achieved: boolean): Observable<Goal[]> {
-    return this.http.get<Goal[]>(this.url + "/filter/" + achieved ).pipe(
+    return this.http.get<Goal[]>(this.url + "/filter/" + achieved , this.getHttpOptions()).pipe(
       catchError((err: any) => {
       console.log(err);
       return throwError(
@@ -48,7 +48,7 @@ export class GoalService {
   }
 
   updateGoal(id: number, goal: Goal): Observable<Goal> {
-    return this.http.put<Goal>(this.url + "/" + id, goal).pipe(
+    return this.http.put<Goal>(this.url + "/" + id, goal, this.getHttpOptions()).pipe(
       catchError((err: any) => {
       console.log(err);
       return throwError(
@@ -59,7 +59,7 @@ export class GoalService {
   }
 
   achieveGoal(id: number, goal: Goal): Observable<Goal> {
-    return this.http.put<Goal>(this.url + "/achieve/" + id, goal).pipe(
+    return this.http.put<Goal>(this.url + "/achieve/" + id, goal, this.getHttpOptions()).pipe(
       catchError((err: any) => {
       console.log(err);
       return throwError(
@@ -71,7 +71,7 @@ export class GoalService {
 
 
   create(goal: Goal): Observable<Goal> {
-    return this.http.post<Goal>(this.url, goal).pipe(
+    return this.http.post<Goal>(this.url, goal, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(
@@ -81,7 +81,7 @@ export class GoalService {
     );
   }
   destroy(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}/${id}`).pipe(
+    return this.http.delete<void>(`${this.url}/${id}`, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(

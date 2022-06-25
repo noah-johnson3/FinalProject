@@ -70,7 +70,7 @@ export class TopicService {
 
 
   create(topic: Topic): Observable<Topic> {
-    return this.http.post<Topic>(this.url, topic).pipe(
+    return this.http.post<Topic>(this.url, topic, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(

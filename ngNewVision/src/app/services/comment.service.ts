@@ -37,7 +37,7 @@ export class CommentService {
     );
   }
   updateBlog(id: number, comment: Comment): Observable<Comment> {
-    return this.http.put<Comment>(this.url + "/" + id, comment).pipe(
+    return this.http.put<Comment>(this.url + "/" + id, comment, this.getHttpOptions()).pipe(
       catchError((err: any) => {
       console.log(err);
       return throwError(
@@ -49,7 +49,7 @@ export class CommentService {
 
 
   create(comment: Comment): Observable<Comment> {
-    return this.http.post<Comment>(this.url, comment).pipe(
+    return this.http.post<Comment>(this.url, comment, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(
@@ -59,7 +59,7 @@ export class CommentService {
     );
   }
   destroy(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}/${id}`).pipe(
+    return this.http.delete<void>(`${this.url}/${id}`, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(

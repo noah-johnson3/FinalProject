@@ -26,6 +26,7 @@ export class BlogComponent implements OnInit {
 
 
 
+
   constructor(private blogServ: BlogService, private commentServ: CommentService,
     private topicServ: TopicService, private auth: AuthService, private userServ: UserService) { }
 
@@ -33,7 +34,7 @@ export class BlogComponent implements OnInit {
     this.indexBlogs();
     this.indexTopics();
     this.commentsByBlog();
-    this.checkLogin();
+    this.getUser();
 
   }
   //********************** Page Dynamics ********************************** */
@@ -95,17 +96,7 @@ export class BlogComponent implements OnInit {
     }
   }
 
-  checkLogin(){
-    this.userServ.getLoggedInUser().subscribe({
-      next: (user) => {
-        this.loggedInUser = user;
-      },
-      error: (problem) => {
-        console.error('HttpComponent.loadProducts(): error loading products:');
-        console.error(problem);
-      }
-    });
-  }
+
 
   commentsByBlog(): void{
     if(this.displayBlog){
@@ -121,6 +112,16 @@ export class BlogComponent implements OnInit {
       });
     }
   }
-
+  getUser(){
+    this.userServ.getLoggedInUser().subscribe({
+      next: (user) => {
+        this.loggedInUser = user;
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
 
 }

@@ -57,7 +57,7 @@ export class BlogService {
     );
   }
   updateBlog(id: number, blog: Blog): Observable<Blog> {
-    return this.http.put<Blog>(this.url + "/" + id, blog).pipe(
+    return this.http.put<Blog>(this.url + "/" + id, blog, this.getHttpOptions()).pipe(
       catchError((err: any) => {
       console.log(err);
       return throwError(
@@ -69,7 +69,7 @@ export class BlogService {
 
 
   create(blog: Blog): Observable<Blog> {
-    return this.http.post<Blog>(this.url, blog).pipe(
+    return this.http.post<Blog>(this.url, blog, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(
@@ -79,7 +79,7 @@ export class BlogService {
     );
   }
   destroy(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}/${id}`).pipe(
+    return this.http.delete<void>(`${this.url}/${id}`, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(

@@ -28,7 +28,7 @@ export class MealService {
   }
 
   indexByDay(day: TrackedDay): Observable<Meal[]> {
-    return this.http.get<Meal[]>(this.url + "/byDay").pipe(
+    return this.http.get<Meal[]>(this.url + "/byDay", this.getHttpOptions()).pipe(
       catchError((err: any) => {
       console.log(err);
       return throwError(
@@ -39,7 +39,7 @@ export class MealService {
   }
 
   findMealById(id: number): Observable<Meal> {
-    return this.http.get<Meal>(this.url + "/" + id ).pipe(
+    return this.http.get<Meal>(this.url + "/" + id , this.getHttpOptions()).pipe(
       catchError((err: any) => {
       console.log(err);
       return throwError(
@@ -52,7 +52,7 @@ export class MealService {
 
 
   create(meal: Meal): Observable<Meal> {
-    return this.http.post<Meal>(this.url, meal).pipe(
+    return this.http.post<Meal>(this.url, meal, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(
@@ -62,7 +62,7 @@ export class MealService {
     );
   }
   destroy(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}/${id}`).pipe(
+    return this.http.delete<void>(`${this.url}/${id}`, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(

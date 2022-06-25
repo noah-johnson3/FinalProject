@@ -64,7 +64,7 @@ export class IngredientService {
 
 
   create(ingredient: Ingredient): Observable<Ingredient> {
-    return this.http.post<Ingredient>(this.url, ingredient).pipe(
+    return this.http.post<Ingredient>(this.url, ingredient, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(

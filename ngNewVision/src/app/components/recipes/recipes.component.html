@@ -6,8 +6,10 @@
 
       </div>
       <div class="row">
-        <h3>Recipe seach options</h3>
-
+        <form name="searchForm">
+          <input type="text" name="ingredientName" placeholder="Egg, Potato, Chicken.." [(ngModel)]="ingredientName">
+          <button (click)="getRecipesByIngredient(ingredientName)">Search By Ingredient</button>
+        </form>
       </div>
       <div class="row">
         <img src="https://farm8.staticflickr.com/7037/6802898136_932e900b5e_z.jpg"
@@ -17,11 +19,51 @@
     </div>
 
     <div class="col-sm-8">
-      <div class="row" *ngFor="let recipeArray of arrayOfRecipeArray">
-        <div class="col-sm-4" *ngFor="let recipe of recipeArray">
-            <h3>{{recipe.name}}</h3>
-            <h3>{{recipe.imageUrl}}</h3>
+      <div *ngIf="!selectedRecipe">
+
+        <div *ngFor="let recipeArray of arrayOfRecipeArray">
+          <div class="row">
+            <div class="col-sm-4 single-recipe" *ngFor="let recipe of recipeArray" style="width: 400px">
+              <h3 (click)="selectRecipe(recipe)">{{recipe.name}}</h3>
+              <img src="{{recipe.imageUrl}}" class="img-fluid" style="height: 350px">
+            </div>
+          </div>
         </div>
+      </div>
+      <div *ngIf="selectedRecipe">
+          <table>
+
+            <thead>
+              <tr>
+
+                <th>Recipe Name</th>
+                <th>Time Required</th>
+                <th>Calories</th>
+                <th>Protein</th>
+                <th>Carbs</th>
+                <th>Fats</th>
+                <th>Sodium</th>
+                <th>Sugar</th>
+              </tr>
+              </thead>
+            <tbody>
+              <tr>
+              <td>{{selectedRecipe.name}}</td>
+              <td>{{selectedRecipe.timeRequired}} mintues</td>
+              <td>{{selectedRecipe.calories}}</td>
+              <td>{{selectedRecipe.protein}}g</td>
+              <td>{{selectedRecipe.carbs}}g</td>
+              <td>{{selectedRecipe.fats}}g</td>
+              <td>{{selectedRecipe.sodium}}mg</td>
+              <td>{{selectedRecipe.sugar}}g</td>
+            </tr>
+            <tr>
+              <td>By: {{selectedRecipe.user?.username}}</td>
+              <td class="recipe-text" colspan="7">{{selectedRecipe.recipeText}}</td>
+            </tr>
+            </tbody>
+          </table>
+        <button (click)="cancelSelect()">Back</button>
       </div>
     </div>
 

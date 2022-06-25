@@ -63,7 +63,7 @@ export class RecipeService {
       catchError((err: any) => {
       console.log(err);
       return throwError(
-        () => new Error(' error finding all topics by keyword: ' + err)
+        () => new Error(' error finding all recipes by ingredient: ' + err)
       );
       })
     );

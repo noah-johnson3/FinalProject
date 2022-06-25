@@ -38,8 +38,8 @@ export class RecipeService {
       })
     );
   }
-  findRecipeByAuthor(author: string): Observable<Topic[]> {
-    return this.http.get<Topic[]>(this.url + "/author/" + author).pipe(
+  findRecipeByAuthor(author: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(this.url + "/author/" + author).pipe(
       catchError((err: any) => {
       console.log(err);
       return throwError(

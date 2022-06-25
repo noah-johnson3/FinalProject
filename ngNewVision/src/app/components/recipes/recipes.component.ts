@@ -15,6 +15,9 @@ export class RecipesComponent implements OnInit {
   selectedRecipe: Recipe | null = null;
   ingredientName: string = '';
   time: number | null = null;
+  authorName: string = '';
+  newRecipe: Recipe | null = null;
+  updating: boolean = false;
   //*************************** Setup ******************** */
 
   constructor(private recipeServ: RecipeService) { }
@@ -51,6 +54,15 @@ export class RecipesComponent implements OnInit {
   }
   resetTime(){
     this.time = null;
+  }
+  creatingRecipe(){
+    this.newRecipe = new Recipe();
+  }
+  cancelCreate(){
+    this.newRecipe = null;
+  }
+  updateSelect(){
+    this.updating = true;
   }
 
 
@@ -98,5 +110,46 @@ export class RecipesComponent implements OnInit {
       });
     }
   }
+  getRecipesByAuthor(authorName: string){
+    if(authorName){
+      this.recipeServ.findRecipeByAuthor(authorName).subscribe({
+        next: (recipeArray) => {
+          this.allRecipes = recipeArray;
+          this.sortRecipes();
+        },
+        error: (problem) => {
+          console.error('getRecipes(): error loading recipe list by ingredient');
+          console.error(problem);
+        }
+      });
+    }
+  }
+  createRecipe(recipe: Recipe){
+    this.recipeServ.createRecipe(recipe).subscribe({
+      next: (recipeArray) => {
+        this.newRecipe = null;
+        this.getRecipes();
+      },
+      error: (problem) => {
+        console.error('error creating recipe: ');
+        console.error(problem);
+      }
+    });
+  }
+  updateRecipe(recipe: Recipe){
+    this.recipeServ.updateRecipe(recipe).subscribe({
+      next: (recipeArray) => {
+        this.updating = false;
+        this.getRecipes();
+        this.selectedRecipe = null;
+      },
+      error: (problem) => {
+        console.error('error updating recipe: ');
+        console.error(problem);
+      }
+    });
+  }
+  deleteRecipe(recipeId: number){
 
+  }
 }

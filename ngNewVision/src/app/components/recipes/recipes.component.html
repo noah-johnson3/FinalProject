@@ -15,10 +15,14 @@
 
       </div>
     </div>
+
     <div class="col-sm-8">
-      <p> Recipe text gLorem ipsum dolor sit amet, consectetur adipisicing elit.
-         Expedita eaque optio quam eos, dolores est ea facere,
-         modi ut perferendis amet ipsam officiis nam laborum excepturi laboriosam sit voluptas aspernatur.</p>
+      <div class="row" *ngFor="let recipeArray of arrayOfRecipeArray">
+        <div class="col-sm-4" *ngFor="let recipe of recipeArray">
+            <h3>{{recipe.name}}</h3>
+            <h3>{{recipe.imageUrl}}</h3>
+        </div>
+      </div>
     </div>
 
 

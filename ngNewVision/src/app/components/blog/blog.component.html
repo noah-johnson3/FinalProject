@@ -1,1 +1,47 @@
-<p>blog works!</p>
+<main class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="row">
+        <h3>{{displayBlog?.title}}</h3>
+        <h3>By: <span *ngIf="!displayBlog?.user?.publicProfile">{{displayBlog?.user?.username}}</span ><span *ngIf="displayBlog?.user?.publicProfile" >{{displayBlog?.user?.firstName}} {{displayBlog?.user?.lastName}}</span></h3>
+        <h4>Covered Topics:</h4>
+        <ul>
+          <li (click)="searchByTopic(topic)" *ngFor="let topic of displayBlog?.topics" > {{topic.name}}</li>
+        </ul>
+
+      </div>
+      <div class="row">
+        <h3>Blog seach options</h3>
+
+        <form>
+          <button (click)="searchByTopic(searchTopic)">Search</button>
+          <select name="topic" [(ngModel)]="searchTopic">
+            <option *ngFor="let topic of topics" [ngValue]="topic">{{topic.name}}</option>
+          </select><br>
+          <button (click)="searchByAuthor(author)">Author Search:</button><br>
+          <input type="text" name="author" [(ngModel)]="author">
+        </form>
+      </div>
+      <div class="row">
+        <p (click)="selectBlog(blog)" *ngFor="let blog of blogs">{{blog.title}}</p>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <p>{{displayBlog?.content}}</p>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <div *ngFor="let comment of comments" class="comment row">
+      <div class="col-sm-2">{{comment.user?.username}}</div>
+      <div class="col-sm-10">{{comment.content}}</div>
+      <button *ngIf="comment.user == loggedInUser ">Edit</button>
+    </div>
+  </div>
+  <div class="row">
+
+  </div>
+
+
+</main>

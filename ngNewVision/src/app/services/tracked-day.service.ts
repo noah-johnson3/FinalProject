@@ -27,7 +27,7 @@ export class TrackedDayService {
   }
 
   indexByUser(): Observable<TrackedDay[]> {
-    return this.http.get<TrackedDay[]>(this.url + "/user").pipe(
+    return this.http.get<TrackedDay[]>(this.url + "/user", this.getHttpOptions()).pipe(
       catchError((err: any) => {
       console.log(err);
       return throwError(
@@ -37,7 +37,7 @@ export class TrackedDayService {
     );
   }
   findDayById(id: number): Observable<TrackedDay[]> {
-    return this.http.get<TrackedDay[]>(this.url + "/" + id ).pipe(
+    return this.http.get<TrackedDay[]>(this.url + "/" + id , this.getHttpOptions()).pipe(
       catchError((err: any) => {
       console.log(err);
       return throwError(
@@ -48,7 +48,7 @@ export class TrackedDayService {
   }
 
   updateDay(id: number, day: TrackedDay): Observable<TrackedDay> {
-    return this.http.put<TrackedDay>(this.url + "/" + id, day).pipe(
+    return this.http.put<TrackedDay>(this.url + "/" + id, day , this.getHttpOptions()).pipe(
       catchError((err: any) => {
       console.log(err);
       return throwError(
@@ -60,7 +60,7 @@ export class TrackedDayService {
 
 
   create(day: TrackedDay): Observable<TrackedDay> {
-    return this.http.post<TrackedDay>(this.url, day).pipe(
+    return this.http.post<TrackedDay>(this.url, day , this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(

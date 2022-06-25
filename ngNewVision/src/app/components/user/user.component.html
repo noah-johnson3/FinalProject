@@ -1,1 +1,75 @@
-<p>user works!</p>
+<main class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="row">
+        <h3>Placeholder</h3>
+
+      </div>
+      <div class="row">
+        <img src="https://farm8.staticflickr.com/7037/6802898136_932e900b5e_z.jpg"
+        style="height:250px; width:350px" />
+
+
+      </div>
+      <div class="row">
+        <h3>{{loggedInUser?.username}}</h3>
+        <h3>{{loggedInUser?.email}}</h3>
+        <h3>{{loggedInUser?.firstName}}</h3>
+        <h3>{{loggedInUser?.lastName}}</h3>
+        <button (click)="showEdit()">Edit User Details</button>
+
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="tracker">
+
+        <div *ngFor="let day of trackedDays" class="row">
+          <button>{{day.day}}  </button>
+        </div>
+
+
+      </div>
+      <div class="editUser" *ngIf="editing && editUser">
+        <form name="login">
+          <label for="firstName">First Name</label>
+          <input class="col form-control" type="text" name="firstName" [(ngModel)]="editUser.firstName" placeholder="First Name" /><br>
+          <label for="lastName">Last Name</label>
+          <input class="col form-control" type="text" name="lastName" [(ngModel)]="editUser.lastName" placeholder="Last Name"/><br>
+          <label for="email">Email Address</label>
+          <input class="col form-control" type="text" name="email" [(ngModel)]="editUser.email" placeholder="Email Address"/><br>
+          <label for="height">Height in Inches</label>
+          <input class="col form-control" type="number" name="height" [(ngModel)]="editUser.height" placeholder="Height in Inches"/><br>
+          <label for="weight">Weight in lbs</label>
+          <input class="col form-control" type="number" name="weight" [(ngModel)]="editUser.weight" placeholder="Weight in lbs" /><br>
+          <label for="dateOfBirth">Date of Birth</label>
+          <input class="col form-control" type="datetime-local" name="dateOfBirth" [(ngModel)]="editUser.dateOfBirth" /><br>
+          <label for="gender">Gender</label>
+          <select name="gender" [(ngModel)]="editUser.gender">
+            <option *ngFor="let gender of genders" [ngValue]="gender">{{gender.name}}</option>
+          </select><br>
+          <label>How would you describe your activity level right now?</label>
+          <select name="activityLevel" [(ngModel)]="editUser.activityLevel">
+            <option  value="1">Sedentary (little to no exercise, desk job)</option>
+            <option  value="2">Light Activity (light exercise/sports 1-3 days/week)</option>
+            <option  value="3">Moderate Activity (moderate exercise/ sports 6-7 days/week)</option>
+            <option  value="4">Very Active (hard exercise every day, or exercising twice/day)</option>
+            <option  value="5">Extra Active (hard exercise 2 or more times per day)</option>
+          </select><br>
+          <label>Make profile public? (Other users will see your real name for blog posts and recipes that you create)</label>
+          <input type="checkbox" name="publicProfile" [(ngModel)]="editUser.publicProfile"/><br>
+          <button (click)="updateUser(editUser)">Update</button><button (click)="cancelEdit()">Cancel</button>
+        </form>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="row">
+    <h5>Height: {{loggedInUser?.height}}" Weight: {{loggedInUser?.weight}}lbs Age: {{age}}  BMR: {{calculateMetabolicRate()}} AMR: {{amr}}</h5>
+  </div>
+  <div class="row">
+
+  </div>
+
+
+</main>

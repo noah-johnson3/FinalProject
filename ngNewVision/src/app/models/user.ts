@@ -23,6 +23,9 @@ export class User {
   trackedDays: TrackedDay[];
   recipes: Recipe[];
   createdRecipes: Recipe[];
+  updatedAt: Date | null;
+  publicProfile: boolean;
+  activityLevel: number;
 
   constructor(
     id: number | null = 0,
@@ -40,7 +43,10 @@ export class User {
   blogs: Blog[] = [],
   trackedDays: TrackedDay[] = [],
   recipes: Recipe[] = [],
-  createdRecipes: Recipe[] = []
+  createdRecipes: Recipe[] = [],
+  updatedAt: Date | null = null,
+  publicProfile: boolean = false,
+  activityLevel: number = 1
   ){
     this.id = id;
     this.username = username;
@@ -58,6 +64,9 @@ export class User {
     this.trackedDays = trackedDays;
     this.recipes = recipes;
     this.createdRecipes = createdRecipes;
+    this.updatedAt = updatedAt;
+    this.publicProfile = publicProfile;
+    this.activityLevel = activityLevel;
   }
 
 }

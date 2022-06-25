@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Blog {
@@ -41,7 +41,7 @@ public class Blog {
 	@ManyToOne
 	private User user;
 
-	@JsonIgnore
+	@JsonIgnoreProperties({"blogs"})
 	@ManyToMany
 	@JoinTable(name = "blog_topic", joinColumns = @JoinColumn(name = "blog_id"), inverseJoinColumns = @JoinColumn(name = "topic_id"))
 	private List<Topic> topics;

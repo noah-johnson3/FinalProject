@@ -41,6 +41,28 @@ export class AuthService {
      })
    );
  }
+  getLoggedInUser(){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: `Basic ${this.getCredentials}`,
+        'X-Requested-With': 'XMLHttpRequest',
+      }),
+    };
+    return this.http.get<User>(this.url + 'authenticate', httpOptions).pipe(
+      tap((loggedInUser) => {
+        // While credentials are stored in browser localStorage, we consider
+        // ourselves logged in.
+        return loggedInUser;
+      }),
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () => new Error('AuthService.login(): error logging in user.')
+        );
+      })
+    );
+  }
+
 
  register(user: User): Observable<User>  {
    // Create POST request to register a new account

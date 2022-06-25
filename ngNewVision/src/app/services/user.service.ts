@@ -1,4 +1,5 @@
-import { HttpClient } from '@angular/common/http';
+import { GenderService } from './gender.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -27,6 +28,27 @@ export class UserService {
     return options;
   }
 
+  getLoggedInUser():Observable<User>{
+
+      return this.http.get<User>(this.url + "/loggedIn", this.getHttpOptions()).pipe(
+        catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () => new Error(' error finding all topics : ' + err)
+        );
+        })
+      );
+  }
+  updateUser(id: number, user: User):Observable<User>{
+      return this.http.put<User>(this.url + "/" + id, user ,this.getHttpOptions()).pipe(
+        catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () => new Error(' error finding all topics : ' + err)
+        );
+        })
+      );
+  }
 
 
 }

@@ -1,3 +1,4 @@
+import { GenderService } from './../../services/gender.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Gender } from 'src/app/models/gender';
@@ -13,9 +14,10 @@ export class RegisterComponent implements OnInit {
   newUser: User = new User();
   genders: Gender[] = [];
 
-  constructor(private authServ: AuthService, private router: Router) { }
+  constructor(private authServ: AuthService, private router: Router, private genderServ: GenderService) { }
 
   ngOnInit(): void {
+    this.indexGender();
   }
 
 
@@ -36,4 +38,16 @@ export class RegisterComponent implements OnInit {
       }
     });
   }
+  indexGender(): void{
+    this.genderServ.index().subscribe({
+      next: (genders) => {
+       this.genders = genders;
+      },
+      error: (problem) => {
+        console.error('HttpComponent.reload(): error registering');
+        console.error(problem);
+      }
+    });
+  }
+
 }

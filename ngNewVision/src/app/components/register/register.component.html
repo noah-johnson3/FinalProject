@@ -18,11 +18,21 @@
         <label for="weight">Weight in lbs</label>
         <input class="col form-control" type="number" name="weight" [(ngModel)]="newUser.weight" placeholder="Weight in lbs" /><br>
         <label for="dateOfBirth">Date of Birth</label>
-        <input class="col form-control" type="date" name="dateOfBirth" [(ngModel)]="newUser.dateOfBirth" /><br>
+        <input class="col form-control" type="datetime-local" name="dateOfBirth" [(ngModel)]="newUser.dateOfBirth" /><br>
         <label for="gender">Gender</label>
         <select name="gender" [(ngModel)]="newUser.gender">
           <option *ngFor="let gender of genders" [ngValue]="gender">{{gender.name}}</option>
         </select><br>
+        <label>How would you describe your activity level right now?</label>
+        <select name="activityLevel" [(ngModel)]="newUser.activityLevel">
+          <option  value="1">Sedentary (little to no exercise, desk job)</option>
+          <option  value="2">Light Activity (light exercise/sports 1-3 days/week)</option>
+          <option  value="3">Moderate Activity (moderate exercise/ sports 6-7 days/week)</option>
+          <option  value="4">Very Active (hard exercise every day, or exercising twice/day)</option>
+          <option  value="5">Extra Active (hard exercise 2 or more times per day)</option>
+        </select><br>
+        <label>Make profile public? (Other users will see your real name for blog posts and recipes that you create)</label>
+        <input type="checkbox" name="publicProfile" [(ngModel)]="newUser.publicProfile"/><br>
         <button (click)="register(newUser)">Register</button>
       </form>
     </div>

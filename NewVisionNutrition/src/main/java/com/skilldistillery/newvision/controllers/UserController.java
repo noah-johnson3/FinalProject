@@ -27,11 +27,11 @@ public class UserController {
 		private UserService userService;
 		
 		
-		@GetMapping("users/{id}")
-		public User findUserById(HttpServletResponse res, @PathVariable("id")int id) {
+		@GetMapping("users/loggedIn")
+		public User findUserById(HttpServletResponse res, Principal principal) {
 			User user = null;
 			try {
-				user = userService.getUserById(id);
+				user = userService.findByUsernameEquals(principal.getName());
 			}catch(Exception e) {
 				e.printStackTrace();
 				res.setStatus(400);

@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -49,6 +50,16 @@ public class User {
 	private String password;
 
 	private String role;
+	
+	@Column(name="public_profile")
+	private boolean publicProfile;
+	
+	@Column(name="activity_level")
+	private int activityLevel;
+	
+	@UpdateTimestamp
+	@Column(name="updated_at")
+	private LocalDateTime updatedAt;
 
 	@CreationTimestamp
 	@Column(name = "created_at")
@@ -129,6 +140,31 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+	
+	
+	public boolean isPublicProfile() {
+		return publicProfile;
+	}
+
+	public void setPublicProfile(boolean publicProfile) {
+		this.publicProfile = publicProfile;
+	}
+
+	public int getActivityLevel() {
+		return activityLevel;
+	}
+
+	public void setActivityLevel(int activityLevel) {
+		this.activityLevel = activityLevel;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	public List<Goal> getGoals() {

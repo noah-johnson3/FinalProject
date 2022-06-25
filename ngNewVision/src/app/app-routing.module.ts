@@ -14,12 +14,12 @@ const routes: Routes = [
   { path: 'recipes', component: RecipesComponent },
   { path: 'user', component: UserComponent },
   {path: 'register' , component: RegisterComponent},
-  {path: 'login' , component: LoginComponent}
+  {path: 'login' , component: LoginComponent},
   //{path: '**' , component: NotFoundComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [RouterModule.forRoot(routes, {useHash: true, onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

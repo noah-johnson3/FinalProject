@@ -2,13 +2,18 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="row">
-        <h3>Recipe Name</h3>
+        <a class="nav-link"><span (click)="getRecipes()">Recipes</span>
+          <span *ngIf="ingredientName" (click)="getRecipesByIngredient(ingredientName)"> > {{ingredientName}}</span>
+          <span *ngIf="selectedRecipe"> > {{selectedRecipe?.name}}</span>
+        </a>
 
       </div>
       <div class="row">
         <form name="searchForm">
           <input type="text" name="ingredientName" placeholder="Egg, Potato, Chicken.." [(ngModel)]="ingredientName">
-          <button (click)="getRecipesByIngredient(ingredientName)">Search By Ingredient</button>
+          <button (click)="getRecipesByIngredient(ingredientName)">Search By Ingredient</button><br>
+          <input type="number" min=0  name="time" placeholder="10" [(ngModel)]="time">
+          <button (click)="getRecipesByTime(time)">Search By Time</button>
         </form>
       </div>
       <div class="row">

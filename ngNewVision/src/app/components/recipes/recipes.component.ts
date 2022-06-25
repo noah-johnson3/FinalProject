@@ -14,6 +14,7 @@ export class RecipesComponent implements OnInit {
   arrayOfRecipeArray: Recipe [] [] = [];
   selectedRecipe: Recipe | null = null;
   ingredientName: string = '';
+  time: number | null = null;
   //*************************** Setup ******************** */
 
   constructor(private recipeServ: RecipeService) { }
@@ -25,6 +26,7 @@ export class RecipesComponent implements OnInit {
 
   //*************************** Page Dynamics ******************** */
   sortRecipes(){
+    this.arrayOfRecipeArray = [];
     while(this.allRecipes.length > 0){
       let tempArray: Recipe[] = [];
       for(let x = 0; x < 3 && this.allRecipes.length > 0; x++){
@@ -44,6 +46,12 @@ export class RecipesComponent implements OnInit {
   cancelSelect(){
     this.selectedRecipe = null;
   }
+  setTime(time : number){
+    this.time = time;
+  }
+  resetTime(){
+    this.time = null;
+  }
 
 
 
@@ -54,6 +62,8 @@ export class RecipesComponent implements OnInit {
       next: (recipeArray) => {
         this.allRecipes = recipeArray;
         this.sortRecipes();
+        this.ingredientName = '';
+        this.time = null;
       },
       error: (problem) => {
         console.error('getRecipes(): error loading recipe list:');
@@ -72,6 +82,21 @@ export class RecipesComponent implements OnInit {
         console.error(problem);
       }
     });
+  }
+  getRecipesByTime(time: number | null){
+    if(time){
+
+      this.recipeServ.findRecipesByTime(time).subscribe({
+        next: (recipeArray) => {
+          this.allRecipes = recipeArray;
+          this.sortRecipes();
+        },
+        error: (problem) => {
+          console.error('getRecipes(): error loading recipe list by ingredient');
+          console.error(problem);
+        }
+      });
+    }
   }
 
 }

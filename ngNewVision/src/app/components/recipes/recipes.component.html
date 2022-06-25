@@ -23,6 +23,10 @@
         style="height:250px; width:350px" />
 
       </div>
+      <div class="row">
+        <h1>Recipe add/ edit options</h1>
+        <button (click)="creatingRecipe()">Create Recipe</button>
+      </div>
     </div>
 
     <div class="col-sm-8">
@@ -73,6 +77,7 @@
         <button (click)="cancelSelect()">Back</button>
         <button (click)="updateSelect()">Update</button>
         <button (click)="deleteSelect(selectedRecipe.id)">Delete</button>
+        <button (click)="addSelect(selectedRecipe)">Favorite</button>
       </div>
       <div *ngIf="newRecipe">
         <form name="newRecipe">
@@ -120,8 +125,7 @@
 
   </div>
   <div class="row">
-    <h1>Recipe add/ edit options</h1>
-    <button (click)="creatingRecipe()">Create Recipe</button>
+
   </div>
   <div class="row">
 

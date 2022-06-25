@@ -149,7 +149,30 @@ export class RecipesComponent implements OnInit {
       }
     });
   }
-  deleteRecipe(recipeId: number){
+  addSelect(recipe: Recipe){
+    this.recipeServ.addUser(recipe, recipe.id).subscribe({
+      next: (recipeArray) => {
+        this.updating = false;
+        this.getRecipes();
+        this.selectedRecipe = null;
+      },
+      error: (problem) => {
+        console.error('error updating recipe: ');
+        console.error(problem);
+      }
+    });
+  }
+  deleteSelect(recipeId: number){
+    this.recipeServ.destroyRecipe(recipeId).subscribe({
+      next: (recipeArray) => {
+        this.selectedRecipe = null;
+        this.getRecipes();
+      },
+      error: (problem) => {
+        console.error('error updating recipe: ');
+        console.error(problem);
+      }
+    });
 
   }
 }

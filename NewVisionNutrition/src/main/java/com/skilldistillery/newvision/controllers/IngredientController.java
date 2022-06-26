@@ -96,7 +96,7 @@ public class IngredientController {
 		return ing;
 	}
 	
-	@PostMapping("Indredients")
+	@PostMapping("ingredients")
 	public Ingredient createIng(HttpServletResponse res, @RequestBody Ingredient ing, Principal principal) {
 
 		try {

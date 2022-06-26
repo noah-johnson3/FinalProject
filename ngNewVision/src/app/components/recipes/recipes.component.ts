@@ -24,6 +24,7 @@ export class RecipesComponent implements OnInit {
   newRecipeIngredients : Ingredient [] = [];
   numRecipeIngredients : number [] = [];
   ingredientToBeAdded: Ingredient | null = null;
+  newIngredient: Ingredient = new Ingredient();
 
   //*************************** Setup ******************** */
 
@@ -229,6 +230,18 @@ export class RecipesComponent implements OnInit {
     this.ingServ.index().subscribe({
       next: (ingredientArray) => {
         this.allIngredients = ingredientArray;
+      },
+      error: (problem) => {
+        console.error('error updating recipe: ');
+        console.error(problem);
+      }
+    });
+  }
+  createIngredient(ingredient: Ingredient){
+    this.ingServ.create(ingredient).subscribe({
+      next: (ingredientArray) => {
+        this.newIngredient = new Ingredient();
+        this.getAllIngredients();
       },
       error: (problem) => {
         console.error('error updating recipe: ');

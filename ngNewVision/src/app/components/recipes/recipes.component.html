@@ -23,8 +23,13 @@
 
       </div>
       <div class="row">
-        <h1>Recipe add/ edit options</h1>
+        <h1>Have something you want to add?</h1>
         <button (click)="creatingRecipe()">Create Recipe</button>
+      </div>
+      <div class="row">
+        <h1>Your ingredient not in our available list?</h1>
+        <input type="text" name="newIngredient" [(ngModel)]="newIngredient.name">
+        <button (click)="createIngredient(newIngredient)">Create Ingredient</button>
       </div>
     </div>
 

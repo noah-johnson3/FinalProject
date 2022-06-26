@@ -12,15 +12,14 @@
         <form name="searchForm">
           <input type="text" name="ingredientName" placeholder="Egg, Potato, Chicken.." [(ngModel)]="ingredientName">
           <button (click)="getRecipesByIngredient(ingredientName)">Search By Ingredient</button><br>
-          <input type="number" min=0  name="time" placeholder="10" [(ngModel)]="time">
+          <input type="number" min=0 name="time" placeholder="10" [(ngModel)]="time">
           <button (click)="getRecipesByTime(time)">Search By Time</button><br>
           <input type="text" name="authorName" placeholder="Author's Name" [(ngModel)]="authorName">
           <button (click)="getRecipesByAuthor(authorName)">Search By Author</button>
         </form>
       </div>
       <div class="row">
-        <img src="https://farm8.staticflickr.com/7037/6802898136_932e900b5e_z.jpg"
-        style="height:250px; width:350px" />
+        <img src="https://farm8.staticflickr.com/7037/6802898136_932e900b5e_z.jpg" style="height:250px; width:350px" />
 
       </div>
       <div class="row">
@@ -42,8 +41,8 @@
         </div>
       </div>
       <div *ngIf="selectedRecipe">
-          <table>
-
+        <form>
+          <table style="max-width:1300px;" class="table" >
             <thead>
               <tr>
 
@@ -56,32 +55,88 @@
                 <th>Sodium</th>
                 <th>Sugar</th>
               </tr>
-              </thead>
+            </thead>
             <tbody>
               <tr>
-              <td>{{selectedRecipe.name}}</td>
-              <td>{{selectedRecipe.timeRequired}} mintues</td>
-              <td>{{selectedRecipe.calories}}</td>
-              <td>{{selectedRecipe.protein}}g</td>
-              <td>{{selectedRecipe.carbs}}g</td>
-              <td>{{selectedRecipe.fats}}g</td>
-              <td>{{selectedRecipe.sodium}}mg</td>
-              <td>{{selectedRecipe.sugar}}g</td>
-            </tr>
-            <tr>
-              <td>By: {{selectedRecipe.user?.username}}</td>
-              <td class="recipe-text" colspan="7">{{selectedRecipe.recipeText}}</td>
-            </tr>
+                <td>{{selectedRecipe.name}}</td>
+                <td>{{selectedRecipe.timeRequired}} mintues</td>
+                <td>{{selectedRecipe.calories}}</td>
+                <td>{{selectedRecipe.protein}}g</td>
+                <td>{{selectedRecipe.carbs}}g</td>
+                <td>{{selectedRecipe.fats}}g</td>
+                <td>{{selectedRecipe.sodium}}mg</td>
+                <td>{{selectedRecipe.sugar}}g</td>
+              </tr>
+              <tr>
+                <td>Ingredients:</td>
+                <td colspan="7"><span *ngFor="let ing of selectedRecipe.ingredients">{{ing.name}}, </span></td>
+              </tr>
+              <tr>
+                <td>By: {{selectedRecipe.user?.username}}</td>
+                <td class="recipe-text" colspan="7">{{selectedRecipe.recipeText}}</td>
+              </tr>
             </tbody>
           </table>
-        <button (click)="cancelSelect()">Back</button>
-        <button (click)="updateSelect()">Update</button>
-        <button (click)="deleteSelect(selectedRecipe.id)">Delete</button>
-        <button (click)="addSelect(selectedRecipe)">Favorite</button>
+          <button (click)="cancelSelect()">Back</button>
+          <button (click)="updateSelect()">Update</button>
+          <button (click)="deleteSelect(selectedRecipe.id)">Delete</button>
+          <button (click)="addSelect(selectedRecipe)">Favorite</button>
+          </form>
       </div>
+
+      <div id="updateSection" *ngIf="updating && selectedRecipe">
+        <form>
+          <table style="max-width:1300px;" class="table" >
+            <thead>
+              <tr>
+                <th>Recipe Name</th>
+                <th>Time Required</th>
+                <th>Calories</th>
+                <th>Protein(g)</th>
+                <th>Carbs(g)</th>
+                <th>Fats(g)</th>
+                <th>Sodium(mg)</th>
+                <th>Sugar(g)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="text" name="name" [(ngModel)]="selectedRecipe.name" placeholder="Name of Recipe"></td>
+                <td> <input type="number" min="0" name="timeRequired" [(ngModel)]="selectedRecipe.timeRequired"
+                    placeholder="Time Required"></td>
+                <td><input type="number" min="0" name="calories" [(ngModel)]="selectedRecipe.calories"
+                    placeholder="Calories">
+                </td>
+                <td><input type="number" min="0" name="protein" [(ngModel)]="selectedRecipe.protein" placeholder="">
+                </td>
+                <td><input type="number" min="0" name="carbs" [(ngModel)]="selectedRecipe.carbs" placeholder="Carbs">
+                </td>
+                <td><input type="number" min="0" name="fats" [(ngModel)]="selectedRecipe.fats" placeholder="Fats"></td>
+                <td><input type="number" min="0" name="sodium" [(ngModel)]="selectedRecipe.sodium" placeholder="Sodium">
+                </td>
+                <td><input type="number" min="0" name="sugar" [(ngModel)]="selectedRecipe.sugar" placeholder="Sugar">
+                </td>
+              </tr>
+
+              <tr>
+                <td>Possible User info</td>
+                <td class="recipe-text" colspan="7"><textarea type="text" name="recipeText"
+                    [(ngModel)]="selectedRecipe.recipeText" placeholder="Recipe Instructions"></textarea></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <input type="text" name="link" [(ngModel)]="selectedRecipe.link" placeholder="Recipe Url Link">
+          <button (click)="cancelUpdate()">Cancel</button>
+          <button (click)="updateRecipe(selectedRecipe)">Add Recipe</button>
+          <p>PlaceHolder for ingredients Search</p>
+        </form>
+      </div>
+
+
       <div *ngIf="newRecipe">
         <form name="newRecipe">
-          <table>
+          <table style="max-width:1300px;"  class="table">
 
             <thead>
               <tr>
@@ -95,28 +150,40 @@
                 <th>Sodium(mg)</th>
                 <th>Sugar(g)</th>
               </tr>
-              </thead>
+            </thead>
             <tbody>
               <tr>
-              <td><input type="text" name="name" [(ngModel)]="newRecipe.name"placeholder="Name of Recipe"></td>
-              <td> <input type="number" min="0" name="timeRequired" [(ngModel)]="newRecipe.timeRequired" placeholder="Time Required"></td>
-              <td><input type="number" min="0" name="calories" [(ngModel)]="newRecipe.calories" placeholder="Calories"></td>
-              <td><input type="number" min="0" name="protein" [(ngModel)]="newRecipe.protein" placeholder=""></td>
-              <td><input type="number" min="0" name="carbs" [(ngModel)]="newRecipe.carbs" placeholder="Carbs"></td>
-              <td><input type="number" min="0" name="fats" [(ngModel)]="newRecipe.fats" placeholder="Fats"></td>
-              <td><input type="number" min="0" name="sodium" [(ngModel)]="newRecipe.sodium" placeholder="Sodium"></td>
-              <td><input type="number" min="0" name="sugar" [(ngModel)]="newRecipe.sugar" placeholder="Sugar"></td>
-            </tr>
-            <tr>
-              <td>Possible User info</td>
-              <td class="recipe-text" colspan="7"><textarea type="text" name="recipeText" [(ngModel)]="newRecipe.recipeText" placeholder="Recipe Instructions"></textarea></td>
-            </tr>
+                <td><input type="text" name="name" [(ngModel)]="newRecipe.name" placeholder="Name of Recipe"></td>
+                <td> <input type="number" min="0" name="timeRequired" [(ngModel)]="newRecipe.timeRequired"
+                    placeholder="Time Required"></td>
+                <td><input type="number" min="0" name="calories" [(ngModel)]="newRecipe.calories"
+                    placeholder="Calories"></td>
+                <td><input type="number" min="0" name="protein" [(ngModel)]="newRecipe.protein" placeholder=""></td>
+                <td><input type="number" min="0" name="carbs" [(ngModel)]="newRecipe.carbs" placeholder="Carbs"></td>
+                <td><input type="number" min="0" name="fats" [(ngModel)]="newRecipe.fats" placeholder="Fats"></td>
+                <td><input type="number" min="0" name="sodium" [(ngModel)]="newRecipe.sodium" placeholder="Sodium"></td>
+                <td><input type="number" min="0" name="sugar" [(ngModel)]="newRecipe.sugar" placeholder="Sugar"></td>
+              </tr>
+              <tr>
+                <td>Possible User info</td>
+                <td class="recipe-text" colspan="7"><textarea type="text" name="recipeText"
+                    [(ngModel)]="newRecipe.recipeText" placeholder="Recipe Instructions"></textarea></td>
+              </tr>
+              <tr>
+                <td>Ingredients:<br>
+                  <button (click)="addingAnotherIngredient()" >Add Ingredient</button></td>
+                <td colspan="7">
+                <select *ngFor="let ing of newRecipeIngredients" name="ingredient" [(ngModel)]="newRecipe.ingredients"   >
+                    <option *ngFor="let ingredient of allIngredients" [ngValue]="ingredient" >{{ingredient.name}}</option>
+                </select>
+                </td>
+              </tr>
             </tbody>
           </table>
 
           <input type="text" name="link" [(ngModel)]="newRecipe.link" placeholder="Recipe Url Link">
           <button (click)="cancelCreate()">Cancel</button>
-            <button (click)="createRecipe(newRecipe)">Add Recipe</button>
+          <button (click)="createRecipe(newRecipe)">Add Recipe</button>
         </form>
         <p>PlaceHolder for ingredients Search</p>
       </div>

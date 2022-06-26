@@ -1,3 +1,5 @@
+import { IngredientService } from './../../services/ingredient.service';
+import { Ingredient } from './../../models/ingredient';
 
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/models/recipe';
@@ -18,12 +20,17 @@ export class RecipesComponent implements OnInit {
   authorName: string = '';
   newRecipe: Recipe | null = null;
   updating: boolean = false;
+  allIngredients : Ingredient [] = [];
+  newRecipeIngredients : Ingredient [] = [];
+  numRecipeIngredients : number [] = [];
+
   //*************************** Setup ******************** */
 
-  constructor(private recipeServ: RecipeService) { }
+  constructor(private recipeServ: RecipeService, private ingServ: IngredientService) { }
 
   ngOnInit(): void {
     this.getRecipes();
+    this.getAllIngredients();
   }
 
 
@@ -60,11 +67,26 @@ export class RecipesComponent implements OnInit {
   }
   cancelCreate(){
     this.newRecipe = null;
+    this.newRecipeIngredients = [];
+    this.numRecipeIngredients = [];
   }
   updateSelect(){
     this.updating = true;
+    if(this.selectedRecipe?.ingredients){
+      this.newRecipeIngredients = this.selectedRecipe?.ingredients;
+    }
+  }
+  cancelUpdate(){
+    this.updating = false;
+    this.newRecipeIngredients = [];
   }
 
+  addingAnotherIngredient(){
+    this.newRecipeIngredients.push(new Ingredient());
+  }
+  addIngredient(ing: Ingredient){
+    this.newRecipeIngredients.push(ing);
+  }
 
 
   //*************************** Service Methods ******************** */
@@ -174,5 +196,16 @@ export class RecipesComponent implements OnInit {
       }
     });
 
+  }
+  getAllIngredients(){
+    this.ingServ.index().subscribe({
+      next: (ingredientArray) => {
+        this.allIngredients = ingredientArray;
+      },
+      error: (problem) => {
+        console.error('error updating recipe: ');
+        console.error(problem);
+      }
+    });
   }
 }

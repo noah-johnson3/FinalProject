@@ -104,7 +104,7 @@ export class RecipeService {
     );
   }
   addUser(recipe: Recipe, recipeId: number): Observable<Recipe> {
-    return this.http.put<Recipe>(`${this.url}` + "/adduser/" + recipeId , recipe, this.getHttpOptions()).pipe(
+    return this.http.put<Recipe>(`${this.url}` + "/addUser/" + recipeId , recipe, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(

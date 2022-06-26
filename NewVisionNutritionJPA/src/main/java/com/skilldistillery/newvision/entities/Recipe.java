@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Recipe {
@@ -63,7 +63,7 @@ public class Recipe {
 	@ManyToOne
 	private User user;
 
-	@JsonIgnore
+	@JsonIgnoreProperties({"recipes"})
 	@ManyToMany
 	@JoinTable(name = "recipe_ingredient", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
 	private List<Ingredient> ingredients;

@@ -83,10 +83,20 @@ export class RecipesComponent implements OnInit {
   }
 
   removeIngredient(ing : Ingredient){
-    for(let idx = 0; idx < this.newRecipeIngredients.length; idx ++){
-      if(this.newRecipeIngredients[idx] == ing){
-          this.newRecipeIngredients.splice(idx, 1);
-          break;
+    if(this.newRecipeIngredients){
+      for(let idx = 0; idx < this.newRecipeIngredients.length; idx ++){
+        if(this.newRecipeIngredients[idx] == ing){
+            this.newRecipeIngredients.splice(idx, 1);
+            break;
+        }
+      }
+    }
+    if(this.selectedRecipe){
+      for(let idx = 0; idx < this.selectedRecipe.ingredients.length; idx ++){
+        if(this.selectedRecipe.ingredients[idx] == ing){
+            this.selectedRecipe.ingredients.splice(idx, 1);
+            break;
+        }
       }
     }
   }
@@ -94,9 +104,14 @@ export class RecipesComponent implements OnInit {
   addIngredient(){
     console.log(this.ingredientToBeAdded)
     if(this.ingredientToBeAdded){
-      this.newRecipeIngredients.push(this.ingredientToBeAdded);
+      if(this.newRecipeIngredients){
+        this.newRecipeIngredients.push(this.ingredientToBeAdded);
+      }
+        if(this.selectedRecipe){
+        this.selectedRecipe.ingredients.push(this.ingredientToBeAdded);
+        }
+      }
     }
-  }
 
 
   //*************************** Service Methods ******************** */

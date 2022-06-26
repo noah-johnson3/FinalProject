@@ -117,7 +117,19 @@
                 <td><input type="number" min="0" name="sugar" [(ngModel)]="selectedRecipe.sugar" placeholder="Sugar">
                 </td>
               </tr>
-
+              <tr>
+                <td>Ingredients currently in recipe:</td>
+                <td colspan="7"><span *ngFor="let ing of selectedRecipe.ingredients">{{ing.name}} <button (click)="removeIngredient(ing)">X</button> </span></td>
+              </tr>
+              <tr>
+                <td>Ingredients:<br>
+                <td colspan="7">
+                <select name="ingredient" [(ngModel)]="ingredientToBeAdded">
+                    <option *ngFor="let ingredient of allIngredients" [ngValue]="ingredient" >{{ingredient.name}}</option>
+                  </select>
+                  <button (click)="addIngredient()" >Add Ingredient</button>
+                </td>
+              </tr>
               <tr>
                 <td>Possible User info</td>
                 <td class="recipe-text" colspan="7"><textarea type="text" name="recipeText"
@@ -128,7 +140,7 @@
 
           <input type="text" name="link" [(ngModel)]="selectedRecipe.link" placeholder="Recipe Url Link">
           <button (click)="cancelUpdate()">Cancel</button>
-          <button (click)="updateRecipe(selectedRecipe)">Add Recipe</button>
+          <button (click)="updateRecipe(selectedRecipe)">Update Recipe</button>
           <p>PlaceHolder for ingredients Search</p>
         </form>
       </div>

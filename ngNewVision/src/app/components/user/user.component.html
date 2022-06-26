@@ -25,6 +25,7 @@
         <div id=""addMeal>
           <form name="addMeal" *ngIf="newMeal">
             <!-- <input class="col form-control" type="text" name="meal" [(ngModel)]="newMeal."> -->
+
           </form>
 
         </div>
@@ -33,7 +34,7 @@
           <button (click)="showDayDetails(day)" >{{day.day.toString().substring(0,10)}}  </button>
           <div id="dayDetails" *ngIf="displayDay == day"  >
               <div *ngFor="let meal of displayDay.meals">{{meal.mealType?.name}} :
-                <span>{{meal.recipe?.calories}} </span>
+
               </div>
           </div>
         </div>

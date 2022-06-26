@@ -23,7 +23,7 @@
     <div class="col-sm-8">
       <div class="tracker">
         <div id=""addMeal>
-          <form name="addMeal" *ngIf="newMeal">
+          <form name="addMealByNutrient" *ngIf="newMeal">
 
             <input type="number" min="0" name="calories" [(ngModel)]="newMealNutrients.calories"
                 placeholder="Calories">
@@ -34,6 +34,15 @@
             <input type="number" min="0" name="sugar" [(ngModel)]="newMealNutrients.sugar" placeholder="Sugar">
             <button class="submit" (click)="addMeal(newMeal)">Add a new Meal</button>
 
+          </form>
+          <form name="addMealByIngredient">
+            <select name="newMealIngredient" [(ngModel)]="newIngredient">
+              <option *ngFor="let ing of allIngredient" [ngValue]="ing"> {{ing.name}}</option>
+
+            </select>
+            <button (click)="addNewIngredientToMeal(newIngredient)">Add Ingredient</button>
+            <p *ngFor="let ing of newMealIngredient">{{ing.name}}<button (click)="removeIngredient(ing)">X</button></p>
+            <button (click)="addMeal(newMeal)">Submit</button>
           </form>
 
         </div>

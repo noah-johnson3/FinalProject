@@ -1,3 +1,5 @@
+import { IngredientService } from './../../services/ingredient.service';
+import { Ingredient } from './../../models/ingredient';
 import { Nutrients } from './../../models/nutrients';
 import { NutrientsService } from './../../services/nutrients.service';
 import { MealTypeService } from './../../services/meal-type.service';
@@ -31,16 +33,22 @@ export class UserComponent implements OnInit {
   displayDay : TrackedDay | null = null;
   newMeal: Meal = new Meal();
   newMealNutrients: Nutrients = new Nutrients();
+  newMealIngredient: Ingredient[] = [];
+  allIngredient: Ingredient[] = [];
+  newIngredient: Ingredient = new Ingredient();
+
 
   //************************ Setup Methods ********************* */
   constructor(private auth: AuthService, private userServ: UserService,
     private tds: TrackedDayService, private genderServ: GenderService,
-    private mealServ: MealService, private mts: MealTypeService, private nts: NutrientsService) { }
+    private mealServ: MealService, private mts: MealTypeService, private nts: NutrientsService,
+    private ingServ: IngredientService) { }
 
   ngOnInit(): void {
     this.getUser();
     this.getTrackedDays();
     this.indexGender();
+    this.indexIngred();
 
   }
 
@@ -90,9 +98,9 @@ export class UserComponent implements OnInit {
   let result = false;
 
   for (let day of this.trackedDays){
-    if(day.day.getFullYear() == today.getFullYear()) {
-      if(day.day.getMonth() == today.getMonth()) {
-        if(day.day.getDay() == today.getDay()) {
+    if(Number.parseInt(day.day.toString().substring(0,4)) == today.getFullYear()) {
+      if(Number.parseInt(day.day.toString().substring(5,7)) == today.getMonth()) {
+        if(Number.parseInt(day.day.toString().substring(8,10)) == today.getDate()) {
           result = true;
         }
       }
@@ -106,9 +114,9 @@ export class UserComponent implements OnInit {
     let result = new TrackedDay;
 
   for (let day of this.trackedDays){
-    if(day.day.getFullYear() == today.getFullYear()) {
-      if(day.day.getMonth() == today.getMonth()) {
-        if(day.day.getDay() == today.getDay()) {
+    if(Number.parseInt(day.day.toString().substring(0,4)) == today.getFullYear()) {
+      if(Number.parseInt(day.day.toString().substring(5,7)) == today.getMonth()) {
+        if(Number.parseInt(day.day.toString().substring(8,10)) == today.getDate()) {
           result = day;
         }
       }
@@ -123,6 +131,20 @@ export class UserComponent implements OnInit {
     today.day = new Date();
     if(!this.checkCurrentDay) {
       this.createTrackedDay(today);
+    }
+  }
+
+  addNewIngredientToMeal(ingred: Ingredient) {
+    this.newMealIngredient.push(ingred);
+  }
+  removeIngredient(ingred: Ingredient) {
+    if(this.newMealIngredient) {
+      for(let i = 0; i < this.newMealIngredient.length; i++) {
+        if(this.newMealIngredient[i].name == ingred.name) {
+          this.newMealIngredient.splice(i,1);
+          break;
+        }
+      }
     }
   }
 
@@ -182,6 +204,7 @@ export class UserComponent implements OnInit {
   addMeal(meal: Meal) {
     meal.trackDay = this.getCurrentDay();
     meal.nutrients = this.newMealNutrients;
+    meal.ingredients = this.newMealIngredient;
     this.mealServ.create(meal).subscribe({
       next: (meals)=>{
         this.getTrackedDays();
@@ -203,6 +226,18 @@ export class UserComponent implements OnInit {
         console.error(fail);
       }
     })
+  }
+
+  indexIngred(): void{
+    this.ingServ.index().subscribe({
+      next: (ingredient) => {
+       this.allIngredient = ingredient;
+      },
+      error: (problem) => {
+        console.error('HttpComponent.reload(): error registering');
+        console.error(problem);
+      }
+    });
   }
 
 }

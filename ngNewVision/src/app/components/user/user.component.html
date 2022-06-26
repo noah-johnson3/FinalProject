@@ -22,6 +22,9 @@
     </div>
     <div class="col-sm-8">
       <div class="tracker">
+        <div id=""addMeal>
+
+        </div>
 
         <div *ngFor="let day of trackedDays" class="row">
           <button (click)="showDayDetails(day)" >{{day.day.toString().substring(0,10)}}  </button>

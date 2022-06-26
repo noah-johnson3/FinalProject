@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { GenderService } from 'src/app/services/gender.service';
 import { Gender } from 'src/app/models/gender';
+import { Meal } from 'src/app/models/meal';
 
 @Component({
   selector: 'app-user',
@@ -25,6 +26,7 @@ export class UserComponent implements OnInit {
   genders: Gender [] = [];
   amr: number = 0;
   displayDay : TrackedDay | null = null;
+  newMeal: Meal = new Meal();
 
   //************************ Setup Methods ********************* */
   constructor(private auth: AuthService, private userServ: UserService,
@@ -130,6 +132,19 @@ export class UserComponent implements OnInit {
         console.error(problem);
       }
     });
+  }
+
+  addMeal(meal: Meal) {
+    this.mealServ.create(meal).subscribe({
+      next: (meals)=>{
+        this.getTrackedDays();
+        this.newMeal = new Meal();
+      },
+      error: (fail)=>{
+        console.error('ERROR in creating a new Meal');
+        console.error(fail);
+      }
+    })
   }
 
 }

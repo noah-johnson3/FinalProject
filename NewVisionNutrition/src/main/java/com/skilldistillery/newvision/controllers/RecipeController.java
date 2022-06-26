@@ -57,23 +57,7 @@ public class RecipeController {
 		
 		return recipes;
 	}
-	@GetMapping("recipes/nutrition")
-	public List<Recipe> findByNutrition(@RequestBody Recipe recipe, HttpServletResponse res){
-		List<Recipe> recipes = null;
-		try {
-			recipes = rs.findByNutritionValue(recipe.getCalories(), 
-					recipe.getProtein(), recipe.getCarbs(), recipe.getFats(),
-					recipe.getSodium(), recipe.getSugar());
-			if(recipes == null) {
-				res.setStatus(404);
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-			res.setStatus(400);
-		}
-		
-		return recipes;
-	}
+	
 	@GetMapping("recipes/author/{username}")
 	public List<Recipe> findByNutrition(@PathVariable String username, HttpServletResponse res){
 		List<Recipe> recipes = null;

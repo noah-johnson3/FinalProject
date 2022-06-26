@@ -20,12 +20,6 @@ public interface RecipeRepository extends JpaRepository<Recipe, Integer>{
 	List<Recipe> findByIngredient(@Param("ingredient")String ingredient);
 	
 	
-	@Query("SELECT r FROM Recipe r WHERE r.protein = :protein AND r.carbs = :carbs AND r.fats = :fats AND "
-			+ "r.sugar = :sugar AND r.sodium = :sodium AND r.calories = :calories")
-	List<Recipe> findByNutrients(@Param("protein")Double protein, 
-			@Param("carbs")Double carbs, @Param("sugar")Integer sugar, @Param("sodium")Integer sodium,
-			@Param("calories")Double calories,
-			@Param("fats")Double fats);
 	
 	List<Recipe> findByUser_UsernameEquals(@Param("Username")String username);
 }

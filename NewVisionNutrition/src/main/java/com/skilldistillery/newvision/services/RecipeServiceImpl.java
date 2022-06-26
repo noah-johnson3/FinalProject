@@ -42,11 +42,6 @@ public class RecipeServiceImpl implements RecipeService {
 		return recipeRepo.findByIngredient(ingredient);
 	}
 
-	@Override
-	public List<Recipe> findByNutritionValue(Double calories, Double protein, Double carbs, Double fats,
-			Integer sugarInGrams, Integer sodiumInGrams) {
-		return recipeRepo.findByNutrients(protein, carbs, sugarInGrams, sodiumInGrams, calories, fats);
-	}
 
 	@Override
 	public List<Recipe> findByAuthor(String username) {
@@ -79,17 +74,11 @@ public class RecipeServiceImpl implements RecipeService {
 			Optional<Recipe> op = recipeRepo.findById(id);
 			if (op.isPresent()) {
 				updatedRecipe = op.get();
-				updatedRecipe.setCalories(recipe.getCalories());
-				updatedRecipe.setCarbs(recipe.getCarbs());
-				updatedRecipe.setFats(recipe.getFats());
 				updatedRecipe.setImageUrl(recipe.getImageUrl());
 				updatedRecipe.setIngredients(recipe.getIngredients());
 				updatedRecipe.setLink(recipe.getLink());
 				updatedRecipe.setName(recipe.getName());
-				updatedRecipe.setProtein(recipe.getProtein());
 				updatedRecipe.setRecipeText(recipe.getRecipeText());
-				updatedRecipe.setSodium(recipe.getSodium());
-				updatedRecipe.setSugar(recipe.getSugar());
 				updatedRecipe.setTimeRequired(recipe.getTimeRequired());
 				updatedRecipe = recipeRepo.saveAndFlush(updatedRecipe);
 			}

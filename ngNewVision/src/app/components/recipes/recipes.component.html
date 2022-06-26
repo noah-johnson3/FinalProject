@@ -170,12 +170,16 @@
                     [(ngModel)]="newRecipe.recipeText" placeholder="Recipe Instructions"></textarea></td>
               </tr>
               <tr>
+                <td>Ingredients currently in recipe:</td>
+                <td colspan="7"><span *ngFor="let ing of newRecipeIngredients">{{ing.name}} <button (click)="removeIngredient(ing)">X</button> </span></td>
+              </tr>
+              <tr>
                 <td>Ingredients:<br>
-                  <button (click)="addingAnotherIngredient()" >Add Ingredient</button></td>
                 <td colspan="7">
-                <select *ngFor="let ing of newRecipeIngredients" name="ingredient" [(ngModel)]="newRecipe.ingredients"   >
+                <select name="ingredient" [(ngModel)]="ingredientToBeAdded">
                     <option *ngFor="let ingredient of allIngredients" [ngValue]="ingredient" >{{ingredient.name}}</option>
-                </select>
+                  </select>
+                  <button (click)="addIngredient()" >Add Ingredient</button>
                 </td>
               </tr>
             </tbody>

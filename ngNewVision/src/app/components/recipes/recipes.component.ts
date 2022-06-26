@@ -23,6 +23,7 @@ export class RecipesComponent implements OnInit {
   allIngredients : Ingredient [] = [];
   newRecipeIngredients : Ingredient [] = [];
   numRecipeIngredients : number [] = [];
+  ingredientToBeAdded: Ingredient | null = null;
 
   //*************************** Setup ******************** */
 
@@ -81,11 +82,20 @@ export class RecipesComponent implements OnInit {
     this.newRecipeIngredients = [];
   }
 
-  addingAnotherIngredient(){
-    this.newRecipeIngredients.push(new Ingredient());
+  removeIngredient(ing : Ingredient){
+    for(let idx = 0; idx < this.newRecipeIngredients.length; idx ++){
+      if(this.newRecipeIngredients[idx] == ing){
+          this.newRecipeIngredients.splice(idx, 1);
+          break;
+      }
+    }
   }
-  addIngredient(ing: Ingredient){
-    this.newRecipeIngredients.push(ing);
+
+  addIngredient(){
+    console.log(this.ingredientToBeAdded)
+    if(this.ingredientToBeAdded){
+      this.newRecipeIngredients.push(this.ingredientToBeAdded);
+    }
   }
 
 
@@ -147,6 +157,9 @@ export class RecipesComponent implements OnInit {
     }
   }
   createRecipe(recipe: Recipe){
+    console.log(recipe.ingredients)
+    recipe.ingredients = this.newRecipeIngredients;
+    console.log(recipe.ingredients)
     this.recipeServ.createRecipe(recipe).subscribe({
       next: (recipeArray) => {
         this.newRecipe = null;

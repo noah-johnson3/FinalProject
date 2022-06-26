@@ -71,6 +71,22 @@ public class NutrientsController {
 		
 		return nutrients;
 	}
+	
+	@GetMapping("nutrients/recipe/ingredients/{id}")
+	public List<Nutrients> getByRecipeIdWithIngredients(HttpServletResponse res, @PathVariable int id) {
+		List<Nutrients> nutrients = null;
+		try {
+			nutrients = nutriServ.findByRecipeWithIngredients(id);
+			if(nutrients == null) {
+				res.setStatus(404);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			res.setStatus(400);
+		}
+		
+		return nutrients;
+	}
 	@GetMapping("nutrients/meal/ingredients/{id}")
 	public List<Nutrients> getByMealIdWithIngredients(HttpServletResponse res, @PathVariable int id) {
 		List<Nutrients> nutrients = null;

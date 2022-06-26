@@ -15,6 +15,7 @@ export class Recipe {
   user: User | null;
   ingredients: Ingredient [];
 
+
   constructor(id: number = 0, link: string = '', timeRequired: number = 0, recipeText: string = '', name: string = '',
   createdAt: Date = new Date(), updatedAt: Date | null = null,
   imageUrl: string = '', user: User | null = null, ingredients: Ingredient [] = []){
@@ -23,7 +24,6 @@ export class Recipe {
     this.timeRequired = timeRequired
     this.recipeText = recipeText
     this.name = name
-
     this.createdAt = createdAt
     this.updatedAt = updatedAt
     this.imageUrl = imageUrl

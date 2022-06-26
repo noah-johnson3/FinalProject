@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 import com.skilldistillery.newvision.entities.Ingredient;
 import com.skilldistillery.newvision.entities.Meal;
 import com.skilldistillery.newvision.entities.Nutrients;
+import com.skilldistillery.newvision.entities.Recipe;
 import com.skilldistillery.newvision.entities.User;
 import com.skilldistillery.newvision.repositories.IngredientRepository;
 import com.skilldistillery.newvision.repositories.MealRepository;
 import com.skilldistillery.newvision.repositories.NutrientsRepository;
+import com.skilldistillery.newvision.repositories.RecipeRepository;
 import com.skilldistillery.newvision.repositories.UserRepository;
 
 @Service
@@ -30,6 +32,9 @@ public class NutrientServiceImpl implements NutrientService {
 	
 	@Autowired
 	private UserRepository ur; 
+	
+	@Autowired
+	private RecipeRepository rr;
 
 	@Override
 	public Nutrients findById(int id) {
@@ -92,6 +97,23 @@ public class NutrientServiceImpl implements NutrientService {
 			meal = op.get();
 			if(meal.getIngredients() != null) {
 				for(Ingredient ing : meal.getIngredients()) {
+					ingNutrients.add(ing.getNutrients());
+				}
+			}
+		}
+		
+		return ingNutrients;
+	}
+
+	@Override
+	public List<Nutrients> findByRecipeWithIngredients(int recipeId) {
+		Recipe recipe = null;
+		List<Nutrients> ingNutrients = new ArrayList<>();
+		Optional<Recipe> op = rr.findById(recipeId);
+		if(op.isPresent()) {
+			recipe = op.get();
+			if(recipe.getIngredients() != null) {
+				for(Ingredient ing : recipe.getIngredients()) {
 					ingNutrients.add(ing.getNutrients());
 				}
 			}

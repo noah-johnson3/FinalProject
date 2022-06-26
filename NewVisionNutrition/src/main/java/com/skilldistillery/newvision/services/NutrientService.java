@@ -19,4 +19,7 @@ public interface NutrientService {
 	List<Nutrients> findByMealWithIngredients(int mealId);
 	
 	
+	List<Nutrients> findByRecipeWithIngredients(int recipeId);
+	
+	
 }

@@ -186,6 +186,55 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `nutrients`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `nutrients` ;
+
+CREATE TABLE IF NOT EXISTS `nutrients` (
+  `protein` DECIMAL(5,2) NULL,
+  `carbs` DECIMAL(5,2) NULL,
+  `fats` DECIMAL(5,2) NULL,
+  `sodium` INT NULL,
+  `sugar` INT NULL,
+  `calories` DECIMAL(6,2) NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `meal`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `meal` ;
+
+CREATE TABLE IF NOT EXISTS `meal` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `tracked_day_id` INT NOT NULL,
+  `meal_type_id` INT NOT NULL,
+  `nutrients_id` INT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_meal_tracked_day1_idx` (`tracked_day_id` ASC),
+  INDEX `fk_meal_meal_type1_idx` (`meal_type_id` ASC),
+  INDEX `fk_meal_nutrients1_idx` (`nutrients_id` ASC),
+  CONSTRAINT `fk_meal_tracked_day1`
+    FOREIGN KEY (`tracked_day_id`)
+    REFERENCES `tracked_day` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_meal_meal_type1`
+    FOREIGN KEY (`meal_type_id`)
+    REFERENCES `meal_type` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_meal_nutrients1`
+    FOREIGN KEY (`nutrients_id`)
+    REFERENCES `nutrients` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `recipe`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `recipe` ;
@@ -196,12 +245,6 @@ CREATE TABLE IF NOT EXISTS `recipe` (
   `time_required` INT NULL,
   `recipe_text` TEXT NULL,
   `name` VARCHAR(45) NOT NULL,
-  `protein` DECIMAL(5,2) NULL,
-  `carbs` DECIMAL(5,2) NULL,
-  `fats` DECIMAL(5,2) NULL,
-  `sodium` INT NULL,
-  `sugar` INT NULL,
-  `calories` DECIMAL(6,2) NULL,
   `user_id` INT NOT NULL,
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NULL,
@@ -217,38 +260,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `meal`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `meal` ;
-
-CREATE TABLE IF NOT EXISTS `meal` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `tracked_day_id` INT NOT NULL,
-  `meal_type_id` INT NOT NULL,
-  `recipe_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_meal_tracked_day1_idx` (`tracked_day_id` ASC),
-  INDEX `fk_meal_meal_type1_idx` (`meal_type_id` ASC),
-  INDEX `fk_meal_recipe1_idx` (`recipe_id` ASC),
-  CONSTRAINT `fk_meal_tracked_day1`
-    FOREIGN KEY (`tracked_day_id`)
-    REFERENCES `tracked_day` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_meal_meal_type1`
-    FOREIGN KEY (`meal_type_id`)
-    REFERENCES `meal_type` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_meal_recipe1`
-    FOREIGN KEY (`recipe_id`)
-    REFERENCES `recipe` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `ingredient`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `ingredient` ;
@@ -256,7 +267,14 @@ DROP TABLE IF EXISTS `ingredient` ;
 CREATE TABLE IF NOT EXISTS `ingredient` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NOT NULL,
-  PRIMARY KEY (`id`))
+  `nutrients_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_ingredient_nutrients1_idx` (`nutrients_id` ASC),
+  CONSTRAINT `fk_ingredient_nutrients1`
+    FOREIGN KEY (`nutrients_id`)
+    REFERENCES `nutrients` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -485,6 +503,30 @@ CREATE TABLE IF NOT EXISTS `blog_topic` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `meal_ingredient`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `meal_ingredient` ;
+
+CREATE TABLE IF NOT EXISTS `meal_ingredient` (
+  `meal_id` INT NOT NULL,
+  `ingredient_id` INT NOT NULL,
+  PRIMARY KEY (`meal_id`, `ingredient_id`),
+  INDEX `fk_meal_has_ingredient_ingredient1_idx` (`ingredient_id` ASC),
+  INDEX `fk_meal_has_ingredient_meal1_idx` (`meal_id` ASC),
+  CONSTRAINT `fk_meal_has_ingredient_meal1`
+    FOREIGN KEY (`meal_id`)
+    REFERENCES `meal` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_meal_has_ingredient_ingredient1`
+    FOREIGN KEY (`ingredient_id`)
+    REFERENCES `ingredient` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 SET SQL_MODE = '';
 DROP USER IF EXISTS nutrition@localhost;
 SET SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
@@ -586,21 +628,13 @@ COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `recipe`
+-- Data for table `nutrients`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `nutritiondb`;
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (1, NULL, 10, '2 Eggs, 1 cup frozen hash brown mix, 1 tbsp vegetable oil: Add oil and hashbrowns to pan, set to medium heat. Beat eggs, add seasoning to taste. When hashbrowns begin to brown add in eggs. Stir and serve when at desired firmness.', 'Easy Morning Hash', 20, 10, 9, 20, 0, 300, 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (2, NULL, 12, 'test 1', 'test name', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (3, NULL, 34, 'test 1', 'test name', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (4, NULL, 23, 'test 1', 'test name', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (5, NULL, 13, 'test 1', 'test name', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (6, NULL, 5, 'test 1', 'test name', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (7, NULL, 56, 'test 1', 'test name', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (8, NULL, 20, 'test 1', 'test name', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (9, NULL, 23, 'test 1', 'test name', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (10, NULL, 11, 'test 1', 'test name', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (11, NULL, 12, 'test 15000', 'name', NULL, NULL, NULL, NULL, NULL, NULL, 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
+INSERT INTO `nutrients` (`protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `id`) VALUES (9, 3, 4, 0, 0, 80, 1);
+INSERT INTO `nutrients` (`protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `id`) VALUES (2, 15, 2, 0, 0, 100, 2);
+INSERT INTO `nutrients` (`protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `id`) VALUES (0, 0, 10, 0, 0, 30, 3);
 
 COMMIT;
 
@@ -610,9 +644,29 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `nutritiondb`;
-INSERT INTO `meal` (`id`, `tracked_day_id`, `meal_type_id`, `recipe_id`) VALUES (1, 1, 1, 1);
-INSERT INTO `meal` (`id`, `tracked_day_id`, `meal_type_id`, `recipe_id`) VALUES (2, 1, 2, 1);
-INSERT INTO `meal` (`id`, `tracked_day_id`, `meal_type_id`, `recipe_id`) VALUES (3, 1, 3, 1);
+INSERT INTO `meal` (`id`, `tracked_day_id`, `meal_type_id`, `nutrients_id`) VALUES (1, 1, 1, NULL);
+INSERT INTO `meal` (`id`, `tracked_day_id`, `meal_type_id`, `nutrients_id`) VALUES (2, 1, 2, NULL);
+INSERT INTO `meal` (`id`, `tracked_day_id`, `meal_type_id`, `nutrients_id`) VALUES (3, 1, 3, NULL);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `recipe`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `nutritiondb`;
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (1, NULL, 10, '2 Eggs, 1 cup frozen hash brown mix, 1 tbsp vegetable oil: Add oil and hashbrowns to pan, set to medium heat. Beat eggs, add seasoning to taste. When hashbrowns begin to brown add in eggs. Stir and serve when at desired firmness.', 'Easy Morning Hash', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (2, NULL, 12, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (3, NULL, 34, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (4, NULL, 23, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (5, NULL, 13, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (6, NULL, 5, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (7, NULL, 56, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (8, NULL, 20, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (9, NULL, 23, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (10, NULL, 11, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (11, NULL, 12, 'test 15000', 'name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
 
 COMMIT;
 
@@ -622,9 +676,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `nutritiondb`;
-INSERT INTO `ingredient` (`id`, `name`) VALUES (1, 'egg');
-INSERT INTO `ingredient` (`id`, `name`) VALUES (2, 'potatoes');
-INSERT INTO `ingredient` (`id`, `name`) VALUES (3, 'vegetable oil');
+INSERT INTO `ingredient` (`id`, `name`, `nutrients_id`) VALUES (1, 'egg', 1);
+INSERT INTO `ingredient` (`id`, `name`, `nutrients_id`) VALUES (2, 'potatoes', 2);
+INSERT INTO `ingredient` (`id`, `name`, `nutrients_id`) VALUES (3, 'vegetable oil', 3);
 
 COMMIT;
 
@@ -689,6 +743,20 @@ COMMIT;
 START TRANSACTION;
 USE `nutritiondb`;
 INSERT INTO `blog_topic` (`topic_id`, `blog_id`) VALUES (1, 1);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `meal_ingredient`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `nutritiondb`;
+INSERT INTO `meal_ingredient` (`meal_id`, `ingredient_id`) VALUES (1, 1);
+INSERT INTO `meal_ingredient` (`meal_id`, `ingredient_id`) VALUES (2, 2);
+INSERT INTO `meal_ingredient` (`meal_id`, `ingredient_id`) VALUES (3, 2);
+INSERT INTO `meal_ingredient` (`meal_id`, `ingredient_id`) VALUES (1, 2);
+INSERT INTO `meal_ingredient` (`meal_id`, `ingredient_id`) VALUES (1, 3);
 
 COMMIT;
 

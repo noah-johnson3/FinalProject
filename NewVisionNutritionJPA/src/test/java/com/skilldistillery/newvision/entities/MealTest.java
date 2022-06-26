@@ -47,13 +47,7 @@ class MealTest {
 		assertEquals(meal.getId(), 1);
 		
 	}
-	@Test
-	@DisplayName("testing basic meal / recipe mappings")
-	void test2() {
-		assertNotNull(meal);
-		assertEquals(meal.getRecipe().getName(), "Easy Morning Hash");
-		
-	}
+	
 	@Test
 	@DisplayName("testing basic meal / mealType mappings")
 	void test3() {

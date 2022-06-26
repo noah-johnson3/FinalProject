@@ -3,6 +3,7 @@ package com.skilldistillery.newvision.entities;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -21,6 +23,10 @@ public class Ingredient {
 	private int id;
 
 	private String name;
+	
+	@OneToOne(cascade= {CascadeType.PERSIST})
+	@JoinColumn(name="nutrients_id")
+	private Nutrients nutrients;
 
 	@JsonIgnore
 	@ManyToMany
@@ -53,6 +59,15 @@ public class Ingredient {
 
 	public void setRecipes(List<Recipe> recipes) {
 		this.recipes = recipes;
+	}
+	
+
+	public Nutrients getNutrients() {
+		return nutrients;
+	}
+
+	public void setNutrients(Nutrients nutrients) {
+		this.nutrients = nutrients;
 	}
 
 	@Override

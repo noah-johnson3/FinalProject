@@ -17,6 +17,7 @@
 	<class>com.skilldistillery.newvision.entities.Topic</class>
 	<class>com.skilldistillery.newvision.entities.TrackedDay</class>
 	<class>com.skilldistillery.newvision.entities.User</class>
+	<class>com.skilldistillery.newvision.entities.Nutrients</class>
 
     
     <!-- end entities  -->

@@ -1,13 +1,18 @@
 package com.skilldistillery.newvision.entities;
 
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -27,9 +32,18 @@ public class Meal {
 	@ManyToOne
 	private MealType mealType;
 
-	@JoinColumn(name = "recipe_id")
-	@ManyToOne
-	private Recipe recipe;
+	@JsonIgnoreProperties({"meals"})
+	@ManyToMany
+	@JoinTable(name = "meal_ingredient", 
+	joinColumns = @JoinColumn(name = "meal_id"), 
+	inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+	private List<Ingredient> ingredients;
+	
+	
+	@JsonIgnoreProperties({"meal"})
+	@OneToOne(cascade= {CascadeType.PERSIST})
+	@JoinColumn(name="nutrients_id")
+	private Nutrients nutrients;
 
 	public Meal() {
 		super();
@@ -58,13 +72,22 @@ public class Meal {
 	public void setMealType(MealType mealType) {
 		this.mealType = mealType;
 	}
+	
 
-	public Recipe getRecipe() {
-		return recipe;
+	public List<Ingredient> getIngredients() {
+		return ingredients;
 	}
 
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
+	public void setIngredients(List<Ingredient> ingredients) {
+		this.ingredients = ingredients;
+	}
+
+	public Nutrients getNutrients() {
+		return nutrients;
+	}
+
+	public void setNutrients(Nutrients nutrients) {
+		this.nutrients = nutrients;
 	}
 
 	@Override

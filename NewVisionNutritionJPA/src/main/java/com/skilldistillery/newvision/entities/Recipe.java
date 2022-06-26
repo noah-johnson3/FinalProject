@@ -36,18 +36,7 @@ public class Recipe {
 
 	private String name;
 
-	private Double protein;
-
-	private Double carbs;
-
-	private Double fats;
-
-	private Integer sodium;
-
-	private Integer sugar;
-
-	private Double calories;
-
+	
 	@CreationTimestamp
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
@@ -112,53 +101,6 @@ public class Recipe {
 		this.name = name;
 	}
 
-	public Double getProtein() {
-		return protein;
-	}
-
-	public void setProtein(Double protein) {
-		this.protein = protein;
-	}
-
-	public Double getCarbs() {
-		return carbs;
-	}
-
-	public void setCarbs(Double carbs) {
-		this.carbs = carbs;
-	}
-
-	public Double getFats() {
-		return fats;
-	}
-
-	public void setFats(Double fats) {
-		this.fats = fats;
-	}
-
-	public Integer getSodium() {
-		return sodium;
-	}
-
-	public void setSodium(Integer sodium) {
-		this.sodium = sodium;
-	}
-
-	public Integer getSugar() {
-		return sugar;
-	}
-
-	public void setSugar(Integer sugar) {
-		this.sugar = sugar;
-	}
-
-	public Double getCalories() {
-		return calories;
-	}
-
-	public void setCalories(Double calories) {
-		this.calories = calories;
-	}
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
@@ -217,12 +159,6 @@ public class Recipe {
 		return id == other.id;
 	}
 
-	@Override
-	public String toString() {
-		return "Recipe [id=" + id + ", link=" + link + ", timeRequired=" + timeRequired + ", recipeText=" + recipeText
-				+ ", name=" + name + ", protein=" + protein + ", carbs=" + carbs + ", fats=" + fats + ", sodium="
-				+ sodium + ", sugar=" + sugar + ", calories=" + calories + ", createdAt=" + createdAt + ", updatedAt="
-				+ updatedAt + ", imageUrl=" + imageUrl + ", user=" + user + "]";
-	}
+	
 
 }

@@ -24,7 +24,15 @@
       <div class="tracker">
         <div id=""addMeal>
           <form name="addMeal" *ngIf="newMeal">
-            <!-- <input class="col form-control" type="text" name="meal" [(ngModel)]="newMeal."> -->
+
+            <input type="number" min="0" name="calories" [(ngModel)]="newMealNutrients.calories"
+                placeholder="Calories">
+            <input type="number" min="0" name="protein" [(ngModel)]="newMealNutrients.protein" placeholder="Protein">
+            <input type="number" min="0" name="carbs" [(ngModel)]="newMealNutrients.carbs" placeholder="Carbs">
+            <input type="number" min="0" name="fats" [(ngModel)]="newMealNutrients.fats" placeholder="Fats">
+            <input type="number" min="0" name="sodium" [(ngModel)]="newMealNutrients.sodium" placeholder="Sodium">
+            <input type="number" min="0" name="sugar" [(ngModel)]="newMealNutrients.sugar" placeholder="Sugar">
+            <button class="submit" (click)="addMeal(newMeal)">Add a new Meal</button>
 
           </form>
 

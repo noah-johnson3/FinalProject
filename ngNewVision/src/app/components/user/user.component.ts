@@ -1,3 +1,5 @@
+import { Nutrients } from './../../models/nutrients';
+import { NutrientsService } from './../../services/nutrients.service';
 import { MealTypeService } from './../../services/meal-type.service';
 import { MealService } from './../../services/meal.service';
 import { TrackedDay } from './../../models/tracked-day';
@@ -9,6 +11,7 @@ import { User } from 'src/app/models/user';
 import { GenderService } from 'src/app/services/gender.service';
 import { Gender } from 'src/app/models/gender';
 import { Meal } from 'src/app/models/meal';
+
 
 @Component({
   selector: 'app-user',
@@ -27,11 +30,12 @@ export class UserComponent implements OnInit {
   amr: number = 0;
   displayDay : TrackedDay | null = null;
   newMeal: Meal = new Meal();
+  newMealNutrients: Nutrients = new Nutrients();
 
   //************************ Setup Methods ********************* */
   constructor(private auth: AuthService, private userServ: UserService,
     private tds: TrackedDayService, private genderServ: GenderService,
-    private mealServ: MealService, private mts: MealTypeService) { }
+    private mealServ: MealService, private mts: MealTypeService, private nts: NutrientsService) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -79,6 +83,47 @@ export class UserComponent implements OnInit {
   }
   cancelDetails(){
     this.displayDay = null;
+  }
+
+  checkCurrentDay(): boolean  {
+  let today = new Date();
+  let result = false;
+
+  for (let day of this.trackedDays){
+    if(day.day.getFullYear() == today.getFullYear()) {
+      if(day.day.getMonth() == today.getMonth()) {
+        if(day.day.getDay() == today.getDay()) {
+          result = true;
+        }
+      }
+    }
+  }
+  return result;
+  }
+
+  getCurrentDay(): TrackedDay {
+    let today = new Date();
+    let result = new TrackedDay;
+
+  for (let day of this.trackedDays){
+    if(day.day.getFullYear() == today.getFullYear()) {
+      if(day.day.getMonth() == today.getMonth()) {
+        if(day.day.getDay() == today.getDay()) {
+          result = day;
+        }
+      }
+    }
+  }
+  return result;
+
+  }
+
+  createCurrentDay(): void {
+    let today = new TrackedDay;
+    today.day = new Date();
+    if(!this.checkCurrentDay) {
+      this.createTrackedDay(today);
+    }
   }
 
   //*********************Service Methods ************ */
@@ -135,6 +180,8 @@ export class UserComponent implements OnInit {
   }
 
   addMeal(meal: Meal) {
+    meal.trackDay = this.getCurrentDay();
+    meal.nutrients = this.newMealNutrients;
     this.mealServ.create(meal).subscribe({
       next: (meals)=>{
         this.getTrackedDays();
@@ -142,6 +189,17 @@ export class UserComponent implements OnInit {
       },
       error: (fail)=>{
         console.error('ERROR in creating a new Meal');
+        console.error(fail);
+      }
+    })
+  }
+ createTrackedDay(td: TrackedDay) {
+    this.tds.create(td).subscribe({
+      next: (tds)=>{
+        this.getTrackedDays();
+      },
+      error: (fail)=>{
+        console.error('ERROR in creating a new Day');
         console.error(fail);
       }
     })

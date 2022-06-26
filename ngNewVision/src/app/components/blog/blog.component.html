@@ -21,13 +21,30 @@
           <button (click)="searchByAuthor(author)">Author Search:</button><br>
           <input type="text" name="author" [(ngModel)]="author">
         </form>
+        <button (click)="startCreateBlog()" >Create New Blog</button>
       </div>
       <div class="row">
         <p (click)="selectBlog(blog)" *ngFor="let blog of blogs">{{blog.title}}</p>
       </div>
     </div>
     <div class="col-sm-8">
-      <p>{{displayBlog?.content}}</p>
+      <div *ngIf="!creatingBlog">
+        <p>{{displayBlog?.content}}</p>
+      </div>
+      <div *ngIf="creatingBlog">
+        <form>
+          <input type ="text" name="title" [(ngModel)]="newBlog.title" >
+          <textarea name="content" [(ngModel)]="newBlog.content">Blog Content</textarea>
+          <input type ="text" name="imageLink" [(ngModel)]="newBlog.imageLink" >
+          <select name="newBlogTopic" [(ngModel)]="newBlogTopic">
+              <option *ngFor="let topic of topics" [ngValue]="topic" > {{topic.name}}</option>
+          </select>
+          <p *ngFor="let topic of newBlogTopics">{{topic.name}}</p>
+        </form>
+
+        <button (click)="createBlog(newBlog)" >Submit</button>
+        <button (click)="cancelCreateBlog()">Cancel</button>
+      </div>
     </div>
 
 

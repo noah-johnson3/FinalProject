@@ -23,7 +23,10 @@ export class BlogComponent implements OnInit {
   searchTopic: Topic | null = null;
   loggedInUser: User | null = null;
   author: string = '';
-
+  newBlog: Blog = new Blog();
+  creatingBlog: boolean = false;
+  newBlogTopics:Topic [] = [];
+  newBlogTopic: Topic = new Topic();
 
 
 
@@ -42,6 +45,33 @@ export class BlogComponent implements OnInit {
     this.displayBlog = blog;
   }
 
+  startCreateBlog(){
+    this.creatingBlog = true;
+  }
+  cancelCreateBlog(){
+    this.creatingBlog = false;
+    this.newBlog = new Blog();
+  }
+
+  addNewBlogTopic(topic : Topic){
+    this.newBlogTopics.push(topic);
+    this.newBlogTopic = new Topic();
+  }
+  removeNewBlogTopic(topic : Topic){
+    if(this.newBlogTopics){
+      for(let i=0; i< this.newBlogTopics.length; i ++){
+        this.newBlogTopics.slice(i, 1);
+      }
+    }
+  }
+  removeBlogTopic(topic: Topic){
+    // if(this.newBlogTopics){
+    //   for(let i=0; i< this.newBlogTopics.length; i ++){
+    //     this.newBlogTopics.slice(i, 1);
+    //   }
+    // }
+
+  }
 
   //******************   Service Methods  *************************** */
   indexBlogs(): void {
@@ -96,7 +126,21 @@ export class BlogComponent implements OnInit {
     }
   }
 
-
+  createBlog(blog : Blog){
+    blog.topics = this.newBlogTopics;
+    this.blogServ.create(blog).subscribe({
+      next: () => {
+        this.indexBlogs();
+        this.newBlogTopics = [];
+        this.newBlogTopic = new Topic();
+        this.cancelCreateBlog();
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
 
   commentsByBlog(): void{
     if(this.displayBlog){

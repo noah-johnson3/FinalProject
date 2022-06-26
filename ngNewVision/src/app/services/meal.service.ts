@@ -56,7 +56,7 @@ export class MealService {
       catchError((err: any) => {
         console.log(err);
         return throwError(
-          () => new Error('error creating goal ' + err)
+          () => new Error('error creating meal' + err)
         );
       })
     );

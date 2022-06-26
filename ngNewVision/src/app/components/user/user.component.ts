@@ -13,6 +13,7 @@ import { User } from 'src/app/models/user';
 import { GenderService } from 'src/app/services/gender.service';
 import { Gender } from 'src/app/models/gender';
 import { Meal } from 'src/app/models/meal';
+import { MealType } from 'src/app/models/meal-type';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class UserComponent implements OnInit {
   newMealIngredient: Ingredient[] = [];
   allIngredient: Ingredient[] = [];
   newIngredient: Ingredient = new Ingredient();
+  mealTypes: MealType [] = [];
 
 
   //************************ Setup Methods ********************* */
@@ -49,6 +51,8 @@ export class UserComponent implements OnInit {
     this.getTrackedDays();
     this.indexGender();
     this.indexIngred();
+    this.indexMealTypes();
+
 
   }
 
@@ -96,26 +100,29 @@ export class UserComponent implements OnInit {
   checkCurrentDay(): boolean  {
   let today = new Date();
   let result = false;
-
+  console.log(today);
   for (let day of this.trackedDays){
+    console.log(day.day)
     if(Number.parseInt(day.day.toString().substring(0,4)) == today.getFullYear()) {
-      if(Number.parseInt(day.day.toString().substring(5,7)) == today.getMonth()) {
+
+      if(Number.parseInt(day.day.toString().substring(5,7)) == (today.getMonth() + 1)) {
         if(Number.parseInt(day.day.toString().substring(8,10)) == today.getDate()) {
           result = true;
         }
       }
     }
   }
+  console.log(result)
   return result;
   }
 
   getCurrentDay(): TrackedDay {
     let today = new Date();
-    let result = new TrackedDay;
+    let result = new TrackedDay();
 
   for (let day of this.trackedDays){
     if(Number.parseInt(day.day.toString().substring(0,4)) == today.getFullYear()) {
-      if(Number.parseInt(day.day.toString().substring(5,7)) == today.getMonth()) {
+      if(Number.parseInt(day.day.toString().substring(5,7)) == (today.getMonth()+1)) {
         if(Number.parseInt(day.day.toString().substring(8,10)) == today.getDate()) {
           result = day;
         }
@@ -127,15 +134,18 @@ export class UserComponent implements OnInit {
   }
 
   createCurrentDay(): void {
-    let today = new TrackedDay;
+    let today = new TrackedDay();
     today.day = new Date();
-    if(!this.checkCurrentDay) {
+    console.log(today.day)
+    if(!this.checkCurrentDay()) {
+      console.log("starting")
       this.createTrackedDay(today);
     }
   }
 
   addNewIngredientToMeal(ingred: Ingredient) {
     this.newMealIngredient.push(ingred);
+    this.newIngredient = new Ingredient();
   }
   removeIngredient(ingred: Ingredient) {
     if(this.newMealIngredient) {
@@ -166,6 +176,9 @@ export class UserComponent implements OnInit {
     this.tds.indexByUser().subscribe({
       next: (trackedDays) => {
         this.trackedDays = trackedDays;
+        if(!this.checkCurrentDay()){
+          this.createCurrentDay();
+        }
       },
       error: (problem) => {
         console.error('HttpComponent.loadProducts(): error loading products:');
@@ -189,6 +202,7 @@ export class UserComponent implements OnInit {
     });
   }
   }
+
   indexGender(): void{
     this.genderServ.index().subscribe({
       next: (genders) => {
@@ -209,6 +223,7 @@ export class UserComponent implements OnInit {
       next: (meals)=>{
         this.getTrackedDays();
         this.newMeal = new Meal();
+
       },
       error: (fail)=>{
         console.error('ERROR in creating a new Meal');
@@ -217,8 +232,9 @@ export class UserComponent implements OnInit {
     })
   }
  createTrackedDay(td: TrackedDay) {
+  console.log("creating new tracked day")
     this.tds.create(td).subscribe({
-      next: (tds)=>{
+      next: ()=>{
         this.getTrackedDays();
       },
       error: (fail)=>{
@@ -232,6 +248,30 @@ export class UserComponent implements OnInit {
     this.ingServ.index().subscribe({
       next: (ingredient) => {
        this.allIngredient = ingredient;
+      },
+      error: (problem) => {
+        console.error('HttpComponent.reload(): error registering');
+        console.error(problem);
+      }
+    });
+  }
+
+  indexMealTypes(){
+    this.mts.index().subscribe({
+      next: (allMealTypes) => {
+       this.mealTypes = allMealTypes;
+      },
+      error: (problem) => {
+        console.error('HttpComponent.reload(): error registering');
+        console.error(problem);
+      }
+    });
+  }
+
+  removeMeal(meal: Meal){
+    this.mealServ.destroy(meal.id).subscribe({
+      next: () => {
+       this.getTrackedDays();
       },
       error: (problem) => {
         console.error('HttpComponent.reload(): error registering');

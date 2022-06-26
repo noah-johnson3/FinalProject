@@ -65,12 +65,11 @@
               <tr>
                 <td>{{selectedRecipe.name}}</td>
                 <td>{{selectedRecipe.timeRequired}} mintues</td>
-                <td>{{selectedRecipe.calories}}</td>
-                <td>{{selectedRecipe.protein}}g</td>
-                <td>{{selectedRecipe.carbs}}g</td>
-                <td>{{selectedRecipe.fats}}g</td>
-                <td>{{selectedRecipe.sodium}}mg</td>
-                <td>{{selectedRecipe.sugar}}g</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>Ingredients:</td>
@@ -96,12 +95,6 @@
               <tr>
                 <th>Recipe Name</th>
                 <th>Time Required</th>
-                <th>Calories</th>
-                <th>Protein(g)</th>
-                <th>Carbs(g)</th>
-                <th>Fats(g)</th>
-                <th>Sodium(mg)</th>
-                <th>Sugar(g)</th>
               </tr>
             </thead>
             <tbody>
@@ -109,22 +102,11 @@
                 <td><input type="text" name="name" [(ngModel)]="selectedRecipe.name" placeholder="Name of Recipe"></td>
                 <td> <input type="number" min="0" name="timeRequired" [(ngModel)]="selectedRecipe.timeRequired"
                     placeholder="Time Required"></td>
-                <td><input type="number" min="0" name="calories" [(ngModel)]="selectedRecipe.calories"
-                    placeholder="Calories">
-                </td>
-                <td><input type="number" min="0" name="protein" [(ngModel)]="selectedRecipe.protein" placeholder="">
-                </td>
-                <td><input type="number" min="0" name="carbs" [(ngModel)]="selectedRecipe.carbs" placeholder="Carbs">
-                </td>
-                <td><input type="number" min="0" name="fats" [(ngModel)]="selectedRecipe.fats" placeholder="Fats"></td>
-                <td><input type="number" min="0" name="sodium" [(ngModel)]="selectedRecipe.sodium" placeholder="Sodium">
-                </td>
-                <td><input type="number" min="0" name="sugar" [(ngModel)]="selectedRecipe.sugar" placeholder="Sugar">
-                </td>
+
               </tr>
               <tr>
                 <td>Ingredients currently in recipe:</td>
-                <td colspan="7"><span *ngFor="let ing of selectedRecipe.ingredients">{{ing.name}} <button (click)="removeIngredient(ing)">X</button> </span></td>
+                <td ><span *ngFor="let ing of selectedRecipe.ingredients">{{ing.name}} <button (click)="removeIngredient(ing)">X</button> </span><br></td>
               </tr>
               <tr>
                 <td>Ingredients:<br>
@@ -160,12 +142,7 @@
 
                 <th>Recipe Name</th>
                 <th>Time Required</th>
-                <th>Calories</th>
-                <th>Protein(g)</th>
-                <th>Carbs(g)</th>
-                <th>Fats(g)</th>
-                <th>Sodium(mg)</th>
-                <th>Sugar(g)</th>
+
               </tr>
             </thead>
             <tbody>
@@ -173,26 +150,18 @@
                 <td><input type="text" name="name" [(ngModel)]="newRecipe.name" placeholder="Name of Recipe"></td>
                 <td> <input type="number" min="0" name="timeRequired" [(ngModel)]="newRecipe.timeRequired"
                     placeholder="Time Required"></td>
-                <td><input type="number" min="0" name="calories" [(ngModel)]="newRecipe.calories"
-                    placeholder="Calories"></td>
-                <td><input type="number" min="0" name="protein" [(ngModel)]="newRecipe.protein" placeholder=""></td>
-                <td><input type="number" min="0" name="carbs" [(ngModel)]="newRecipe.carbs" placeholder="Carbs"></td>
-                <td><input type="number" min="0" name="fats" [(ngModel)]="newRecipe.fats" placeholder="Fats"></td>
-                <td><input type="number" min="0" name="sodium" [(ngModel)]="newRecipe.sodium" placeholder="Sodium"></td>
-                <td><input type="number" min="0" name="sugar" [(ngModel)]="newRecipe.sugar" placeholder="Sugar"></td>
               </tr>
               <tr>
-                <td>Possible User info</td>
-                <td class="recipe-text" colspan="7"><textarea type="text" name="recipeText"
+                <td class="recipe-text" colspan="2"><textarea type="text" name="recipeText"
                     [(ngModel)]="newRecipe.recipeText" placeholder="Recipe Instructions"></textarea></td>
               </tr>
               <tr>
                 <td>Ingredients currently in recipe:</td>
-                <td colspan="7"><span *ngFor="let ing of newRecipeIngredients">{{ing.name}} <button (click)="removeIngredient(ing)">X</button> </span></td>
+                <td ><span *ngFor="let ing of newRecipeIngredients">{{ing.name}} <button (click)="removeIngredient(ing)">X</button> </span></td>
               </tr>
               <tr>
                 <td>Ingredients:<br>
-                <td colspan="7">
+                <td >
                 <select name="ingredient" [(ngModel)]="ingredientToBeAdded">
                     <option *ngFor="let ingredient of allIngredients" [ngValue]="ingredient" >{{ingredient.name}}</option>
                   </select>

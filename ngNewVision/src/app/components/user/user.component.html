@@ -24,7 +24,12 @@
       <div class="tracker">
 
         <div *ngFor="let day of trackedDays" class="row">
-          <button>{{day.day}}  </button>
+          <button (click)="showDayDetails(day)" >{{day.day.toString().substring(0,10)}}  </button>
+          <div id="dayDetails" *ngIf="displayDay == day"  >
+              <div *ngFor="let meal of displayDay.meals">{{meal.mealType?.name}} :
+                <span>{{meal.recipe?.calories}} </span>
+              </div>
+          </div>
         </div>
 
 

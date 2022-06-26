@@ -92,7 +92,7 @@ export class RecipesComponent implements OnInit {
         }
       }
     }
-    if(this.selectedRecipe){
+    else if(this.selectedRecipe){
       for(let idx = 0; idx < this.selectedRecipe.ingredients.length; idx ++){
         if(this.selectedRecipe.ingredients[idx] == ing){
             this.selectedRecipe.ingredients.splice(idx, 1);
@@ -108,7 +108,7 @@ export class RecipesComponent implements OnInit {
       if(this.newRecipeIngredients){
         this.newRecipeIngredients.push(this.ingredientToBeAdded);
       }
-        if(this.selectedRecipe){
+       else if(this.selectedRecipe){
         this.selectedRecipe.ingredients.push(this.ingredientToBeAdded);
         }
       }

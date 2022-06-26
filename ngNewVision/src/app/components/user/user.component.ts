@@ -24,7 +24,7 @@ export class UserComponent implements OnInit {
   editUser: User | null = null;
   genders: Gender [] = [];
   amr: number = 0;
-
+  displayDay : TrackedDay | null = null;
 
   //************************ Setup Methods ********************* */
   constructor(private auth: AuthService, private userServ: UserService,
@@ -70,6 +70,15 @@ export class UserComponent implements OnInit {
   cancelEdit(){
     this.editing = false;
   }
+  showDayDetails(day : TrackedDay){
+    if(day){
+      this.displayDay = day;
+    }
+  }
+  cancelDetails(){
+    this.displayDay = null;
+  }
+
   //*********************Service Methods ************ */
   getUser(){
     this.userServ.getLoggedInUser().subscribe({

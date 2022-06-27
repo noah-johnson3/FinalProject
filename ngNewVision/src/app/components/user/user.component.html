@@ -2,27 +2,64 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="row">
-        <h3>Placeholder</h3>
+        <h3>{{loggedInUser?.username}}</h3>
 
       </div>
       <div class="row">
-        <img src="https://farm8.staticflickr.com/7037/6802898136_932e900b5e_z.jpg"
+        <img *ngIf="loggedInUser?.imageUrl" src="{{loggedInUser?.imageUrl}}">
+        <img *ngIf="!loggedInUser?.imageUrl" src="https://farm8.staticflickr.com/7037/6802898136_932e900b5e_z.jpg"
         style="height:250px; width:350px" />
 
 
       </div>
       <div class="row">
-        <h3>{{loggedInUser?.username}}</h3>
-        <h3>{{loggedInUser?.email}}</h3>
-        <h3>{{loggedInUser?.firstName}}</h3>
-        <h3>{{loggedInUser?.lastName}}</h3>
-        <button (click)="showEdit()">Edit User Details</button>
+
+        <h5>{{loggedInUser?.email}}</h5>
+        <h5>{{loggedInUser?.firstName}} {{loggedInUser?.lastName}}</h5>
 
       </div>
+      <div class="row">
+        <h3>Your Goals: </h3>
+        <ul>
+          <li *ngFor="let goal of loggedInUser?.goals"><span *ngIf="!goal.achieved">{{goal.name}}
+            <ul>
+              <li>{{goal.description}}</li>
+              <li>{{goal.weight}}</li>
+              <li><button class="bg bg-success" (click)="achieveGoal(goal)">Achieve!</button></li>
+            </ul>
+          </span>
+          </li>
+        </ul>
+        <h3>Your Achievements: </h3>
+        <ul>
+          <li *ngFor="let goal of loggedInUser?.goals"><span *ngIf="goal.achieved">{{goal.name}}
+            <ul>
+              <li>{{goal.description}}</li>
+              <li>{{goal.dateAchieved}}</li>
+            </ul>
+          </span>
+          </li>
+        </ul>
+      </div>
+      <div id="newGoal">
+        <h3>Create New Goal:</h3>
+        <label>Name: </label><input type="text" name="name" [(ngModel)]="newGoal.name"><br>
+        <label>Description: </label><input type="text" name="description" [(ngModel)]="newGoal.description"><br>
+        <button (click)="createNewGoal(newGoal)" >Add Goal</button>
+      </div>
+
     </div>
     <div class="col-sm-8">
+      <div class="row">
+        <h3>
+        <button (click)="showTracker()">Nutrition Tracker</button>
+        <button (click)="showAddMeal()">Add Meal</button>
+        <button (click)="viewRecipes()" >View Recipes</button>
+        <button (click)="showEdit()" >Update Info</button>
+        </h3>
+      </div>
       <div class="tracker">
-        <div id=""addMeal>
+        <div id="addMeal" *ngIf="showingAddMeal" >
           <form name="addMealByNutrient" *ngIf="newMeal">
             <label>Meal type: </label><select name="mealType" [(ngModel)]="newMeal.mealType">
               <option *ngFor="let mealType of mealTypes" [ngValue]="mealType" >{{mealType.name}}</option>
@@ -53,14 +90,16 @@
 
         </div>
 
-        <div *ngFor="let day of trackedDays" class="row">
-          <button (click)="showDayDetails(day)" >{{day.day.toString().substring(0,10)}}  </button>
-          <div id="dayDetails" *ngIf="displayDay == day"  >
+        <div  *ngIf="showingTracker">
+          <div *ngFor="let day of trackedDays" class="row"  >
+            <button (click)="showDayDetails(day)" >{{day.day.toString().substring(0,10)}}  </button>
+            <div id="dayDetails" *ngIf="displayDay == day"  >
               <div *ngFor="let meal of displayDay.meals">
                 <button (click)="removeMeal(meal)" >X</button>
                 {{meal.mealType?.name}} :
 
               </div>
+            </div>
           </div>
         </div>
 
@@ -74,6 +113,8 @@
           <input class="col form-control" type="text" name="lastName" [(ngModel)]="editUser.lastName" placeholder="Last Name"/><br>
           <label for="email">Email Address</label>
           <input class="col form-control" type="text" name="email" [(ngModel)]="editUser.email" placeholder="Email Address"/><br>
+          <label for="imageUrl">Profile picture url</label>
+          <input class="col form-control" type="text" name="imageUrl" [(ngModel)]="editUser.imageUrl" placeholder="Image Url"/><br>
           <label for="height">Height in Inches</label>
           <input class="col form-control" type="number" name="height" [(ngModel)]="editUser.height" placeholder="Height in Inches"/><br>
           <label for="weight">Weight in lbs</label>
@@ -97,6 +138,20 @@
           <button (click)="updateUser(editUser)">Update</button><button (click)="cancelEdit()">Cancel</button>
         </form>
       </div>
+
+      <div id="recipes" *ngIf="showingRecipes">
+        <h4>Your Favorited Recipes: </h4>
+        <ul>
+          <li  (click)="showRecipe(recipe)" *ngFor="let recipe of loggedInUser?.recipes">{{recipe.name}} : {{recipe.timeRequired}} mins</li>
+        </ul>
+        <div *ngIf="selectedRecipe" >
+            <h3>{{selectedRecipe.name}}</h3>
+            <p>{{selectedRecipe.recipeText}}</p>
+
+        </div>
+      </div>
+
+
     </div>
 
 

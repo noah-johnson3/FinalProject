@@ -1,3 +1,5 @@
+import { GoalService } from './../../services/goal.service';
+import { RecipeService } from './../../services/recipe.service';
 import { IngredientService } from './../../services/ingredient.service';
 import { Ingredient } from './../../models/ingredient';
 import { Nutrients } from './../../models/nutrients';
@@ -14,6 +16,8 @@ import { GenderService } from 'src/app/services/gender.service';
 import { Gender } from 'src/app/models/gender';
 import { Meal } from 'src/app/models/meal';
 import { MealType } from 'src/app/models/meal-type';
+import { Recipe } from 'src/app/models/recipe';
+import { Goal } from 'src/app/models/goal';
 
 
 @Component({
@@ -38,13 +42,18 @@ export class UserComponent implements OnInit {
   allIngredient: Ingredient[] = [];
   newIngredient: Ingredient = new Ingredient();
   mealTypes: MealType [] = [];
+  showingRecipes: boolean = false;
+  showingTracker: boolean = true;
+  showingAddMeal: boolean = false;
+  selectedRecipe: Recipe | null = null;
+  newGoal: Goal = new Goal();
 
 
   //************************ Setup Methods ********************* */
   constructor(private auth: AuthService, private userServ: UserService,
     private tds: TrackedDayService, private genderServ: GenderService,
     private mealServ: MealService, private mts: MealTypeService, private nts: NutrientsService,
-    private ingServ: IngredientService) { }
+    private ingServ: IngredientService, private recipeServ: RecipeService, private goalServ: GoalService) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -52,11 +61,35 @@ export class UserComponent implements OnInit {
     this.indexGender();
     this.indexIngred();
     this.indexMealTypes();
+    this.getFavoriteRecipes();
+
 
 
   }
 
   //******************** Page Dynamics Methods  ******************** */
+
+  showTracker(){
+    this.showingTracker = true;
+    this.showingRecipes = false;
+    this.showingAddMeal = false;
+    this.editing = false;
+    this.editUser = null;
+  }
+  viewRecipes(){
+    this.showingTracker = false;
+    this.showingRecipes = true;
+    this.showingAddMeal = false;
+    this.editing = false;
+    this.editUser = null;
+  }
+  showAddMeal(){
+    this.showingTracker = false;
+    this.showingRecipes = false;
+    this.showingAddMeal = true;
+    this.editing = false;
+    this.editUser = null;
+  }
 
   calculateMetabolicRate(): number {
     let bmr = 0;
@@ -84,6 +117,15 @@ export class UserComponent implements OnInit {
   showEdit(){
     this.editing = true;
     this.editUser = this.loggedInUser;
+    this.showingRecipes = false;
+    this.showingAddMeal = false;
+    this.showingTracker = false
+  }
+  showRecipe(recipe: Recipe){
+    this.selectedRecipe = recipe;
+  }
+  stopShowRecipe(recipe: Recipe){
+    this.selectedRecipe = null;
   }
   cancelEdit(){
     this.editing = false;
@@ -164,6 +206,7 @@ export class UserComponent implements OnInit {
       next: (user) => {
         this.loggedInUser = user;
         this.calculateAge();
+        this.getUserGoals();
       },
       error: (problem) => {
         console.error('HttpComponent.loadProducts(): error loading products:');
@@ -194,6 +237,7 @@ export class UserComponent implements OnInit {
         this.loggedInUser = user;
         this.calculateAge();
         this.editing = false;
+        this.showingTracker = true;
       },
       error: (problem) => {
         console.error('HttpComponent.loadProducts(): error loading products:');
@@ -223,6 +267,20 @@ export class UserComponent implements OnInit {
       next: (meals)=>{
         this.getTrackedDays();
         this.newMeal = new Meal();
+
+      },
+      error: (fail)=>{
+        console.error('ERROR in creating a new Meal');
+        console.error(fail);
+      }
+    })
+  }
+  getFavoriteRecipes() {
+    this.recipeServ.findUserFavorites().subscribe({
+      next: (favRecipes)=>{
+        if(this.loggedInUser){
+          this.loggedInUser.recipes = favRecipes;
+        }
 
       },
       error: (fail)=>{
@@ -279,5 +337,44 @@ export class UserComponent implements OnInit {
       }
     });
   }
+  createNewGoal(goal: Goal){
+    this.goalServ.create(goal).subscribe({
+      next: () => {
+        this.getUserGoals();
+      },
+      error: (problem) => {
+        console.error('HttpComponent.reload(): error registering');
+        console.error(problem);
+      }
+    });
+  }
+  achieveGoal(goal: Goal){
+    goal.achieved = true;
+    this.goalServ.achieveGoal(goal.id, goal).subscribe({
+      next: () => {
+        this.getUserGoals();
+      },
+      error: (problem) => {
+        console.error('HttpComponent.reload(): error registering');
+        console.error(problem);
+      }
+    });
+  }
+  getUserGoals(){
+    if(this.loggedInUser?.id != null){
+      this.goalServ.indexByUser(this.loggedInUser.id).subscribe({
+        next: (goals) => {
+          if(this.loggedInUser){
+            this.loggedInUser.goals = goals;
+          }
+        },
+        error: (problem) => {
+          console.error('HttpComponent.reload(): error registering');
+          console.error(problem);
+        }
+      });
+    }
+  }
+
 
 }

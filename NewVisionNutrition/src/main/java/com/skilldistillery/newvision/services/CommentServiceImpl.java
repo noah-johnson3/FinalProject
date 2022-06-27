@@ -49,10 +49,14 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public Comment updateComment(Comment comm, String username, int id) {
 		User user = userRepo.findByUsernameEquals(username);
+		
 		Comment updatedComm = null;
+		System.out.println(comm.getId());
 		if (comm.getUser().equals(user)) {
-			Optional<Comment> op = commRepo.findById(id);
+			System.out.println(user.getFirstName());
+			Optional<Comment> op = commRepo.findById(comm.getId());
 			if (op.isPresent()) {
+				System.out.println(user.getEmail());
 				updatedComm = op.get();
 				updatedComm.setContent(comm.getContent());
 				updatedComm = commRepo.saveAndFlush(updatedComm);

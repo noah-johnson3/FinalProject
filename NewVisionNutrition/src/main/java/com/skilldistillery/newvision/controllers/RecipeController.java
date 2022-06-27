@@ -27,6 +27,22 @@ public class RecipeController {
 	@Autowired
 	private RecipeService rs;
 	
+	
+	
+	
+	@GetMapping("recipes/favorites")
+	public List<Recipe> findUserFavorites( HttpServletResponse res, Principal principal){
+		List<Recipe> recipes = null;
+		try {
+			recipes = rs.findUserFavorites(principal.getName());
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			res.setStatus(400);
+		}
+		
+		return recipes;
+	}
 	@GetMapping("recipes/time/{minutes}")
 	public List<Recipe> findByTime(@PathVariable int minutes, HttpServletResponse res){
 		List<Recipe> recipes = null;

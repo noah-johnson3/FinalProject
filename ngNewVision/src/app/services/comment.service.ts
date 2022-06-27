@@ -36,7 +36,7 @@ export class CommentService {
       })
     );
   }
-  updateBlog(id: number, comment: Comment): Observable<Comment> {
+  updateComment(id: number, comment: Comment): Observable<Comment> {
     return this.http.put<Comment>(this.url + "/" + id, comment, this.getHttpOptions()).pipe(
       catchError((err: any) => {
       console.log(err);

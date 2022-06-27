@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -23,7 +24,7 @@ public class Meal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@JsonIgnoreProperties({"meals", "user"})
+	@JsonIgnoreProperties({"meals"})
 	@ManyToOne
 	@JoinColumn(name = "tracked_day_id")
 	private TrackedDay trackDay;

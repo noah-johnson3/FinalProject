@@ -1,13 +1,13 @@
-import { UserService } from './../../services/user.service';
-import { AuthService } from './../../services/auth.service';
-import { TopicService } from './../../services/topic.service';
-import { Comment } from './../../models/comment';
-import { BlogService } from './../../services/blog.service';
 import { Component, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
 import { Topic } from 'src/app/models/topic';
 import { User } from 'src/app/models/user';
 import { CommentService } from 'src/app/services/comment.service';
+import { Comment } from './../../models/comment';
+import { AuthService } from './../../services/auth.service';
+import { BlogService } from './../../services/blog.service';
+import { TopicService } from './../../services/topic.service';
+import { UserService } from './../../services/user.service';
 
 @Component({
   selector: 'app-blog',
@@ -27,6 +27,12 @@ export class BlogComponent implements OnInit {
   creatingBlog: boolean = false;
   newBlogTopics:Topic [] = [];
   newBlogTopic: Topic = new Topic();
+  newComment: Comment = new Comment();
+  commentUnderEdit: Comment = new Comment();
+  editingComment: boolean = false;
+  newTopic: Topic = new Topic();
+  blogUnderEdit: Blog = new Blog();
+  editingBlog: boolean = false;
 
 
 
@@ -53,6 +59,15 @@ export class BlogComponent implements OnInit {
     this.newBlog = new Blog();
   }
 
+  startEditBlog(blog: Blog){
+    this.blogUnderEdit = blog;
+    this.editingBlog = true;
+  }
+  cancelEditBlog(){
+    this.blogUnderEdit = new Blog();
+    this.editingBlog = false;
+  }
+
   addNewBlogTopic(topic : Topic){
     this.newBlogTopics.push(topic);
     this.newBlogTopic = new Topic();
@@ -64,6 +79,23 @@ export class BlogComponent implements OnInit {
       }
     }
   }
+
+  showEditComment(comment: Comment){
+    this.editingComment = true;
+    this.commentUnderEdit = comment;
+  }
+  cancelEditComment(){
+    this.editingComment = false;
+    this.commentUnderEdit = new Comment();
+  }
+  addTopic(topic : Topic){
+    this.newBlogTopics.push(topic);
+    this.newTopic = new Topic();
+    this.newBlogTopic = new Topic();
+
+  }
+
+
   removeBlogTopic(topic: Topic){
     // if(this.newBlogTopics){
     //   for(let i=0; i< this.newBlogTopics.length; i ++){
@@ -91,6 +123,20 @@ export class BlogComponent implements OnInit {
     this.topicServ.listAllTopics().subscribe({
       next: (topics) => {
         this.topics = topics;
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
+  createTopic(topic: Topic): void {
+    this.topicServ.create(topic).subscribe({
+      next: (topic) => {
+        if(this.creatingBlog){
+          this.newBlogTopics.push(topic);
+        }
+          this.indexTopics();
       },
       error: (problem) => {
         console.error('HttpComponent.loadProducts(): error loading products:');
@@ -141,6 +187,48 @@ export class BlogComponent implements OnInit {
       }
     });
   }
+  updateBlog(blog : Blog){
+    blog.topics = this.newBlogTopics;
+    this.blogServ.updateBlog(blog.id, blog).subscribe({
+      next: () => {
+        this.indexBlogs();
+        this.newBlogTopics = [];
+        this.newBlogTopic = new Topic();
+        this.cancelEditBlog();
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
+  deleteBlog(id: number){
+    this.blogServ.destroy(id).subscribe({
+      next: () => {
+        this.indexBlogs();
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
+  createComment(comment : Comment){
+    comment.blog = this.displayBlog;
+    if(this.loggedInUser){
+      comment.user = this.loggedInUser;
+    }
+    this.commentServ.create(comment).subscribe({
+      next: () => {
+        this.commentsByBlog();
+        this.newComment = new Comment();
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
 
   commentsByBlog(): void{
     if(this.displayBlog){
@@ -160,6 +248,33 @@ export class BlogComponent implements OnInit {
     this.userServ.getLoggedInUser().subscribe({
       next: (user) => {
         this.loggedInUser = user;
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
+  editComment(comment : Comment){
+    if(this.loggedInUser){
+      comment.user = this.loggedInUser;
+    }
+    this.commentServ.updateComment(comment.id, comment).subscribe({
+      next: () => {
+        this.commentsByBlog();
+        this.commentUnderEdit = new Comment();
+        this.editingComment = false;
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
+  deleteComment(commentId : number){
+    this.commentServ.destroy(commentId).subscribe({
+      next: () => {
+        this.commentsByBlog();
       },
       error: (problem) => {
         console.error('HttpComponent.loadProducts(): error loading products:');

@@ -1,3 +1,4 @@
+import { UsdaService } from './../../services/usda.service';
 import { GoalService } from './../../services/goal.service';
 import { RecipeService } from './../../services/recipe.service';
 import { IngredientService } from './../../services/ingredient.service';
@@ -18,6 +19,8 @@ import { Meal } from 'src/app/models/meal';
 import { MealType } from 'src/app/models/meal-type';
 import { Recipe } from 'src/app/models/recipe';
 import { Goal } from 'src/app/models/goal';
+import { SearchQuery } from 'src/app/models/search-query';
+import { Food } from 'src/app/models/food';
 
 
 @Component({
@@ -47,13 +50,25 @@ export class UserComponent implements OnInit {
   showingAddMeal: boolean = false;
   selectedRecipe: Recipe | null = null;
   newGoal: Goal = new Goal();
+  dailyNutrients = new Nutrients();
+  //**************USDA Fields ********************/
+  searchResults: Food [] = [];
+  addedIngredients: Ingredient [] = [];
+  selectedIngredient: Ingredient = new Ingredient();
+  selectedFood: Food = new Food();
+  mealNutrients: Nutrients = new Nutrients();
+  searchQuery: string = '';
+  addedFoods: Food [] = [];
+  totalNutrients = new Nutrients();
+  creatingNewMeal: boolean = true;
 
 
   //************************ Setup Methods ********************* */
   constructor(private auth: AuthService, private userServ: UserService,
     private tds: TrackedDayService, private genderServ: GenderService,
     private mealServ: MealService, private mts: MealTypeService, private nts: NutrientsService,
-    private ingServ: IngredientService, private recipeServ: RecipeService, private goalServ: GoalService) { }
+    private ingServ: IngredientService, private recipeServ: RecipeService, private goalServ: GoalService,
+    private usdaServ: UsdaService) { }
 
   ngOnInit(): void {
     this.getUser();
@@ -71,6 +86,7 @@ export class UserComponent implements OnInit {
 
   showTracker(){
     this.showingTracker = true;
+    console.log(this.showingTracker)
     this.showingRecipes = false;
     this.showingAddMeal = false;
     this.editing = false;
@@ -133,6 +149,9 @@ export class UserComponent implements OnInit {
   showDayDetails(day : TrackedDay){
     if(day){
       this.displayDay = day;
+
+      this.dailyNutrients = this.calculateDailyNutrients(day.meals);
+
     }
   }
   cancelDetails(){
@@ -199,6 +218,29 @@ export class UserComponent implements OnInit {
       }
     }
   }
+  calculateDailyNutrients(meals: Meal []): Nutrients{
+    let nutri: Nutrients = new Nutrients();
+     nutri.protein = 0;
+     nutri.carbs = 0;
+     nutri.calories = 0;
+     nutri.fats = 0;
+     nutri.sugar = 0;
+     nutri.sodium = 0;
+     nutri.cholesterol = 0;
+    for(let ing of meals) {
+      if(ing.nutrients){
+        nutri.sodium += ing.nutrients.sodium;
+        nutri.protein += ing.nutrients.protein;
+        nutri.calories += ing.nutrients.calories;
+        nutri.carbs += ing.nutrients.carbs;
+        nutri.fats += ing.nutrients.fats;
+        nutri.sugar += ing.nutrients.sugar;
+        nutri.cholesterol += ing.nutrients.cholesterol;
+      }
+
+    }
+    return nutri;
+  }
 
   //*********************Service Methods ************ */
   getUser(){
@@ -218,6 +260,7 @@ export class UserComponent implements OnInit {
   getTrackedDays(){
     this.tds.indexByUser().subscribe({
       next: (trackedDays) => {
+        console.log("tracked days retrieved: " + trackedDays)
         this.trackedDays = trackedDays;
         if(!this.checkCurrentDay()){
           this.createCurrentDay();
@@ -261,12 +304,17 @@ export class UserComponent implements OnInit {
 
   addMeal(meal: Meal) {
     meal.trackDay = this.getCurrentDay();
-    meal.nutrients = this.newMealNutrients;
-    meal.ingredients = this.newMealIngredient;
+    meal.nutrients = this.mealNutrients;
+    meal.ingredients = this.addedIngredients;
     this.mealServ.create(meal).subscribe({
       next: (meals)=>{
         this.getTrackedDays();
         this.newMeal = new Meal();
+        this.addedFoods = [];
+        this.addedIngredients = [];
+        this.selectedIngredient = new Ingredient();
+        this.selectedFood = new Food();
+        this.mealNutrients = new Nutrients();
 
       },
       error: (fail)=>{
@@ -375,6 +423,65 @@ export class UserComponent implements OnInit {
       });
     }
   }
+// ***************************** USDA Service Methods *************************//
+
+
+  //************************* Page Dynamics */
+
+  search(query: string){
+    this.searchByKeyword(query);
+
+}
+
+addFoodToMealOrRecipe(food: Food,){
+  this.addedFoods.push(food);
+  this.addedIngredients.push(this.usdaServ.converter(food, this.selectedIngredient));
+  this.selectedIngredient = new  Ingredient();
+  this.mealNutrients = this.calculateMealRecipeNutrients(this.addedIngredients);
+  this.searchQuery = '';
+  this.searchResults = [];
+}
+
+calculateMealRecipeNutrients(ingredients: Ingredient []): Nutrients{
+  let nutri: Nutrients = new Nutrients();
+   nutri.protein = 0;
+   nutri.carbs = 0;
+   nutri.calories = 0;
+   nutri.fats = 0;
+   nutri.sugar = 0;
+   nutri.sodium = 0;
+   nutri.cholesterol = 0;
+  for(let ing of ingredients) {
+    if(ing.nutrients){
+      nutri.sodium += ing.nutrients.sodium;
+      nutri.protein += ing.nutrients.protein;
+      nutri.calories += ing.nutrients.calories;
+      nutri.carbs += ing.nutrients.carbs;
+      nutri.fats += ing.nutrients.fats;
+      nutri.sugar += ing.nutrients.sugar;
+      nutri.cholesterol += ing.nutrients.cholesterol;
+    }
+
+  }
+  return nutri;
+}
+//***********************Service Methods
+
+
+searchByKeyword(query: string): void {
+  let search = new SearchQuery(query);
+  this.usdaServ.findFoodByObjectQuery(search).subscribe({
+    next: (result) => {
+        this.searchResults = result.foods;
+
+    },
+    error: (problem) => {
+      console.error('HttpComponent.loadProducts(): error loading products:');
+      console.error(problem);
+    }
+  });
+}
+
 
 
 }

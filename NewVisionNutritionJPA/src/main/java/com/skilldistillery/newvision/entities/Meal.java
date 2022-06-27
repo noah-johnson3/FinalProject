@@ -23,7 +23,7 @@ public class Meal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@JsonIgnoreProperties({"meals"})
+	@JsonIgnoreProperties({"meals", "user"})
 	@ManyToOne
 	@JoinColumn(name = "tracked_day_id")
 	private TrackedDay trackDay;
@@ -33,7 +33,7 @@ public class Meal {
 	private MealType mealType;
 
 	@JsonIgnoreProperties({"meals"})
-	@ManyToMany
+	@ManyToMany(cascade= {CascadeType.PERSIST})
 	@JoinTable(name = "meal_ingredient", 
 	joinColumns = @JoinColumn(name = "meal_id"), 
 	inverseJoinColumns = @JoinColumn(name = "ingredient_id"))

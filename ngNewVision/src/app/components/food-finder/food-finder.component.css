@@ -1,15 +1,7 @@
-td{
-  border: 1px solid black;
-}
-th{
-  border: 1px solid black;
-}
 table {
   display: flex;
   flex-flow: column;
   width: 100%;
-  text-align: center;
-
 }
 
 thead {

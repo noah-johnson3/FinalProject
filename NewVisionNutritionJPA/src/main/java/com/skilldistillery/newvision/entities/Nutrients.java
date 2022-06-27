@@ -31,6 +31,8 @@ public class Nutrients {
 
 	private Double calories;
 	
+	private Double cholesterol;
+	
 	
 	@JsonIgnoreProperties({"nutrients", "recipes", "meals"})
 	@OneToOne(mappedBy="nutrients")
@@ -65,6 +67,20 @@ public class Nutrients {
 			return false;
 		Nutrients other = (Nutrients) obj;
 		return id == other.id;
+	}
+
+
+	
+
+	public Double getCholesterol() {
+		return cholesterol;
+	}
+
+
+
+
+	public void setCholesterol(Double cholesterol) {
+		this.cholesterol = cholesterol;
 	}
 
 

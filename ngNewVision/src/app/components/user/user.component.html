@@ -60,7 +60,7 @@
       </div>
       <div class="tracker">
         <div id="addMeal" *ngIf="showingAddMeal" >
-          <form name="addMealByNutrient" *ngIf="newMeal">
+          <!-- <form name="addMealByNutrient" *ngIf="newMeal">
             <label>Meal type: </label><select name="mealType" [(ngModel)]="newMeal.mealType">
               <option *ngFor="let mealType of mealTypes" [ngValue]="mealType" >{{mealType.name}}</option>
             </select>
@@ -86,7 +86,95 @@
             <button (click)="addNewIngredientToMeal(newIngredient)">Add Ingredient</button>
             <p *ngFor="let ing of newMealIngredient">{{ing.name}}<button (click)="removeIngredient(ing)">X</button></p>
             <button (click)="addMeal(newMeal)">Submit</button>
+          </form> -->
+
+          <div class="container" >
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel-body">
+                      <table class="table"  >
+                        <thead>
+                          <tr>
+                            <th>Meal Type: </th>
+                            <th>Calories</th>
+                            <th>Carbs</th>
+                            <th>Protein</th>
+                            <th>Fats</th>
+                            <th>Sugar</th>
+                            <th>Cholesterol</th>
+                            <th>Sodium </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <select name="mealType" [(ngModel)]="newMeal.mealType">
+                                <option *ngFor="let item of mealTypes" [ngValue]="item">{{item.name}}</option>
+                              </select>
+                            </td>
+                            <td>{{mealNutrients.calories}}</td>
+                            <td>{{mealNutrients.carbs}}</td>
+                            <td>{{mealNutrients.protein}}</td>
+                            <td>{{mealNutrients.fats}}</td>
+                            <td>{{mealNutrients.sugar}}</td>
+                            <td>{{mealNutrients.cholesterol}}</td>
+                            <td>{{mealNutrients.sodium}}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Manually enter Nutrients:
+                            </td>
+                            <td><input type="number" min="0" max="10000" name="calories" [(ngModel)]="mealNutrients.calories"></td>
+                            <td><input type="number"  min="0" max="10000" name="carbs" [(ngModel)]="mealNutrients.carbs"></td>
+                            <td><input type="number"   min="0" max="10000" name="protein" [(ngModel)]="mealNutrients.protein"></td>
+                            <td><input type="number"  min="0" max="10000"  name="fats" [(ngModel)]="mealNutrients.fats"></td>
+                            <td><input type="number" min="0" max="10000" name="sugar" [(ngModel)]="mealNutrients.sugar"></td>
+                            <td><input type="number"  min="0" max="10000" name="cholesterol" [(ngModel)]="mealNutrients.cholesterol"></td>
+                            <td><input type="number"  min="0" max="10000" name="sodium" [(ngModel)]="mealNutrients.sodium"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+          <button (click)="addMeal(newMeal)" >Add Meal</button>
+
+          <form>
+            <label>Search Foods: </label><input (keypress)="search(searchQuery)"  type="text" name="name" [(ngModel)]="searchQuery">
           </form>
+<!-- ********************************************************************************************** -->
+
+            <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel-body" *ngFor="let result of searchResults" class="table"  >
+                      <h4>{{result.description}}</h4>
+                      <p>Serving size: {{result.servingSize}} {{result.servingSizeUnit}}</p>
+                      <input type="number" min="0" max="10000" name="amount" [(ngModel)]="selectedIngredient.amount" >[g/oz]<button (click)="addFoodToMealOrRecipe(result)" >Add</button>
+                      <table>
+                        <thead>
+                          <tr>
+
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of result.foodNutrients" >
+                            <td>{{item.nutrientName}}</td>
+                            <td>{{item.value}} {{item.unitName}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+
+
+<!-- ********************************************************************************************** -->
+
 
         </div>
 
@@ -94,11 +182,45 @@
           <div *ngFor="let day of trackedDays" class="row"  >
             <button (click)="showDayDetails(day)" >{{day.day.toString().substring(0,10)}}  </button>
             <div id="dayDetails" *ngIf="displayDay == day"  >
-              <div *ngFor="let meal of displayDay.meals">
-                <button (click)="removeMeal(meal)" >X</button>
-                {{meal.mealType?.name}} :
-
-              </div>
+              <table>
+                <thead>
+                  <tr>
+                     <th>Meal</th>
+                     <th>Calories</th>
+                     <th>Carbohydrates</th>
+                     <th>Protein</th>
+                     <th>Fat</th>
+                     <th>Sugar</th>
+                     <th>Sodium</th>
+                     <th>Cholesterol</th>
+                     <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let meal of displayDay.meals" >
+                    <td>{{meal.mealType?.name}}</td>
+                    <td>{{meal.nutrients?.calories}}</td>
+                    <td>{{meal.nutrients?.carbs}}</td>
+                    <td>{{meal.nutrients?.protein}}</td>
+                    <td>{{meal.nutrients?.fats}}</td>
+                    <td>{{meal.nutrients?.sugar}}</td>
+                    <td>{{meal.nutrients?.sodium}}</td>
+                    <td>{{meal.nutrients?.cholesterol}}</td>
+                    <td> <button (click)="removeMeal(meal)" >X</button></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Daily Total</strong></td>
+                    <td >{{dailyNutrients.calories}}</td>
+                    <td>{{dailyNutrients.carbs}}</td>
+                    <td>{{dailyNutrients.protein}}</td>
+                    <td>{{dailyNutrients.fats}}</td>
+                    <td>{{dailyNutrients.sugar}}</td>
+                    <td>{{dailyNutrients.sodium}}</td>
+                    <td>{{dailyNutrients.cholesterol}}</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

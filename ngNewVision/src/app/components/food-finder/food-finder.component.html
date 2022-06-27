@@ -1,0 +1,71 @@
+<div class="container" *ngIf="creatingNewMeal" >
+  <div class="row">
+      <div class="col-md-12">
+          <div class="panel-body">
+            <table class="table"  >
+              <thead>
+                <tr>
+                  <th>Meal Type: </th>
+                  <th>Calories</th>
+                  <th>Carbohydrates</th>
+                  <th>Protein</th>
+                  <th>Fats</th>
+                  <th>Sugar</th>
+                  <th>Cholesterol</th>
+                  <th>Sodium </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <select name="mealType" [(ngModel)]="newMeal.mealType">
+                      <option *ngFor="let item of mealTypes" [ngValue]="item">{{item.name}}</option>
+                    </select>
+                  </td>
+                  <td>{{mealNutrients.calories}}</td>
+                  <td>{{mealNutrients.carbs}}</td>
+                  <td>{{mealNutrients.protein}}</td>
+                  <td>{{mealNutrients.fats}}</td>
+                  <td>{{mealNutrients.sugar}}</td>
+                  <td>{{mealNutrients.cholesterol}}</td>
+                  <td>{{mealNutrients.sodium}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+  </div>
+</div>
+
+<button (click)="createMeal(newMeal)" >Add Meal</button>
+
+<form>
+  <label>Search Foods: </label><input (keypress)="search(searchQuery)"  type="text" name="name" [(ngModel)]="searchQuery">
+</form>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-12">
+          <div class="panel-body">
+            <table *ngFor="let result of searchResults" class="table"  >
+              <thead>
+                <tr>
+                  <th>Add Food?</th>
+                  <th>Name</th>
+                  <th>Serving Size</th>
+                  <th *ngFor="let item of result.foodNutrients" >{{item.nutrientName}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="number" min="0" name="amount" [(ngModel)]="selectedIngredient.amount" >[g/oz]<button (click)="addFoodToMealOrRecipe(result)" >Add</button></td>
+                  <td>{{result.description}}</td>
+                  <td>{{result.servingSize}}{{result.servingSizeUnit}}</td>
+                  <td *ngFor="let item of result.foodNutrients" > {{item.value}}{{item.unitName}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+  </div>
+</div>

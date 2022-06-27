@@ -25,6 +25,8 @@ public class Ingredient {
 
 	private String name;
 	
+	private String portion;
+	
 	@OneToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="nutrients_id")
 	private Nutrients nutrients;
@@ -56,6 +58,16 @@ public class Ingredient {
 
 	public String getName() {
 		return name;
+	}
+	
+	
+
+	public String getPortion() {
+		return portion;
+	}
+
+	public void setPortion(String portion) {
+		this.portion = portion;
 	}
 
 	public void setName(String name) {

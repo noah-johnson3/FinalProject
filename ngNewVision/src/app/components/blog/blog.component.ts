@@ -1,13 +1,13 @@
-import { UserService } from './../../services/user.service';
-import { AuthService } from './../../services/auth.service';
-import { TopicService } from './../../services/topic.service';
-import { Comment } from './../../models/comment';
-import { BlogService } from './../../services/blog.service';
 import { Component, OnInit } from '@angular/core';
 import { Blog } from 'src/app/models/blog';
 import { Topic } from 'src/app/models/topic';
 import { User } from 'src/app/models/user';
 import { CommentService } from 'src/app/services/comment.service';
+import { Comment } from './../../models/comment';
+import { AuthService } from './../../services/auth.service';
+import { BlogService } from './../../services/blog.service';
+import { TopicService } from './../../services/topic.service';
+import { UserService } from './../../services/user.service';
 
 @Component({
   selector: 'app-blog',
@@ -30,6 +30,9 @@ export class BlogComponent implements OnInit {
   newComment: Comment = new Comment();
   commentUnderEdit: Comment = new Comment();
   editingComment: boolean = false;
+  newTopic: Topic = new Topic();
+  blogUnderEdit: Blog = new Blog();
+  editingBlog: boolean = false;
 
 
 
@@ -56,6 +59,15 @@ export class BlogComponent implements OnInit {
     this.newBlog = new Blog();
   }
 
+  startEditBlog(blog: Blog){
+    this.blogUnderEdit = blog;
+    this.editingBlog = true;
+  }
+  cancelEditBlog(){
+    this.blogUnderEdit = new Blog();
+    this.editingBlog = false;
+  }
+
   addNewBlogTopic(topic : Topic){
     this.newBlogTopics.push(topic);
     this.newBlogTopic = new Topic();
@@ -76,6 +88,13 @@ export class BlogComponent implements OnInit {
     this.editingComment = false;
     this.commentUnderEdit = new Comment();
   }
+  addTopic(topic : Topic){
+    this.newBlogTopics.push(topic);
+    this.newTopic = new Topic();
+    this.newBlogTopic = new Topic();
+
+  }
+
 
   removeBlogTopic(topic: Topic){
     // if(this.newBlogTopics){
@@ -104,6 +123,20 @@ export class BlogComponent implements OnInit {
     this.topicServ.listAllTopics().subscribe({
       next: (topics) => {
         this.topics = topics;
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
+  createTopic(topic: Topic): void {
+    this.topicServ.create(topic).subscribe({
+      next: (topic) => {
+        if(this.creatingBlog){
+          this.newBlogTopics.push(topic);
+        }
+          this.indexTopics();
       },
       error: (problem) => {
         console.error('HttpComponent.loadProducts(): error loading products:');
@@ -147,6 +180,32 @@ export class BlogComponent implements OnInit {
         this.newBlogTopics = [];
         this.newBlogTopic = new Topic();
         this.cancelCreateBlog();
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
+  updateBlog(blog : Blog){
+    blog.topics = this.newBlogTopics;
+    this.blogServ.updateBlog(blog.id, blog).subscribe({
+      next: () => {
+        this.indexBlogs();
+        this.newBlogTopics = [];
+        this.newBlogTopic = new Topic();
+        this.cancelEditBlog();
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
+  deleteBlog(id: number){
+    this.blogServ.destroy(id).subscribe({
+      next: () => {
+        this.indexBlogs();
       },
       error: (problem) => {
         console.error('HttpComponent.loadProducts(): error loading products:');

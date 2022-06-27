@@ -2,6 +2,7 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="row">
+
         <h3>{{displayBlog?.title}}</h3>
         <h3>By: <span *ngIf="!displayBlog?.user?.publicProfile">{{displayBlog?.user?.username}}</span ><span *ngIf="displayBlog?.user?.publicProfile" >{{displayBlog?.user?.firstName}} {{displayBlog?.user?.lastName}}</span></h3>
         <h4>Covered Topics:</h4>
@@ -27,18 +28,53 @@
         <p (click)="selectBlog(blog)" *ngFor="let blog of blogs">{{blog.title}}</p>
       </div>
     </div>
+
+
+
     <div class="col-sm-8">
+
       <div *ngIf="!creatingBlog">
+        <p  *ngIf="loggedInUser?.id == displayBlog?.user?.id"  ><button *ngIf="displayBlog" (click)="startEditBlog(displayBlog)" >Edit</button>
+          <button *ngIf="displayBlog" (click)="deleteBlog(displayBlog.id)"  >Delete</button>
+          </p>
         <p>{{displayBlog?.content}}</p>
       </div>
+
+
+      <div *ngIf="editingBlog">
+        <form>
+          <input type ="text" name="title" [(ngModel)]="blogUnderEdit.title" >
+          <textarea name="content" [(ngModel)]="blogUnderEdit.content">Blog Content</textarea>
+          <input type ="text" name="imageLink" [(ngModel)]="blogUnderEdit.imageLink" >
+          <select name="newBlogTopic" [(ngModel)]="newBlogTopic">
+              <option *ngFor="let topic of topics" [ngValue]="topic" > {{topic.name}}</option>
+          </select>
+          <button (click)="addTopic(newBlogTopic)">Add topic</button>
+          <label>Custom Topic</label>
+          <label>Name:</label><input type="text" name="name" [(ngModel)]="newTopic.name" >
+          <label>Description:</label><input type="text" name="description" [(ngModel)]="newTopic.description" >
+          <button (click)="createTopic(newTopic)">Add topic</button>
+          <p *ngFor="let topic of newBlogTopics">{{topic.name}}</p>
+        </form>
+
+        <button (click)="updateBlog(blogUnderEdit)" >Submit</button>
+        <button (click)="cancelEditBlog()">Cancel</button>
+      </div>
+
+
       <div *ngIf="creatingBlog">
         <form>
           <input type ="text" name="title" [(ngModel)]="newBlog.title" >
           <textarea name="content" [(ngModel)]="newBlog.content">Blog Content</textarea>
           <input type ="text" name="imageLink" [(ngModel)]="newBlog.imageLink" >
           <select name="newBlogTopic" [(ngModel)]="newBlogTopic">
-              <option *ngFor="let topic of topics" [ngValue]="topic" > {{topic.name}}</option>
+            <option *ngFor="let topic of topics" [ngValue]="topic" > {{topic.name}}</option>
           </select>
+          <button (click)="addTopic(newBlogTopic)">Add topic</button>
+          <label>Custom Topic</label>
+          <label>Name:</label><input type="text" name="name" [(ngModel)]="newTopic.name" >
+          <label>Description:</label><input type="text" name="description" [(ngModel)]="newTopic.description" >
+          <button (click)="createTopic(newTopic)">Add topic</button>
           <p *ngFor="let topic of newBlogTopics">{{topic.name}}</p>
         </form>
 
@@ -46,9 +82,10 @@
         <button (click)="cancelCreateBlog()">Cancel</button>
       </div>
     </div>
-
-
   </div>
+
+
+
   <div class="row">
     <div id="addComment">
       <textarea name="content" [(ngModel)]="newComment.content"></textarea><button (click)="createComment(newComment)" >Submit</button>

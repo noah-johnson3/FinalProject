@@ -1,3 +1,35 @@
 .site-name{
   color: rgb(63, 162, 233);
 }
+.sign-up-button{
+  background-color: #2ebee2;
+}
+.login-text{
+  color: black;
+}
+.top-left-column{
+  text-align: center;
+  bottom: 350px;
+}
+img{
+  height: 550px;
+  width: 550px;
+  text-align: right;
+}
+.row-one{
+  background: #d0ff9d;
+}
+.row-two{
+  background-color: #e02904;
+}
+.first-row-blurb{
+
+  padding: 10%;
+}
+.row-three{
+  background-color: #ff8cfb;
+}
+.middle-row-blurb{
+  text-align: right;
+  padding: 10%;
+}

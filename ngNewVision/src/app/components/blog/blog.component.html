@@ -15,14 +15,14 @@
         <h3>Blog seach options</h3>
 
         <form>
-          <button (click)="searchByTopic(searchTopic)">Search</button>
+          <button class="col form-control btn btn-info"(click)="searchByTopic(searchTopic)">Search</button>
           <select name="topic" [(ngModel)]="searchTopic">
             <option *ngFor="let topic of topics" [ngValue]="topic">{{topic.name}}</option>
           </select><br>
-          <button (click)="searchByAuthor(author)">Author Search:</button><br>
-          <input type="text" name="author" [(ngModel)]="author">
+          <button class="col form-control btn btn-info" (click)="searchByAuthor(author)">Author Search:</button><br>
+          <input class="col form-control" type="text" name="author" [(ngModel)]="author" placeholder="Geralt of Rivia">
         </form>
-        <button (click)="startCreateBlog()" >Create New Blog</button>
+        <button class="col form-control btn btn-secondary" (click)="startCreateBlog()" >Create Blog</button>
       </div>
       <div class="row">
         <p (click)="selectBlog(blog)" *ngFor="let blog of blogs">{{blog.title}}</p>

@@ -1,4 +1,15 @@
 .login{
   background-image: url("/./assets/images/FinalProjectLogo.png");
   background-repeat: no-repeat;
+  height: 600px;
+  width: 600px;
+}
+
+input {
+  width: 75%;
+  align-content: center;
+}
+
+button {
+  width: 75%;
 }

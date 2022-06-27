@@ -29,7 +29,7 @@ public class Comment {
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
-	@JsonIgnoreProperties({"trackedDays"})
+	@JsonIgnoreProperties({"trackedDays", "recipes", "comments"})
 	@JoinColumn(name = "user_id")
 	@ManyToOne
 	private User user;

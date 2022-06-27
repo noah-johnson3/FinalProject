@@ -68,6 +68,16 @@ export class RecipeService {
       })
     );
   }
+  findUserFavorites(): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(this.url + "/favorites", this.getHttpOptions()).pipe(
+      catchError((err: any) => {
+      console.log(err);
+      return throwError(
+        () => new Error(' error finding all recipes by ingredient: ' + err)
+      );
+      })
+    );
+  }
   //******************************FIX ME *************************************
   // findByNutrients(nutrition: Recipe): Observable<ArrayBuffer> {
     //   return this.http.get<ArrayBuffer>(this.url + "/nutrition", nutrition).pipe(

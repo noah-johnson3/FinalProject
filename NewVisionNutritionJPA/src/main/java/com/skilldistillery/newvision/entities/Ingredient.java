@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Ingredient {
@@ -32,7 +33,15 @@ public class Ingredient {
 	@ManyToMany
 	@JoinTable(name = "recipe_ingredient", joinColumns = @JoinColumn(name = "ingredient_id"), inverseJoinColumns = @JoinColumn(name = "recipe_id"))
 	private List<Recipe> recipes;
-
+	
+	@JsonIgnoreProperties({"ingredients", "trackDay", "mealType"})
+	@ManyToMany
+	@JoinTable(name = "meal_ingredient", 
+	joinColumns = @JoinColumn(name = "ingredient_id"), 
+	inverseJoinColumns = @JoinColumn(name = "meal_id"))
+	private List<Meal> meals;
+	
+	
 	public Ingredient() {
 		super();
 	}
@@ -68,6 +77,15 @@ public class Ingredient {
 
 	public void setNutrients(Nutrients nutrients) {
 		this.nutrients = nutrients;
+	}
+	
+
+	public List<Meal> getMeals() {
+		return meals;
+	}
+
+	public void setMeals(List<Meal> meals) {
+		this.meals = meals;
 	}
 
 	@Override

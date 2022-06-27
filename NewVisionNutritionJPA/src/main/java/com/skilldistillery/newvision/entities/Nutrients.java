@@ -32,11 +32,11 @@ public class Nutrients {
 	private Double calories;
 	
 	
-	@JsonIgnoreProperties({"nutrients"})
+	@JsonIgnoreProperties({"nutrients", "recipes", "meals"})
 	@OneToOne(mappedBy="nutrients")
 	private Ingredient ingredient;
 	
-	@JsonIgnoreProperties({"nutrients"})
+	@JsonIgnoreProperties({"nutrients", "ingredients"})
 	@JsonIgnore
 	@OneToOne(mappedBy="nutrients")
 	private Meal meal;

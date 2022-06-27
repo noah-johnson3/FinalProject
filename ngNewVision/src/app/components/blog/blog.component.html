@@ -50,11 +50,24 @@
 
   </div>
   <div class="row">
-    <div *ngFor="let comment of comments" class="comment row">
-      <div class="col-sm-2">{{comment.user?.username}}</div>
-      <div class="col-sm-10">{{comment.content}}</div>
-      <button *ngIf="loggedInUser == comment.user">Edit</button>
+    <div id="addComment">
+      <textarea name="content" [(ngModel)]="newComment.content"></textarea><button (click)="createComment(newComment)" >Submit</button>
     </div>
+
+    <div id="commentDisplay" *ngIf="!editingComment">
+      <div *ngFor="let comment of comments" class="comment row">
+        <div class="col-sm-2">{{comment.user?.username}}</div>
+        <div class="col-sm-10">{{comment.content}}</div>
+        <p  *ngIf="loggedInUser?.id == comment.user?.id" ><button (click)="showEditComment(comment)" >Edit</button>
+        <button (click)="deleteComment(comment.id)" >Delete</button>
+        </p>
+      </div>
+    </div>
+
+    <div id="editingComment" *ngIf="editingComment">
+      <textarea name="content" [(ngModel)]="commentUnderEdit.content"></textarea><button (click)="editComment(commentUnderEdit)" >Submit</button>
+    </div>
+
   </div>
   <div class="row">
 

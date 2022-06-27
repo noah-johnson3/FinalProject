@@ -14,4 +14,5 @@ public interface RecipeService {
 	Recipe updateRecipe(Recipe recipe, String username, int id);
 	boolean deletedRecipe(String username, int id);
 	List<Recipe> findAll();
+	List<Recipe> findUserFavorites(String username);
 }

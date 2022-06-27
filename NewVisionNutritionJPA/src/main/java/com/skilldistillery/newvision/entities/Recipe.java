@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -48,11 +49,17 @@ public class Recipe {
 	@Column(name = "image_url")
 	private String imageUrl;
 
+	@JsonIgnoreProperties({"recipes", "trackedDays", "goals", "comments"})
 	@JoinColumn(name = "user_id")
 	@ManyToOne
 	private User user;
 
-	@JsonIgnoreProperties({"recipes"})
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name = "user_recipe", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private List<User> users;
+	
+	@JsonIgnoreProperties({"recipes", "meals"})
 	@ManyToMany
 	@JoinTable(name = "recipe_ingredient", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
 	private List<Ingredient> ingredients;

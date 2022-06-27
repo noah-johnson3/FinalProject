@@ -27,6 +27,9 @@ export class BlogComponent implements OnInit {
   creatingBlog: boolean = false;
   newBlogTopics:Topic [] = [];
   newBlogTopic: Topic = new Topic();
+  newComment: Comment = new Comment();
+  commentUnderEdit: Comment = new Comment();
+  editingComment: boolean = false;
 
 
 
@@ -64,6 +67,16 @@ export class BlogComponent implements OnInit {
       }
     }
   }
+
+  showEditComment(comment: Comment){
+    this.editingComment = true;
+    this.commentUnderEdit = comment;
+  }
+  cancelEditComment(){
+    this.editingComment = false;
+    this.commentUnderEdit = new Comment();
+  }
+
   removeBlogTopic(topic: Topic){
     // if(this.newBlogTopics){
     //   for(let i=0; i< this.newBlogTopics.length; i ++){
@@ -141,6 +154,22 @@ export class BlogComponent implements OnInit {
       }
     });
   }
+  createComment(comment : Comment){
+    comment.blog = this.displayBlog;
+    if(this.loggedInUser){
+      comment.user = this.loggedInUser;
+    }
+    this.commentServ.create(comment).subscribe({
+      next: () => {
+        this.commentsByBlog();
+        this.newComment = new Comment();
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
 
   commentsByBlog(): void{
     if(this.displayBlog){
@@ -160,6 +189,33 @@ export class BlogComponent implements OnInit {
     this.userServ.getLoggedInUser().subscribe({
       next: (user) => {
         this.loggedInUser = user;
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
+  editComment(comment : Comment){
+    if(this.loggedInUser){
+      comment.user = this.loggedInUser;
+    }
+    this.commentServ.updateComment(comment.id, comment).subscribe({
+      next: () => {
+        this.commentsByBlog();
+        this.commentUnderEdit = new Comment();
+        this.editingComment = false;
+      },
+      error: (problem) => {
+        console.error('HttpComponent.loadProducts(): error loading products:');
+        console.error(problem);
+      }
+    });
+  }
+  deleteComment(commentId : number){
+    this.commentServ.destroy(commentId).subscribe({
+      next: () => {
+        this.commentsByBlog();
       },
       error: (problem) => {
         console.error('HttpComponent.loadProducts(): error loading products:');

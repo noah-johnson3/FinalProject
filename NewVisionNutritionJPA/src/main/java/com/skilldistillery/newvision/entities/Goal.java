@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Goal {
@@ -38,7 +38,7 @@ public class Goal {
 	private LocalDateTime createAt;
 
 	// has a user
-
+	@JsonIgnoreProperties({"goals"})
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;

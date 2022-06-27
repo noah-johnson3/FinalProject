@@ -106,4 +106,10 @@ public class RecipeServiceImpl implements RecipeService {
 
 	}
 
+	@Override
+	public List<Recipe> findUserFavorites(String username) {
+		return recipeRepo.findUserFaves(username);
+	}
+
+	
 }

@@ -22,4 +22,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Integer>{
 	
 	
 	List<Recipe> findByUser_UsernameEquals(@Param("Username")String username);
+	
+	@Query("SELECT r FROM Recipe r JOIN r.users ru WHERE ru.username = :username")
+	List<Recipe> findUserFaves(@Param("username")String username);
 }

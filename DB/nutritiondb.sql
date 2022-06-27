@@ -198,6 +198,7 @@ CREATE TABLE IF NOT EXISTS `nutrients` (
   `sugar` INT NULL,
   `calories` DECIMAL(6,2) NULL,
   `id` INT NOT NULL AUTO_INCREMENT,
+  `cholesterol` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -268,6 +269,7 @@ CREATE TABLE IF NOT EXISTS `ingredient` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(60) NOT NULL,
   `nutrients_id` INT NOT NULL,
+  `portion` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_ingredient_nutrients1_idx` (`nutrients_id` ASC),
   CONSTRAINT `fk_ingredient_nutrients1`
@@ -632,9 +634,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `nutritiondb`;
-INSERT INTO `nutrients` (`protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `id`) VALUES (9, 3, 4, 0, 0, 80, 1);
-INSERT INTO `nutrients` (`protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `id`) VALUES (2, 15, 2, 0, 0, 100, 2);
-INSERT INTO `nutrients` (`protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `id`) VALUES (0, 0, 10, 0, 0, 30, 3);
+INSERT INTO `nutrients` (`protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `id`, `cholesterol`) VALUES (9, 3, 4, 0, 0, 80, 1, NULL);
+INSERT INTO `nutrients` (`protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `id`, `cholesterol`) VALUES (2, 15, 2, 0, 0, 100, 2, NULL);
+INSERT INTO `nutrients` (`protein`, `carbs`, `fats`, `sodium`, `sugar`, `calories`, `id`, `cholesterol`) VALUES (0, 0, 10, 0, 0, 30, 3, NULL);
 
 COMMIT;
 
@@ -676,9 +678,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `nutritiondb`;
-INSERT INTO `ingredient` (`id`, `name`, `nutrients_id`) VALUES (1, 'egg', 1);
-INSERT INTO `ingredient` (`id`, `name`, `nutrients_id`) VALUES (2, 'potatoes', 2);
-INSERT INTO `ingredient` (`id`, `name`, `nutrients_id`) VALUES (3, 'vegetable oil', 3);
+INSERT INTO `ingredient` (`id`, `name`, `nutrients_id`, `portion`) VALUES (1, 'egg', 1, NULL);
+INSERT INTO `ingredient` (`id`, `name`, `nutrients_id`, `portion`) VALUES (2, 'potatoes', 2, NULL);
+INSERT INTO `ingredient` (`id`, `name`, `nutrients_id`, `portion`) VALUES (3, 'vegetable oil', 3, NULL);
 
 COMMIT;
 

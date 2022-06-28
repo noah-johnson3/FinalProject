@@ -45,10 +45,21 @@
     <div class="col-sm-8">
 
       <div *ngIf="!creatingBlog" class="display-blog"  >
-        <p  *ngIf="loggedInUser?.id == displayBlog?.user?.id"  ><button *ngIf="displayBlog" class="btn btn-primary"(click)="startEditBlog(displayBlog)" >Edit</button>
-          <button *ngIf="displayBlog" class="btn btn-danger"(click)="deleteBlog(displayBlog.id)"  >Delete</button>
+        <div class="row">
+          <div class="col-sm-6">
+            <h3>{{displayBlog.title}</h3>
+          </div>
+          <div class="col-sm-6">
+            <img *ngIf="!displayBlog?.imageLink" src="" >
+          </div>
+        </div>
+        <div class="row">
+
+          <p  *ngIf="loggedInUser?.id == displayBlog?.user?.id"  ><button *ngIf="displayBlog" class="btn btn-primary"(click)="startEditBlog(displayBlog)" >Edit</button>
+            <button *ngIf="displayBlog" class="btn btn-danger"(click)="deleteBlog(displayBlog.id)"  >Delete</button>
           </p>
-        <pre id="blog-content">{{displayBlog?.content}}</pre>
+          <pre id="blog-content">{{displayBlog?.content}}</pre>
+        </div>
       </div>
 
 

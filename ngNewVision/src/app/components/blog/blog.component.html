@@ -48,7 +48,7 @@
         <p  *ngIf="loggedInUser?.id == displayBlog?.user?.id"  ><button *ngIf="displayBlog" class="btn btn-primary"(click)="startEditBlog(displayBlog)" >Edit</button>
           <button *ngIf="displayBlog" class="btn btn-danger"(click)="deleteBlog(displayBlog.id)"  >Delete</button>
           </p>
-        <p>{{displayBlog?.content}}</p>
+        <pre id="blog-content">{{displayBlog?.content}}</pre>
       </div>
 
 

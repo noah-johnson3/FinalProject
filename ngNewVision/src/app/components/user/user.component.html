@@ -36,6 +36,7 @@
             <ul>
               <li>{{goal.description}}</li>
               <li>{{goal.dateAchieved}}</li>
+              <li><button class="btn btn-primary btn-sm" (click)="deleteGoal(goal.id)">Delete</button></li>
             </ul>
           </span>
           </li>
@@ -48,7 +49,7 @@
         <label>I want to change my weight</label><input type="checkbox" name="changeWeight" [(ngModel)]="changeWeight"><br>
         <span *ngIf="changeWeight" ><label>Goal Weight</label><input type="number" name="changeWeight" [(ngModel)]="newGoal.weight" min="0" max="999"><br></span>
 
-        <button class="btn btn-primary" (click)="createNewGoal(newGoal)" >Add Goal</button>
+        <button class="btn btn-primary btn-sm" (click)="createNewGoal(newGoal)" >Add Goal</button>
       </div>
 
     </div>

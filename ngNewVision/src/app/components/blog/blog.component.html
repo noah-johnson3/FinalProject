@@ -63,11 +63,11 @@
           <select name="newBlogTopic" [(ngModel)]="newBlogTopic">
               <option *ngFor="let topic of topics" [ngValue]="topic" > {{topic.name}}</option>
           </select>
-          <button class="btn btn-primary" (click)="addTopic(newBlogTopic)">Add topic</button><br>
+          <button class="btn btn-primary btn-sm" (click)="addTopic(newBlogTopic)">Add topic</button><br>
           <label>Custom Topic</label>
           <label>Name:</label><input class="col form-control" type="text" name="name" [(ngModel)]="newTopic.name" >
           <label>Description:</label><input class="col form-control" type="text" name="description" [(ngModel)]="newTopic.description" >
-          <button class="btn btn-primary" (click)="createTopic(newTopic)">Add topic</button>
+          <p><button class="btn btn-primary btn-sm" (click)="createTopic(newTopic)">Add topic</button></p>
           <p *ngFor="let topic of newBlogTopics">{{topic.name}}</p>
         </form>
 

@@ -446,6 +446,20 @@ export class UserComponent implements OnInit {
     }
   }
 
+  deleteGoal(goalId: number){
+    this.goalServ.destroy(goalId).subscribe({
+      next: (goalArray) => {
+
+        this.getUserGoals();
+      },
+      error: (problem) => {
+        console.error('error deleting goal: ');
+        console.error(problem);
+      }
+    });
+
+  }
+
 // ***************************** USDA Service Methods *************************//
 
 

@@ -1,11 +1,11 @@
-.top-left{
-  border-style: solid;
+.col-sm-4{
+  border-right: 1px solid gray;
 }
 
 .comment{
   text-align: center;
   background-color: rgba(232, 230, 223,.45);
-  border: white
+  border-top: white;
 
 }
 
@@ -13,11 +13,12 @@
   text-align: center;
   padding: 10px;
   background-color: rgba(232, 230, 223,.45);
-  border: white;
+  border-top: white;
 }
 
 .comment-row{
-  margin: 5px;
+ padding: 5px;
+ margin: 5px;
 }
 
 button{
@@ -38,3 +39,8 @@ button{
 /* #commentDisplay{
   text-align: center;
 } */
+
+#create-btn-blog{
+  height: 38px;
+  width: 129.53px;
+}

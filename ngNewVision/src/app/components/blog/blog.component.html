@@ -16,19 +16,27 @@
         <h3>Blog seach options</h3>
 
         <form>
-          <button class="col  btn btn-info"(click)="searchByTopic(searchTopic)">Search</button>
+          <button class="col  btn btn-outline-primary"(click)="searchByTopic(searchTopic)">Topic Search</button>
           <select name="topic" [(ngModel)]="searchTopic">
             <option *ngFor="let topic of topics" [ngValue]="topic">{{topic.name}}</option>
           </select><br>
-          <button class="col form-control btn btn-info" (click)="searchByAuthor(author)">Author Search:</button><br>
-          <input class="col form-control" type="text" name="author" [(ngModel)]="author" placeholder="Ex: Geralt of Rivia">
+
+          <input name="author" type="search" class="form-control rounded" [(ngModel)]="author" placeholder="Search By Author" aria-label="Search" aria-describedby="search-addon" />
+         <button type="button" class="btn btn-outline-primary" (click)="searchByAuthor(author)" >Author Search</button>
+
+
+
+
+          <!-- <button class="col form-control btn btn-info" (click)="searchByAuthor(author)">Author Search:</button><br> -->
+          <!-- <input class="col form-control" type="text" name="author" [(ngModel)]="author" placeholder="Ex: Geralt of Rivia"> -->
+          <button id="create-btn-blog" type="button" class="btn btn-primary" (click)="startCreateBlog()" >Create Blog</button>
         </form>
-        <button class="col form-control btn btn-info" (click)="startCreateBlog()" >Create Blog</button>
       </div>
       <div class="row">
         <p (click)="selectBlog(blog)" *ngFor="let blog of blogs">{{blog.title}}</p>
       </div>
     </div>
+
 
 
 
@@ -98,14 +106,16 @@
     <div id="commentDisplay" *ngIf="!editingComment">
       <div *ngFor="let comment of comments" class="comment-row row">
         <div class="col-sm-4 " ></div>
+        <div class="col-sm-8">
         <div class="col-sm-1 comment">{{comment.user?.username}}<br></div>
         <div class="col-sm-6 comment">{{comment.content}} <br>
-          </div>
-          <div class="col-sm-1 comment" >
-            <p  *ngIf="loggedInUser?.id == comment.user?.id" ><button class="" (click)="showEditComment(comment)" >Edit</button><br>
-              <button class="" (click)="deleteComment(comment.id)" >Delete</button>
-            </p>
-          </div>
+        </div>
+        <div class="col-sm-1 comment" >
+          <p  *ngIf="loggedInUser?.id == comment.user?.id" ><button class="" (click)="showEditComment(comment)" >Edit</button><br>
+            <button class="" (click)="deleteComment(comment.id)" >Delete</button>
+          </p>
+        </div>
+      </div>
       </div>
     </div>
 

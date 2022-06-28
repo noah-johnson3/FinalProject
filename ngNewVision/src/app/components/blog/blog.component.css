@@ -1,5 +1,6 @@
 .col-sm-4{
-  border-right: 1px solid gray;
+  border-right: 2px solid lightgray;
+  background-color: rgba(232, 230, 223,.3) ;
 }
 
 .display-blog{
@@ -7,7 +8,7 @@
 }
 .display-blog-info{
   padding: 5px;
-  background-color: rgba(232, 230, 223,.2) ;
+  border-bottom: 2px lightgray solid;
 
 }
 
@@ -50,4 +51,13 @@ button{
 #create-btn-blog{
   height: 38px;
   width: 129.53px;
+}
+
+.search-options{
+  border-bottom: 2px lightgrey solid;
+  padding: 5px;
+}
+
+#filter-option{
+  margin-left: 6px;
 }

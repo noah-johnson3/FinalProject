@@ -1,6 +1,7 @@
 .navbar{
-  background-color: #2ebee2;
+  background-color: rgba(225,153,137,255);
   color:black;
+  border-bottom: 2px lightgray solid;
 }
 
 .navbar-brand{
@@ -10,3 +11,5 @@
 .nav-link{
   color: black;
 }
+
+

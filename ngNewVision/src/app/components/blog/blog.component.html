@@ -12,8 +12,9 @@
           </div>
 
       </div>
-      <div class="row">
-        <h3>Blog seach options</h3>
+      <div class="row search-options">
+        <h5 id="filter-option">Filter:</h5>
+
 
         <form>
           <button class="col  btn btn-outline-primary"(click)="searchByTopic(searchTopic)">Topic Search</button>
@@ -33,6 +34,7 @@
         </form>
       </div>
       <div class="row">
+        <h5>Search Results:</h5>
         <p (click)="selectBlog(blog)" *ngFor="let blog of blogs">{{blog.title}}</p>
       </div>
     </div>

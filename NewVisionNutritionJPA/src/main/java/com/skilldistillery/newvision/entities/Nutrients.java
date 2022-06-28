@@ -181,6 +181,16 @@ public class Nutrients {
 	public void setMeal(Meal meal) {
 		this.meal = meal;
 	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "Nutrients [id=" + id + ", protein=" + protein + ", carbs=" + carbs + ", fats=" + fats + ", sodium="
+				+ sodium + ", sugar=" + sugar + ", calories=" + calories + ", cholesterol=" + cholesterol + ", recipe="
+				+ recipe + ", ingredient=" + ingredient + ", meal=" + meal + "]";
+	}
 	
 	
 

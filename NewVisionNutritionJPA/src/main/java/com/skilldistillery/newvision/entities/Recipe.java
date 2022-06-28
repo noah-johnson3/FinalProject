@@ -39,8 +39,9 @@ public class Recipe {
 
 	private String name;
 	
+//	@OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	@JsonIgnoreProperties({"recipe", "meal", "ingredient"})
-	@OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToOne
 	@JoinColumn(name="nutrients_id")
 	private Nutrients nutrients;
 	

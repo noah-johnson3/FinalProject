@@ -64,6 +64,7 @@ public class NutrientServiceImpl implements NutrientService {
 		if(user != null) {
 			nutrients = nr.saveAndFlush(nutrients);
 		}
+		System.out.println(nutrients);
 		return nutrients;
 	}
 

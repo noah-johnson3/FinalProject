@@ -25,6 +25,7 @@ export class NutrientsService {
   }
 
   createNutrient(nutrient: Nutrients): Observable<Nutrients> {
+    console.log(nutrient)
     return this.http.post<Nutrients>(this.url, nutrient, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.log(err);

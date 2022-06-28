@@ -203,12 +203,15 @@ export class RecipesComponent implements OnInit {
   createRecipeNutrients(nutri : Nutrients, recipe: Recipe){
     recipe.ingredients = this.newRecipeIngredients;
     recipe.nutrients = this.recipeNutrients;
+    console.log(nutri)
     this.nutriServ.createNutrient(nutri).subscribe({
       next: (nutrition) => {
+        console.log(nutrition)
         console.log(nutrition.id)
         recipe.nutrients = nutrition;
-        this.recipeNutrients = new Nutrients();
+        // this.recipeNutrients = new Nutrients();
         if(this.newRecipe){
+          console.log(recipe)
           this.createRecipe(recipe);
         }else if(this.updating){
           console.log("updating")

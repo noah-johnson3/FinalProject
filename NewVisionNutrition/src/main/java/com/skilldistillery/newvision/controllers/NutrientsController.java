@@ -105,6 +105,10 @@ public class NutrientsController {
 	
 	@PostMapping("nutrients")
 	public Nutrients createNutrients(HttpServletResponse res, @RequestBody Nutrients nutrients, Principal principal) {
+		System.out.println("*********************************************************");
+		
+		
+		System.out.println(nutrients);
 		try {
 			nutrients = nutriServ.addNutrients(nutrients, principal.getName());
 			res.setStatus(201);
@@ -112,6 +116,7 @@ public class NutrientsController {
 			e.printStackTrace();
 			res.setStatus(400);
 		}
+		System.out.println(nutrients);
 		return nutrients;
 	}
 	@PutMapping("nutrients")

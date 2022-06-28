@@ -80,6 +80,7 @@ public class RecipeServiceImpl implements RecipeService {
 				updatedRecipe.setName(recipe.getName());
 				updatedRecipe.setRecipeText(recipe.getRecipeText());
 				updatedRecipe.setTimeRequired(recipe.getTimeRequired());
+				updatedRecipe.setNutrients(recipe.getNutrients());
 				updatedRecipe = recipeRepo.saveAndFlush(updatedRecipe);
 			}
 		}

@@ -30,3 +30,8 @@ tr {
   display: table;
   table-layout: fixed;
 }
+
+.search-form button{
+  width: 50%;
+
+}

@@ -33,12 +33,14 @@ public class Nutrients {
 	
 	private Double cholesterol;
 	
+	@JsonIgnore
+	@OneToOne(mappedBy="nutrients")
+	private Recipe recipe;
 	
-	@JsonIgnoreProperties({"nutrients", "recipes", "meals"})
+	@JsonIgnore
 	@OneToOne(mappedBy="nutrients")
 	private Ingredient ingredient;
 	
-	@JsonIgnoreProperties({"nutrients", "ingredients"})
 	@JsonIgnore
 	@OneToOne(mappedBy="nutrients")
 	private Meal meal;

@@ -27,6 +27,9 @@ public class Ingredient {
 	
 	private String portion;
 	
+	
+//	@JsonIgnore
+	@JsonIgnoreProperties({"recipe", "meal", "ingredient"})
 	@OneToOne(cascade= {CascadeType.PERSIST})
 	@JoinColumn(name="nutrients_id")
 	private Nutrients nutrients;

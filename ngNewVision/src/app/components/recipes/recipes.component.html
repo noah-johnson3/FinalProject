@@ -4,7 +4,9 @@
       <div class="row">
         <a class="nav-link"><span (click)="getRecipes()">Recipes</span>
           <span *ngIf="ingredientName" (click)="getRecipesByIngredient(ingredientName)"> > {{ingredientName}}</span>
+          <span *ngIf="authorName"> > {{authorName}}</span>
           <span *ngIf="selectedRecipe"> > {{selectedRecipe?.name}}</span>
+          <span *ngIf="time"> > by time: {{time}}</span>
         </a>
 
       </div>
@@ -19,7 +21,7 @@
         </form>
       </div>
       <div class="row">
-        <img src="https://farm8.staticflickr.com/7037/6802898136_932e900b5e_z.jpg" style="height:250px; width:350px" />
+        <img src="https://farm8.staticflickr.com/7037/6802898136_932e900b5e_z.jpg" style="height:auto; width:85%%" />
 
       </div>
       <div class="row">
@@ -27,30 +29,27 @@
         <button (click)="creatingRecipe()">Create Recipe</button>
       </div>
       <div class="row">
-        <h1>Your ingredient not in our available list?</h1>
-        <input type="text" name="newIngredient" [(ngModel)]="newIngredient.name">
-        <button (click)="createIngredient(newIngredient)">Create Ingredient</button>
       </div>
     </div>
-
+    <!-- *************************************************** Recipe List ***************************************************************** -->
     <div class="col-sm-8">
       <div *ngIf="!selectedRecipe && !newRecipe">
 
         <div *ngFor="let recipeArray of arrayOfRecipeArray">
           <div class="row">
-            <div class="col-sm-4 single-recipe" *ngFor="let recipe of recipeArray" style="width: 400px">
+            <div class="col-sm-4 single-recipe" *ngFor="let recipe of recipeArray" style="width: 30%">
               <h3 (click)="selectRecipe(recipe)">{{recipe.name}}</h3>
-              <img src="{{recipe.imageUrl}}" class="img-fluid" style="height: 350px">
+              <img src="{{recipe.imageUrl}}" class="img-fluid" style="max-height: 90%">
             </div>
           </div>
         </div>
       </div>
+      <!-- ************************************************* View Details ******************************************************** -->
       <div *ngIf="selectedRecipe">
         <form>
-          <table style="max-width:1300px;" class="table" >
+          <table style="max-width:1300px;" class="table">
             <thead>
               <tr>
-
                 <th>Recipe Name</th>
                 <th>Time Required</th>
                 <th>Calories</th>
@@ -59,25 +58,28 @@
                 <th>Fats</th>
                 <th>Sodium</th>
                 <th>Sugar</th>
+                <th>Cholesterol</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>{{selectedRecipe.name}}</td>
                 <td>{{selectedRecipe.timeRequired}} mintues</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{selectedRecipe.nutrients?.calories}}</td>
+                <td>{{selectedRecipe.nutrients?.protein}}</td>
+                <td>{{selectedRecipe.nutrients?.carbs}}</td>
+                <td>{{selectedRecipe.nutrients?.fats}}</td>
+                <td>{{selectedRecipe.nutrients?.sodium}}</td>
+                <td>{{selectedRecipe.nutrients?.sugar}}</td>
+                <td>{{selectedRecipe.nutrients?.cholesterol}}</td>
               </tr>
               <tr>
                 <td>Ingredients:</td>
-                <td colspan="7"><span *ngFor="let ing of selectedRecipe.ingredients">{{ing.name}}, </span></td>
+                <td colspan="8"><span *ngFor="let ing of selectedRecipe.ingredients">{{ing.name}}, </span></td>
               </tr>
               <tr>
                 <td>By: {{selectedRecipe.user?.username}}</td>
-                <td class="recipe-text" colspan="7">{{selectedRecipe.recipeText}}</td>
+                <td class="recipe-text" colspan="8">{{selectedRecipe.recipeText}}</td>
               </tr>
             </tbody>
           </table>
@@ -85,98 +87,200 @@
           <button (click)="updateSelect()">Update</button>
           <button (click)="deleteSelect(selectedRecipe.id)">Delete</button>
           <button (click)="addSelect(selectedRecipe)">Favorite</button>
-          </form>
+        </form>
       </div>
-
+      <!-- ************************************************* Update Form ************************************************************* -->
       <div id="updateSection" *ngIf="updating && selectedRecipe">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel-body">
+                <table class="table" style="width: 100%">
+                  <thead>
+                    <tr>
+                      <th>Recipe Name: </th>
+                      <th>Time needed</th>
+                      <th>Calories</th>
+                      <th>Carbs</th>
+                      <th>Protein</th>
+                      <th>Fats</th>
+                      <th>Sugar</th>
+                      <th>Cholesterol</th>
+                      <th>Sodium </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <input type="text" name="name" [(ngModel)]="selectedRecipe.name">
+                      </td>
+                      <td>
+                        <input type="number" name="timeRequired" [(ngModel)]="selectedRecipe.timeRequired">
+                      </td>
+                      <td>{{selectedRecipe.nutrients?.calories}}</td>
+                      <td>{{selectedRecipe.nutrients?.carbs }}</td>
+                      <td>{{selectedRecipe.nutrients?.protein }}</td>
+                      <td>{{selectedRecipe.nutrients?.fats }}</td>
+                      <td>{{selectedRecipe.nutrients?.sugar }}</td>
+                      <td>{{selectedRecipe.nutrients?.cholesterol }}</td>
+                      <td>{{selectedRecipe.nutrients?.sodium }}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        Manually enter Nutrients:
+                      </td>
+                      <td><input type="number" min="0" max="10000" name="calories"
+                          [(ngModel)]="recipeNutrients.calories"></td>
+                      <td><input type="number" min="0" max="10000" name="carbs" [(ngModel)]="recipeNutrients.carbs">
+                      </td>
+                      <td><input type="number" min="0" max="10000" name="protein" [(ngModel)]="recipeNutrients.protein">
+                      </td>
+                      <td><input type="number" min="0" max="10000" name="fats" [(ngModel)]="recipeNutrients.fats"></td>
+                      <td><input type="number" min="0" max="10000" name="sugar" [(ngModel)]="recipeNutrients.sugar">
+                      </td>
+                      <td><input type="number" min="0" max="10000" name="cholesterol"
+                          [(ngModel)]="recipeNutrients.cholesterol"></td>
+                      <td><input type="number" min="0" max="10000" name="sodium" [(ngModel)]="recipeNutrients.sodium">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ingredients: </td>
+                      <td colspan="8"><span *ngFor="let ing of newRecipeIngredients">{{ing.name}} <button
+                            (click)="removeIngredient(ing)">X</button> </span></td>
+                    </tr>
+                    <tr>
+                      <td>Instructions: </td>
+                      <td colspan="8"><textarea name="recipeText" cols="30" rows="10"
+                          [(ngModel)]="selectedRecipe.recipeText"></textarea></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button (click)="cancelUpdate()">Cancel</button>
+        <button (click)="createRecipeNutrients(recipeNutrients, selectedRecipe)" >Update Recipe</button>
         <form>
-          <table style="max-width:1300px;" class="table" >
-            <thead>
-              <tr>
-                <th>Recipe Name</th>
-                <th>Time Required</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input type="text" name="name" [(ngModel)]="selectedRecipe.name" placeholder="Name of Recipe"></td>
-                <td> <input type="number" min="0" name="timeRequired" [(ngModel)]="selectedRecipe.timeRequired"
-                    placeholder="Time Required"></td>
-
-              </tr>
-              <tr>
-                <td>Ingredients currently in recipe:</td>
-                <td ><span *ngFor="let ing of selectedRecipe.ingredients">{{ing.name}} <button (click)="removeIngredient(ing)">X</button> </span><br></td>
-              </tr>
-              <tr>
-                <td>Ingredients:<br>
-                <td colspan="7">
-                <select name="ingredient" [(ngModel)]="ingredientToBeAdded">
-                    <option *ngFor="let ingredient of allIngredients" [ngValue]="ingredient" >{{ingredient.name}}</option>
-                  </select>
-                  <button (click)="addIngredient()" >Add Ingredient</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Possible User info</td>
-                <td class="recipe-text" colspan="7"><textarea type="text" name="recipeText"
-                    [(ngModel)]="selectedRecipe.recipeText" placeholder="Recipe Instructions"></textarea></td>
-              </tr>
-            </tbody>
-          </table>
-
-          <input type="text" name="link" [(ngModel)]="selectedRecipe.link" placeholder="Recipe Url Link">
-          <button (click)="cancelUpdate()">Cancel</button>
-          <button (click)="updateRecipe(selectedRecipe)">Update Recipe</button>
-          <p>PlaceHolder for ingredients Search</p>
+          <label>Search Foods: </label><input (keypress)="search(searchQuery)" type="text" name="name"
+            [(ngModel)]="searchQuery">
         </form>
       </div>
 
 
+      <!-- ************************************************* Add Recipe ***************************************************************** -->
       <div *ngIf="newRecipe">
-        <form name="newRecipe">
-          <table style="max-width:1300px;"  class="table">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="panel-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Recipe Name: </th>
+                      <th>Time needed</th>
+                      <th>Calories</th>
+                      <th>Carbs</th>
+                      <th>Protein</th>
+                      <th>Fats</th>
+                      <th>Sugar</th>
+                      <th>Cholesterol</th>
+                      <th>Sodium </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <input type="text" name="name" [(ngModel)]="newRecipe.name">
+                      </td>
+                      <td>
+                        <input type="number" name="timeRequired" [(ngModel)]="newRecipe.timeRequired">
+                      </td>
+                      <td>{{recipeNutrients.calories}}</td>
+                      <td>{{recipeNutrients.carbs}}</td>
+                      <td>{{recipeNutrients.protein}}</td>
+                      <td>{{recipeNutrients.fats}}</td>
+                      <td>{{recipeNutrients.sugar}}</td>
+                      <td>{{recipeNutrients.cholesterol}}</td>
+                      <td>{{recipeNutrients.sodium}}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        Manually enter Nutrients:
+                      </td>
+                      <td><input type="number" min="0" max="10000" name="calories"
+                          [(ngModel)]="recipeNutrients.calories"></td>
+                      <td><input type="number" min="0" max="10000" name="carbs" [(ngModel)]="recipeNutrients.carbs">
+                      </td>
+                      <td><input type="number" min="0" max="10000" name="protein" [(ngModel)]="recipeNutrients.protein">
+                      </td>
+                      <td><input type="number" min="0" max="10000" name="fats" [(ngModel)]="recipeNutrients.fats"></td>
+                      <td><input type="number" min="0" max="10000" name="sugar" [(ngModel)]="recipeNutrients.sugar">
+                      </td>
+                      <td><input type="number" min="0" max="10000" name="cholesterol"
+                          [(ngModel)]="recipeNutrients.cholesterol"></td>
+                      <td><input type="number" min="0" max="10000" name="sodium" [(ngModel)]="recipeNutrients.sodium">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Ingredients: </td>
+                      <td colspan="8"><span *ngFor="let ing of newRecipeIngredients">{{ing.name}} <button
+                            (click)="removeIngredient(ing)">X</button> </span></td>
+                    </tr>
+                    <tr>
+                      <td>Instructions: </td>
+                      <td colspan="8"><textarea name="recipeText" cols="30" rows="10"
+                          [(ngModel)]="newRecipe.recipeText"></textarea></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
 
-            <thead>
-              <tr>
-
-                <th>Recipe Name</th>
-                <th>Time Required</th>
-
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input type="text" name="name" [(ngModel)]="newRecipe.name" placeholder="Name of Recipe"></td>
-                <td> <input type="number" min="0" name="timeRequired" [(ngModel)]="newRecipe.timeRequired"
-                    placeholder="Time Required"></td>
-              </tr>
-              <tr>
-                <td class="recipe-text" colspan="2"><textarea type="text" name="recipeText"
-                    [(ngModel)]="newRecipe.recipeText" placeholder="Recipe Instructions"></textarea></td>
-              </tr>
-              <tr>
-                <td>Ingredients currently in recipe:</td>
-                <td ><span *ngFor="let ing of newRecipeIngredients">{{ing.name}} <button (click)="removeIngredient(ing)">X</button> </span></td>
-              </tr>
-              <tr>
-                <td>Ingredients:<br>
-                <td >
-                <select name="ingredient" [(ngModel)]="ingredientToBeAdded">
-                    <option *ngFor="let ingredient of allIngredients" [ngValue]="ingredient" >{{ingredient.name}}</option>
-                  </select>
-                  <button (click)="addIngredient()" >Add Ingredient</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          <input type="text" name="link" [(ngModel)]="newRecipe.link" placeholder="Recipe Url Link">
-          <button (click)="cancelCreate()">Cancel</button>
-          <button (click)="createRecipe(newRecipe)">Add Recipe</button>
+        <button (click)="cancelCreate()">Cancel</button>
+        <button (click)="createRecipeNutrients(recipeNutrients,newRecipe)">Add Recipe</button>
+        <form>
+          <label>Search Foods: </label><input (keypress)="search(searchQuery)" type="text" name="name"
+            [(ngModel)]="searchQuery">
         </form>
-        <p>PlaceHolder for ingredients Search</p>
       </div>
+
+
+      <!-- *********************************************    Search Results  ************************************************* -->
+
+      <div class="container" *ngIf="newRecipe || updating" >
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel-body" *ngFor="let result of searchResults" class="table">
+              <h4>{{result.description}}</h4>
+              <p>Serving size: {{result.servingSize}} {{result.servingSizeUnit}}</p>
+              <input type="number" min="0" max="10000" name="amount"
+                [(ngModel)]="selectedIngredient.amount">[g/oz]<button
+                (click)="addFoodToMealOrRecipe(result)">Add</button>
+              <table>
+                <thead>
+                  <tr>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of result.foodNutrients">
+                    <td>{{item.nutrientName}}</td>
+                    <td>{{item.value}} {{item.unitName}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ********************************************************************************************************************** -->
     </div>
 
 

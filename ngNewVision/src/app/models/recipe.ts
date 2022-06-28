@@ -1,3 +1,4 @@
+import { Nutrients } from './nutrients';
 import { FactoryTarget } from '@angular/compiler';
 import { Ingredient } from './ingredient';
 import { User } from './user';
@@ -14,11 +15,12 @@ export class Recipe {
   imageUrl: string;
   user: User | null;
   ingredients: Ingredient [];
+  nutrients: Nutrients | null;
 
 
   constructor(id: number = 0, link: string = '', timeRequired: number = 0, recipeText: string = '', name: string = '',
   createdAt: Date = new Date(), updatedAt: Date | null = null,
-  imageUrl: string = '', user: User | null = null, ingredients: Ingredient [] = []){
+  imageUrl: string = '', user: User | null = null, ingredients: Ingredient [] = [], nutrients : Nutrients | null = null){
     this.id = id
     this.link = link
     this.timeRequired = timeRequired
@@ -29,5 +31,6 @@ export class Recipe {
     this.imageUrl = imageUrl
     this.user = user
     this.ingredients = ingredients
+    this.nutrients = nutrients;
   }
 }

@@ -1,9 +1,14 @@
+import { NutrientsService } from './../../services/nutrients.service';
+import { UsdaService } from './../../services/usda.service';
 import { IngredientService } from './../../services/ingredient.service';
 import { Ingredient } from './../../models/ingredient';
 
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/models/recipe';
 import { RecipeService } from './../../services/recipe.service';
+import { Food } from 'src/app/models/food';
+import { Nutrients } from 'src/app/models/nutrients';
+import { SearchQuery } from 'src/app/models/search-query';
 
 @Component({
   selector: 'app-recipes',
@@ -22,13 +27,23 @@ export class RecipesComponent implements OnInit {
   updating: boolean = false;
   allIngredients : Ingredient [] = [];
   newRecipeIngredients : Ingredient [] = [];
-  numRecipeIngredients : number [] = [];
   ingredientToBeAdded: Ingredient | null = null;
   newIngredient: Ingredient = new Ingredient();
+  //**************USDA Fields ********************/
+  searchResults: Food [] = [];
+  addedIngredients: Ingredient [] = [];
+  selectedIngredient: Ingredient = new Ingredient();
+  selectedFood: Food = new Food();
+  recipeNutrients: Nutrients = new Nutrients();
+  searchQuery: string = '';
+  addedFoods: Food [] = [];
+  totalNutrients = new Nutrients();
+  creatingNewMeal: boolean = true;
 
   //*************************** Setup ******************** */
 
-  constructor(private recipeServ: RecipeService, private ingServ: IngredientService) { }
+  constructor(private recipeServ: RecipeService, private ingServ: IngredientService,
+    private usdaServ: UsdaService, private nutriServ: NutrientsService) { }
 
   ngOnInit(): void {
     this.getRecipes();
@@ -70,7 +85,6 @@ export class RecipesComponent implements OnInit {
   cancelCreate(){
     this.newRecipe = null;
     this.newRecipeIngredients = [];
-    this.numRecipeIngredients = [];
   }
   updateSelect(){
     this.updating = true;
@@ -173,13 +187,33 @@ export class RecipesComponent implements OnInit {
     }
   }
   createRecipe(recipe: Recipe){
-    console.log(recipe.ingredients)
-    recipe.ingredients = this.newRecipeIngredients;
-    console.log(recipe.ingredients)
+    console.log(recipe.nutrients?.id);
     this.recipeServ.createRecipe(recipe).subscribe({
       next: (recipeArray) => {
         this.newRecipe = null;
         this.getRecipes();
+        this.recipeNutrients = new Nutrients();
+      },
+      error: (problem) => {
+        console.error('error creating recipe: ');
+        console.error(problem);
+      }
+    });
+  }
+  createRecipeNutrients(nutri : Nutrients, recipe: Recipe){
+    recipe.ingredients = this.newRecipeIngredients;
+    recipe.nutrients = this.recipeNutrients;
+    this.nutriServ.createNutrient(nutri).subscribe({
+      next: (nutrition) => {
+        console.log(nutrition.id)
+        recipe.nutrients = nutrition;
+        this.recipeNutrients = new Nutrients();
+        if(this.newRecipe){
+          this.createRecipe(recipe);
+        }else if(this.updating){
+          console.log("updating")
+          this.updateRecipe(recipe);
+        }
       },
       error: (problem) => {
         console.error('error creating recipe: ');
@@ -188,11 +222,18 @@ export class RecipesComponent implements OnInit {
     });
   }
   updateRecipe(recipe: Recipe){
+    for(let ing of recipe.ingredients){
+      console.log(ing.name)
+    }
+    console.log("recipe:"+ recipe.name)
+    recipe.ingredients = this.newRecipeIngredients;
     this.recipeServ.updateRecipe(recipe).subscribe({
       next: (recipeArray) => {
         this.updating = false;
         this.getRecipes();
         this.selectedRecipe = null;
+        this.recipeNutrients = new Nutrients();
+        this.newRecipeIngredients = [];
       },
       error: (problem) => {
         console.error('error updating recipe: ');
@@ -249,4 +290,66 @@ export class RecipesComponent implements OnInit {
       }
     });
   }
+
+  //************************  USDA Service ****************************** */
+
+//************************* Page Dynamics */
+
+search(query: string){
+  this.searchByKeyword(query);
+
+}
+
+addFoodToMealOrRecipe(food: Food){
+this.addedFoods.push(food);
+this.newRecipeIngredients.push(this.usdaServ.converter(food, this.selectedIngredient));
+this.selectedIngredient = new  Ingredient();
+this.recipeNutrients = this.calculateMealRecipeNutrients(this.newRecipeIngredients);
+this.searchQuery = '';
+this.searchResults = [];
+}
+
+calculateMealRecipeNutrients(ingredients: Ingredient []): Nutrients{
+let nutri: Nutrients = new Nutrients();
+ nutri.protein = 0;
+ nutri.carbs = 0;
+ nutri.calories = 0;
+ nutri.fats = 0;
+ nutri.sugar = 0;
+ nutri.sodium = 0;
+ nutri.cholesterol = 0;
+for(let ing of ingredients) {
+  if(ing.nutrients){
+    nutri.sodium += ing.nutrients.sodium;
+    nutri.protein += ing.nutrients.protein;
+    nutri.calories += ing.nutrients.calories;
+    nutri.carbs += ing.nutrients.carbs;
+    nutri.fats += ing.nutrients.fats;
+    nutri.sugar += ing.nutrients.sugar;
+    nutri.cholesterol += ing.nutrients.cholesterol;
+  }
+
+}
+return nutri;
+}
+
+//***********************Service Methods
+
+
+searchByKeyword(query: string): void {
+let search = new SearchQuery(query);
+this.usdaServ.findFoodByObjectQuery(search).subscribe({
+  next: (result) => {
+      this.searchResults = result.foods;
+
+  },
+  error: (problem) => {
+    console.error('HttpComponent.loadProducts(): error loading products:');
+    console.error(problem);
+  }
+});
+}
+
+
+
 }

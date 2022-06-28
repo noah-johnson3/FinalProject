@@ -60,33 +60,7 @@
       </div>
       <div class="tracker">
         <div id="addMeal" *ngIf="showingAddMeal" >
-          <!-- <form name="addMealByNutrient" *ngIf="newMeal">
-            <label>Meal type: </label><select name="mealType" [(ngModel)]="newMeal.mealType">
-              <option *ngFor="let mealType of mealTypes" [ngValue]="mealType" >{{mealType.name}}</option>
-            </select>
 
-            <input type="number" min="0" name="calories" [(ngModel)]="newMealNutrients.calories"
-                placeholder="Calories">
-            <input type="number" min="0" name="protein" [(ngModel)]="newMealNutrients.protein" placeholder="Protein">
-            <input type="number" min="0" name="carbs" [(ngModel)]="newMealNutrients.carbs" placeholder="Carbs">
-            <input type="number" min="0" name="fats" [(ngModel)]="newMealNutrients.fats" placeholder="Fats">
-            <input type="number" min="0" name="sodium" [(ngModel)]="newMealNutrients.sodium" placeholder="Sodium">
-            <input type="number" min="0" name="sugar" [(ngModel)]="newMealNutrients.sugar" placeholder="Sugar">
-            <button class="submit" (click)="addMeal(newMeal)">Add a new Meal</button>
-
-          </form>
-          <form name="addMealByIngredient">
-            <label>Meal type: </label><select name="mealType" [(ngModel)]="newMeal.mealType">
-              <option *ngFor="let mealType of mealTypes" [ngValue]="mealType" >{{mealType.name}}</option>
-            </select>
-            <select name="newMealIngredient" [(ngModel)]="newIngredient">
-              <option *ngFor="let ing of allIngredient" [ngValue]="ing"> {{ing.name}}</option>
-
-            </select>
-            <button (click)="addNewIngredientToMeal(newIngredient)">Add Ingredient</button>
-            <p *ngFor="let ing of newMealIngredient">{{ing.name}}<button (click)="removeIngredient(ing)">X</button></p>
-            <button (click)="addMeal(newMeal)">Submit</button>
-          </form> -->
 
           <div class="container" >
             <div class="row">

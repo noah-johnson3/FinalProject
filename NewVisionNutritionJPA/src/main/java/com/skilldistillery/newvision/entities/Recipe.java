@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -36,7 +38,11 @@ public class Recipe {
 	private String recipeText;
 
 	private String name;
-
+	
+	@JsonIgnoreProperties({"recipe", "meal", "ingredient"})
+	@OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinColumn(name="nutrients_id")
+	private Nutrients nutrients;
 	
 	@CreationTimestamp
 	@Column(name = "created_at")
@@ -60,7 +66,7 @@ public class Recipe {
 	private List<User> users;
 	
 	@JsonIgnoreProperties({"recipes", "meals"})
-	@ManyToMany
+	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "recipe_ingredient", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
 	private List<Ingredient> ingredients;
 
@@ -147,6 +153,23 @@ public class Recipe {
 
 	public void setIngredients(List<Ingredient> ingredients) {
 		this.ingredients = ingredients;
+	}
+	
+
+	public Nutrients getNutrients() {
+		return nutrients;
+	}
+
+	public void setNutrients(Nutrients nutrients) {
+		this.nutrients = nutrients;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	@Override

@@ -62,9 +62,9 @@ public class NutrientServiceImpl implements NutrientService {
 	public Nutrients addNutrients(Nutrients nutrients, String username) {
 		User user = ur.findByUsernameEquals(username);
 		if(user != null) {
-			nr.saveAndFlush(nutrients);
+			nutrients = nr.saveAndFlush(nutrients);
 		}
-		return null;
+		return nutrients;
 	}
 
 	@Override

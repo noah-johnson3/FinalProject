@@ -250,11 +250,19 @@ CREATE TABLE IF NOT EXISTS `recipe` (
   `created_at` DATETIME NOT NULL,
   `updated_at` DATETIME NULL,
   `image_url` TEXT NULL,
+  `recipecol` VARCHAR(45) NULL,
+  `nutrients_id` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_recipe_user1_idx` (`user_id` ASC),
+  INDEX `fk_recipe_nutrients1_idx` (`nutrients_id` ASC),
   CONSTRAINT `fk_recipe_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_recipe_nutrients1`
+    FOREIGN KEY (`nutrients_id`)
+    REFERENCES `nutrients` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -658,17 +666,17 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `nutritiondb`;
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (1, NULL, 10, '2 Eggs, 1 cup frozen hash brown mix, 1 tbsp vegetable oil: Add oil and hashbrowns to pan, set to medium heat. Beat eggs, add seasoning to taste. When hashbrowns begin to brown add in eggs. Stir and serve when at desired firmness.', 'Easy Morning Hash', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (2, NULL, 12, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (3, NULL, 34, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (4, NULL, 23, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (5, NULL, 13, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (6, NULL, 5, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (7, NULL, 56, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (8, NULL, 20, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (9, NULL, 23, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (10, NULL, 11, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
-INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`) VALUES (11, NULL, 12, 'test 15000', 'name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg');
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`, `recipecol`, `nutrients_id`) VALUES (1, NULL, 10, '2 Eggs, 1 cup frozen hash brown mix, 1 tbsp vegetable oil: Add oil and hashbrowns to pan, set to medium heat. Beat eggs, add seasoning to taste. When hashbrowns begin to brown add in eggs. Stir and serve when at desired firmness.', 'Easy Morning Hash', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg', NULL, NULL);
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`, `recipecol`, `nutrients_id`) VALUES (2, NULL, 12, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg', NULL, NULL);
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`, `recipecol`, `nutrients_id`) VALUES (3, NULL, 34, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg', NULL, NULL);
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`, `recipecol`, `nutrients_id`) VALUES (4, NULL, 23, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg', NULL, NULL);
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`, `recipecol`, `nutrients_id`) VALUES (5, NULL, 13, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg', NULL, NULL);
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`, `recipecol`, `nutrients_id`) VALUES (6, NULL, 5, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg', NULL, NULL);
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`, `recipecol`, `nutrients_id`) VALUES (7, NULL, 56, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg', NULL, NULL);
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`, `recipecol`, `nutrients_id`) VALUES (8, NULL, 20, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg', NULL, NULL);
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`, `recipecol`, `nutrients_id`) VALUES (9, NULL, 23, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg', NULL, NULL);
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`, `recipecol`, `nutrients_id`) VALUES (10, NULL, 11, 'test 1', 'test name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg', NULL, NULL);
+INSERT INTO `recipe` (`id`, `link`, `time_required`, `recipe_text`, `name`, `user_id`, `created_at`, `updated_at`, `image_url`, `recipecol`, `nutrients_id`) VALUES (11, NULL, 12, 'test 15000', 'name', 1, '2022-06-21 03:20:20', NULL, 'https://www.countrycleaver.com/wp-content/uploads/2017/07/Pesto-Chicken-Pasta-Skillet-with-Asparagus-and-Tomatoes-2-e1638331582218.jpg', NULL, NULL);
 
 COMMIT;
 

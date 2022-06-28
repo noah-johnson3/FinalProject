@@ -275,7 +275,7 @@ DROP TABLE IF EXISTS `ingredient` ;
 
 CREATE TABLE IF NOT EXISTS `ingredient` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(60) NOT NULL,
+  `name` VARCHAR(500) NOT NULL,
   `nutrients_id` INT NULL,
   `portion` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),

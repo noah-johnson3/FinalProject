@@ -2,13 +2,14 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="row">
-
+        <div class="top-left">
         <h3>{{displayBlog?.title}}</h3>
         <h3>By: <span *ngIf="!displayBlog?.user?.publicProfile">{{displayBlog?.user?.username}}</span ><span *ngIf="displayBlog?.user?.publicProfile" >{{displayBlog?.user?.firstName}} {{displayBlog?.user?.lastName}}</span></h3>
         <h4>Covered Topics:</h4>
         <ul>
           <li (click)="searchByTopic(topic)" *ngFor="let topic of displayBlog?.topics" > {{topic.name}}</li>
         </ul>
+          </div>
 
       </div>
       <div class="row">
@@ -20,9 +21,9 @@
             <option *ngFor="let topic of topics" [ngValue]="topic">{{topic.name}}</option>
           </select><br>
           <button class="col form-control btn btn-info" (click)="searchByAuthor(author)">Author Search:</button><br>
-          <input class="col form-control" type="text" name="author" [(ngModel)]="author" placeholder="Geralt of Rivia">
+          <input class="col form-control" type="text" name="author" [(ngModel)]="author" placeholder="Ex: Geralt of Rivia">
         </form>
-        <button class="col form-control btn btn-secondary" (click)="startCreateBlog()" >Create Blog</button>
+        <button class="col form-control btn btn-info" (click)="startCreateBlog()" >Create Blog</button>
       </div>
       <div class="row">
         <p (click)="selectBlog(blog)" *ngFor="let blog of blogs">{{blog.title}}</p>
@@ -34,8 +35,8 @@
     <div class="col-sm-8">
 
       <div *ngIf="!creatingBlog">
-        <p  *ngIf="loggedInUser?.id == displayBlog?.user?.id"  ><button *ngIf="displayBlog" (click)="startEditBlog(displayBlog)" >Edit</button>
-          <button *ngIf="displayBlog" (click)="deleteBlog(displayBlog.id)"  >Delete</button>
+        <p  *ngIf="loggedInUser?.id == displayBlog?.user?.id"  ><button *ngIf="displayBlog" class="btn btn-primary"(click)="startEditBlog(displayBlog)" >Edit</button>
+          <button *ngIf="displayBlog" class="btn btn-danger"(click)="deleteBlog(displayBlog.id)"  >Delete</button>
           </p>
         <p>{{displayBlog?.content}}</p>
       </div>
@@ -43,43 +44,49 @@
 
       <div *ngIf="editingBlog">
         <form>
-          <input type ="text" name="title" [(ngModel)]="blogUnderEdit.title" >
-          <textarea name="content" [(ngModel)]="blogUnderEdit.content">Blog Content</textarea>
-          <input type ="text" name="imageLink" [(ngModel)]="blogUnderEdit.imageLink" >
+          <label for="title">Blog Title</label>
+          <input class="col form-control" type ="text" name="title" [(ngModel)]="blogUnderEdit.title" ><br>
+          <label for="content">Content</label>
+          <textarea class="col form-control" name="content" [(ngModel)]="blogUnderEdit.content">Blog Content</textarea><br>
+          <label for="imageLink">Image URL</label>
+          <input class="col form-control" type ="text" name="imageLink" [(ngModel)]="blogUnderEdit.imageLink" ><br>
           <select name="newBlogTopic" [(ngModel)]="newBlogTopic">
               <option *ngFor="let topic of topics" [ngValue]="topic" > {{topic.name}}</option>
           </select>
-          <button (click)="addTopic(newBlogTopic)">Add topic</button>
+          <button class="btn btn-primary" (click)="addTopic(newBlogTopic)">Add topic</button><br>
           <label>Custom Topic</label>
-          <label>Name:</label><input type="text" name="name" [(ngModel)]="newTopic.name" >
-          <label>Description:</label><input type="text" name="description" [(ngModel)]="newTopic.description" >
-          <button (click)="createTopic(newTopic)">Add topic</button>
+          <label>Name:</label><input class="col form-control" type="text" name="name" [(ngModel)]="newTopic.name" >
+          <label>Description:</label><input class="col form-control" type="text" name="description" [(ngModel)]="newTopic.description" >
+          <button class="btn btn-primary" (click)="createTopic(newTopic)">Add topic</button>
           <p *ngFor="let topic of newBlogTopics">{{topic.name}}</p>
         </form>
 
-        <button (click)="updateBlog(blogUnderEdit)" >Submit</button>
-        <button (click)="cancelEditBlog()">Cancel</button>
+        <button class="btn btn-primary" (click)="updateBlog(blogUnderEdit)" >Submit</button>
+        <button class="btn btn-danger" (click)="cancelEditBlog()">Cancel</button>
       </div>
 
 
       <div *ngIf="creatingBlog">
         <form>
-          <input type ="text" name="title" [(ngModel)]="newBlog.title" >
-          <textarea name="content" [(ngModel)]="newBlog.content">Blog Content</textarea>
-          <input type ="text" name="imageLink" [(ngModel)]="newBlog.imageLink" >
+          <label for="title">Blog Title</label>
+          <input class="col form-control" type ="text" name="title" [(ngModel)]="newBlog.title"><br>
+          <label for="content">Content</label>
+          <textarea class="col form-control" name="content" [(ngModel)]="newBlog.content">Blog Content</textarea><br>
+          <label for="imageLink">Image URL</label>
+          <input class="col form-control" type ="text" name="imageLink" [(ngModel)]="newBlog.imageLink"><br>
           <select name="newBlogTopic" [(ngModel)]="newBlogTopic">
             <option *ngFor="let topic of topics" [ngValue]="topic" > {{topic.name}}</option>
-          </select>
-          <button (click)="addTopic(newBlogTopic)">Add topic</button>
+          </select><br>
+          <button class="btn btn-primary" (click)="addTopic(newBlogTopic)">Add topic</button><br>
           <label>Custom Topic</label>
-          <label>Name:</label><input type="text" name="name" [(ngModel)]="newTopic.name" >
-          <label>Description:</label><input type="text" name="description" [(ngModel)]="newTopic.description" >
-          <button (click)="createTopic(newTopic)">Add topic</button>
+          <label>Name:</label><input class="col form-control" type="text" name="name" [(ngModel)]="newTopic.name" ><br>
+          <label>Description:</label><input class="col form-control" type="text" name="description" [(ngModel)]="newTopic.description" ><br>
+          <button class="btn btn-primary" (click)="createTopic(newTopic)">Add topic</button><br>
           <p *ngFor="let topic of newBlogTopics">{{topic.name}}</p>
         </form>
 
-        <button (click)="createBlog(newBlog)" >Submit</button>
-        <button (click)="cancelCreateBlog()">Cancel</button>
+        <button class="btn btn-primary" (click)="createBlog(newBlog)" >Submit</button>
+        <button class="btn btn-danger" (click)="cancelCreateBlog()">Cancel</button>
       </div>
     </div>
   </div>
@@ -87,22 +94,25 @@
 
 
   <div class="row">
-    <div id="addComment">
-      <textarea name="content" [(ngModel)]="newComment.content"></textarea><button (click)="createComment(newComment)" >Submit</button>
-    </div>
 
     <div id="commentDisplay" *ngIf="!editingComment">
       <div *ngFor="let comment of comments" class="comment row">
         <div class="col-sm-2">{{comment.user?.username}}</div>
         <div class="col-sm-10">{{comment.content}}</div>
-        <p  *ngIf="loggedInUser?.id == comment.user?.id" ><button (click)="showEditComment(comment)" >Edit</button>
-        <button (click)="deleteComment(comment.id)" >Delete</button>
+        <p  *ngIf="loggedInUser?.id == comment.user?.id" ><button class="btn btn-primary" (click)="showEditComment(comment)" >Edit</button>
+        <button class="btn btn-danger" (click)="deleteComment(comment.id)" >Delete</button>
         </p>
       </div>
     </div>
-
     <div id="editingComment" *ngIf="editingComment">
-      <textarea name="content" [(ngModel)]="commentUnderEdit.content"></textarea><button (click)="editComment(commentUnderEdit)" >Submit</button>
+      <textarea name="content" [(ngModel)]="commentUnderEdit.content"></textarea><br>
+      <button class="btn btn-primary" (click)="editComment(commentUnderEdit)" >Submit Updated Comment</button>
+    </div>
+
+    <div id="addComment">
+      <br>
+      <textarea name="content" [(ngModel)]="newComment.content"></textarea><br>
+      <button class="btn btn-primary" (click)="createComment(newComment)" >Submit</button>
     </div>
 
   </div>

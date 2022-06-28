@@ -1,1 +1,19 @@
+.top-left{
+  border-style: solid;
+}
 
+.comment{
+  text-align: center;
+}
+
+#addComment{
+  text-align: center;
+}
+
+#editingComment{
+  text-align: center;
+}
+
+/* #commentDisplay{
+  text-align: center;
+} */

@@ -51,6 +51,9 @@ export class UserComponent implements OnInit {
   selectedRecipe: Recipe | null = null;
   newGoal: Goal = new Goal();
   dailyNutrients = new Nutrients();
+  changeWeight: boolean = false;
+  achievedGoals: Goal [] = [];
+  notAchievedGoals: Goal [] = [];
   //**************USDA Fields ********************/
   searchResults: Food [] = [];
   addedIngredients: Ingredient [] = [];
@@ -242,6 +245,20 @@ export class UserComponent implements OnInit {
     return nutri;
   }
 
+  sortGoals() {
+    this.achievedGoals = [];
+    this.notAchievedGoals = [];
+    if(this.loggedInUser?.goals){
+    for (let goal of this.loggedInUser.goals ){
+      if(goal.achieved) {
+        this.achievedGoals.push(goal);
+      }else{
+        this.notAchievedGoals.push(goal);
+      }
+    }
+  }
+}
+
   //*********************Service Methods ************ */
   getUser(){
     this.userServ.getLoggedInUser().subscribe({
@@ -386,8 +403,12 @@ export class UserComponent implements OnInit {
     });
   }
   createNewGoal(goal: Goal){
+    if(goal.weight == 0 && this.loggedInUser){
+      goal.weight = this.loggedInUser?.weight;
+    }
     this.goalServ.create(goal).subscribe({
       next: () => {
+        this.newGoal = new Goal();
         this.getUserGoals();
       },
       error: (problem) => {
@@ -415,6 +436,7 @@ export class UserComponent implements OnInit {
           if(this.loggedInUser){
             this.loggedInUser.goals = goals;
           }
+          this.sortGoals();
         },
         error: (problem) => {
           console.error('HttpComponent.reload(): error registering');
@@ -423,6 +445,7 @@ export class UserComponent implements OnInit {
       });
     }
   }
+
 // ***************************** USDA Service Methods *************************//
 
 

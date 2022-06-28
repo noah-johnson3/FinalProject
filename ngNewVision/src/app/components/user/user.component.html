@@ -21,10 +21,10 @@
       <div class="row">
         <h3>Your Goals: </h3>
         <ul>
-          <li *ngFor="let goal of loggedInUser?.goals"><span *ngIf="!goal.achieved">{{goal.name}}
+          <li *ngFor="let goal of notAchievedGoals"><span >{{goal.name}}
             <ul>
               <li>{{goal.description}}</li>
-              <li>{{goal.weight}}</li>
+              <li>Goal Weight: {{goal.weight}} lbs</li>
               <li><button class="bg bg-success" (click)="achieveGoal(goal)">Achieve!</button></li>
             </ul>
           </span>
@@ -32,7 +32,7 @@
         </ul>
         <h3>Your Achievements: </h3>
         <ul>
-          <li *ngFor="let goal of loggedInUser?.goals"><span *ngIf="goal.achieved">{{goal.name}}
+          <li *ngFor="let goal of achievedGoals"><span >{{goal.name}}
             <ul>
               <li>{{goal.description}}</li>
               <li>{{goal.dateAchieved}}</li>
@@ -43,9 +43,12 @@
       </div>
       <div id="newGoal">
         <h3>Create New Goal:</h3>
-        <label>Name: </label><input type="text" name="name" [(ngModel)]="newGoal.name"><br>
-        <label>Description: </label><input type="text" name="description" [(ngModel)]="newGoal.description"><br>
-        <button (click)="createNewGoal(newGoal)" >Add Goal</button>
+        <label>Name </label><input class="col form-control" type="text" name="name" [(ngModel)]="newGoal.name"><br>
+        <label>Description </label><input class="col form-control" type="text" name="description" [(ngModel)]="newGoal.description"><br>
+        <label>I want to change my weight</label><input type="checkbox" name="changeWeight" [(ngModel)]="changeWeight"><br>
+        <span *ngIf="changeWeight" ><label>Goal Weight</label><input type="number" name="changeWeight" [(ngModel)]="newGoal.weight" min="0" max="999"><br></span>
+
+        <button class="btn btn-primary" (click)="createNewGoal(newGoal)" >Add Goal</button>
       </div>
 
     </div>
@@ -75,7 +78,7 @@
                             <th>Protein</th>
                             <th>Fats</th>
                             <th>Sugar</th>
-                            <th>Cholesterol</th>
+                            <th>Chol</th>
                             <th>Sodium </th>
                           </tr>
                         </thead>
@@ -161,12 +164,12 @@
                   <tr>
                      <th>Meal</th>
                      <th>Calories</th>
-                     <th>Carbohydrates</th>
+                     <th>Carbs</th>
                      <th>Protein</th>
                      <th>Fat</th>
                      <th>Sugar</th>
                      <th>Sodium</th>
-                     <th>Cholesterol</th>
+                     <th>Chol</th>
                      <th>Delete</th>
                   </tr>
                 </thead>

@@ -5,7 +5,7 @@
 }
 td,th{
   text-align: center;
-  border: 3px solid black;
+  border: 1px solid black;
   padding: 10px;
 }
 table {
@@ -29,4 +29,7 @@ tr {
   width: 100%;
   display: table;
   table-layout: fixed;
+}
+button{
+  margin: 2px;
 }

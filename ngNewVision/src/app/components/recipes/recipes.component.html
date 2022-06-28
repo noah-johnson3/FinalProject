@@ -50,36 +50,54 @@
           <table style="max-width:1300px;" class="table">
             <thead>
               <tr>
-                <th>Recipe Name</th>
-                <th>Time Required</th>
-                <th>Calories</th>
-                <th>Protein</th>
-                <th>Carbs</th>
-                <th>Fats</th>
-                <th>Sodium</th>
-                <th>Sugar</th>
-                <th>Cholesterol</th>
+                <th>By: {{selectedRecipe.user?.username}}</th>
+                <th>Nutrients</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>Recipe Name</td>
                 <td>{{selectedRecipe.name}}</td>
+              </tr>
+              <tr>
+                <td>Time Required</td>
                 <td>{{selectedRecipe.timeRequired}} mintues</td>
+              </tr>
+              <tr>
+                <td>Calories</td>
                 <td>{{selectedRecipe.nutrients?.calories}}</td>
-                <td>{{selectedRecipe.nutrients?.protein}}</td>
-                <td>{{selectedRecipe.nutrients?.carbs}}</td>
-                <td>{{selectedRecipe.nutrients?.fats}}</td>
-                <td>{{selectedRecipe.nutrients?.sodium}}</td>
-                <td>{{selectedRecipe.nutrients?.sugar}}</td>
-                <td>{{selectedRecipe.nutrients?.cholesterol}}</td>
+              </tr>
+              <tr>
+                <td>Protein</td>
+                <td>{{selectedRecipe.nutrients?.protein}}g</td>
+              </tr>
+              <tr>
+                <td>Carbs</td>
+                <td>{{selectedRecipe.nutrients?.carbs}}g</td>
+              </tr>
+              <tr>
+                <td>Fats</td>
+                <td>{{selectedRecipe.nutrients?.fats}}g</td>
+              </tr>
+              <tr>
+                <td>Sodium</td>
+                <td>{{selectedRecipe.nutrients?.sodium}}mg</td>
+              </tr>
+              <tr>
+                <td>Sugar</td>
+                <td>{{selectedRecipe.nutrients?.sugar}}g</td>
+              </tr>
+              <tr>
+                <td>Cholesterol</td>
+                <td>{{selectedRecipe.nutrients?.cholesterol}}mg</td>
               </tr>
               <tr>
                 <td>Ingredients:</td>
-                <td colspan="8"><span *ngFor="let ing of selectedRecipe.ingredients">{{ing.name}}, </span></td>
+                <td colspan="2"><span *ngFor="let ing of selectedRecipe.ingredients">{{ing.name}}, </span></td>
               </tr>
               <tr>
-                <td>By: {{selectedRecipe.user?.username}}</td>
-                <td class="recipe-text" colspan="8">{{selectedRecipe.recipeText}}</td>
+
+                <td class="recipe-text" rowspan="2">Directions: {{selectedRecipe.recipeText}}</td>
               </tr>
             </tbody>
           </table>
@@ -99,8 +117,8 @@
                 <table class="table" style="width: 100%">
                   <thead>
                     <tr>
-                      <th>Recipe Name: </th>
-                      <th>Time needed</th>
+                      <th> <button (click)="cancelUpdate()">Cancel</button>
+                        <button (click)="createRecipeNutrients(recipeNutrients, selectedRecipe)" >Update</button></th>
                       <th>Calories</th>
                       <th>Carbs</th>
                       <th>Protein</th>
@@ -111,24 +129,10 @@
                     </tr>
                   </thead>
                   <tbody>
+
                     <tr>
-                      <td>
-                        <input type="text" name="name" [(ngModel)]="selectedRecipe.name">
-                      </td>
-                      <td>
-                        <input type="number" name="timeRequired" [(ngModel)]="selectedRecipe.timeRequired">
-                      </td>
-                      <td>{{selectedRecipe.nutrients?.calories}}</td>
-                      <td>{{selectedRecipe.nutrients?.carbs }}</td>
-                      <td>{{selectedRecipe.nutrients?.protein }}</td>
-                      <td>{{selectedRecipe.nutrients?.fats }}</td>
-                      <td>{{selectedRecipe.nutrients?.sugar }}</td>
-                      <td>{{selectedRecipe.nutrients?.cholesterol }}</td>
-                      <td>{{selectedRecipe.nutrients?.sodium }}</td>
-                    </tr>
-                    <tr>
-                      <td colspan="2">
-                        Manually enter Nutrients:
+                      <td >
+                        Manual Nutrients:
                       </td>
                       <td><input type="number" min="0" max="10000" name="calories"
                           [(ngModel)]="recipeNutrients.calories"></td>
@@ -145,13 +149,61 @@
                       </td>
                     </tr>
                     <tr>
-                      <td>Ingredients: </td>
-                      <td colspan="8"><span *ngFor="let ing of newRecipeIngredients">{{ing.name}} <button
+                      <td>Recipe Name: </td>
+                      <td>
+                        <input type="text" name="name" [(ngModel)]="selectedRecipe.name">
+                      </td>
+                      </tr>
+                      <tr>
+                        <td>Calories</td>
+                        <td>{{selectedRecipe.nutrients?.calories}}</td>
+                      </tr>
+                      <tr>
+                        <td>Carbs</td>
+                        <td>{{selectedRecipe.nutrients?.carbs }}</td>
+                      </tr>
+                      <tr>
+                        <td>Protein</td>
+                        <td>{{selectedRecipe.nutrients?.protein }}</td>
+                      </tr>
+                      <tr>
+                        <td>Fats</td>
+                        <td>{{selectedRecipe.nutrients?.fats }}</td>
+                      </tr>
+                      <tr>
+                        <td>Sugar</td>
+                        <td>{{selectedRecipe.nutrients?.sugar }}</td>
+                      </tr>
+                      <tr>
+                        <td>Cholesterol</td>
+                        <td>{{selectedRecipe.nutrients?.cholesterol }}</td>
+
+                      </tr>
+                      <tr>
+                        <td>Sodium </td>
+                        <td>{{selectedRecipe.nutrients?.sodium }}</td>
+
+                      </tr>
+                      <tr>
+                        <td>Time required:</td>
+                        <td>
+                          <input type="number" name="timeRequired" [(ngModel)]="selectedRecipe.timeRequired">
+                        </td>
+                      </tr>
+
+                    <tr>
+                      <td colspan="2">Ingredients: </td>
+                      <td colspan="6">
+                        <form>
+                          <label>Search Foods: </label><input (keypress)="search(searchQuery)" type="text" name="name"
+                            [(ngModel)]="searchQuery">
+                        </form>
+                        <span *ngFor="let ing of newRecipeIngredients">{{ing.name}} <button
                             (click)="removeIngredient(ing)">X</button> </span></td>
                     </tr>
                     <tr>
-                      <td>Instructions: </td>
-                      <td colspan="8"><textarea name="recipeText" cols="30" rows="10"
+                      <td colspan="2" >Instructions: </td>
+                      <td colspan="6"><textarea name="recipeText" cols="30" rows="5"
                           [(ngModel)]="selectedRecipe.recipeText"></textarea></td>
                     </tr>
                   </tbody>
@@ -161,12 +213,8 @@
           </div>
         </div>
 
-        <button (click)="cancelUpdate()">Cancel</button>
-        <button (click)="createRecipeNutrients(recipeNutrients, selectedRecipe)" >Update Recipe</button>
-        <form>
-          <label>Search Foods: </label><input (keypress)="search(searchQuery)" type="text" name="name"
-            [(ngModel)]="searchQuery">
-        </form>
+
+
       </div>
 
 

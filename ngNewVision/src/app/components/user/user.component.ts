@@ -51,6 +51,7 @@ export class UserComponent implements OnInit {
   selectedRecipe: Recipe | null = null;
   newGoal: Goal = new Goal();
   dailyNutrients = new Nutrients();
+  changeWeight: boolean = false;
   //**************USDA Fields ********************/
   searchResults: Food [] = [];
   addedIngredients: Ingredient [] = [];
@@ -386,8 +387,12 @@ export class UserComponent implements OnInit {
     });
   }
   createNewGoal(goal: Goal){
+    if(goal.weight == 0 && this.loggedInUser){
+      goal.weight = this.loggedInUser?.weight;
+    }
     this.goalServ.create(goal).subscribe({
       next: () => {
+        this.newGoal = new Goal();
         this.getUserGoals();
       },
       error: (problem) => {

@@ -89,7 +89,7 @@ public class User {
 	@OneToMany(mappedBy="user")
 	private List<TrackedDay> trackedDays;
 	
-	@JsonIgnoreProperties({"users", "ingredients"})
+	@JsonIgnoreProperties({"users", "ingredients", "user"})
 	@ManyToMany
 	@JoinTable(name="user_recipe", joinColumns=@JoinColumn(name="user_id"),
 	inverseJoinColumns = @JoinColumn(name="recipe_id"))

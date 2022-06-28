@@ -4,6 +4,24 @@
 
 .comment{
   text-align: center;
+  background-color: rgba(232, 230, 223,.45);
+  border: white
+
+}
+
+.editComment{
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(232, 230, 223,.45);
+  border: white;
+}
+
+.comment-row{
+  margin: 5px;
+}
+
+button{
+  margin: 5px;
 }
 
 #addComment{
@@ -14,6 +32,9 @@
   text-align: center;
 }
 
+.submit-button{
+  align-content:center
+}
 /* #commentDisplay{
   text-align: center;
 } */

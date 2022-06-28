@@ -11,7 +11,7 @@
 
       </div>
       <div class="row">
-        <form name="searchForm">
+        <form name="searchForm" class="search-form">
           <input type="text" name="ingredientName" placeholder="Egg, Potato, Chicken.." [(ngModel)]="ingredientName">
           <button (click)="getRecipesByIngredient(ingredientName)">Search By Ingredient</button><br>
           <input type="number" min=0 name="time" placeholder="10" [(ngModel)]="time">
@@ -21,7 +21,7 @@
         </form>
       </div>
       <div class="row">
-        <img src="https://farm8.staticflickr.com/7037/6802898136_932e900b5e_z.jpg" style="height:auto; width:85%%" />
+        <img src="https://farm8.staticflickr.com/7037/6802898136_932e900b5e_z.jpg" style="height:auto; width:85%" />
 
       </div>
       <div class="row">
@@ -227,8 +227,8 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>Recipe Name: </th>
-                      <th>Time needed</th>
+                      <th><button (click)="cancelCreate()">Cancel</button>
+                        <button (click)="createRecipeNutrients(recipeNutrients,newRecipe)">Create</button></th>
                       <th>Calories</th>
                       <th>Carbs</th>
                       <th>Protein</th>
@@ -240,23 +240,8 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>
-                        <input type="text" name="name" [(ngModel)]="newRecipe.name">
-                      </td>
-                      <td>
-                        <input type="number" name="timeRequired" [(ngModel)]="newRecipe.timeRequired">
-                      </td>
-                      <td>{{recipeNutrients.calories}}</td>
-                      <td>{{recipeNutrients.carbs}}</td>
-                      <td>{{recipeNutrients.protein}}</td>
-                      <td>{{recipeNutrients.fats}}</td>
-                      <td>{{recipeNutrients.sugar}}</td>
-                      <td>{{recipeNutrients.cholesterol}}</td>
-                      <td>{{recipeNutrients.sodium}}</td>
-                    </tr>
-                    <tr>
-                      <td colspan="2">
-                        Manually enter Nutrients:
+                      <td >
+                        Manual Nutrients:
                       </td>
                       <td><input type="number" min="0" max="10000" name="calories"
                           [(ngModel)]="recipeNutrients.calories"></td>
@@ -273,28 +258,79 @@
                       </td>
                     </tr>
                     <tr>
-                      <td>Ingredients: </td>
-                      <td colspan="8"><span *ngFor="let ing of newRecipeIngredients">{{ing.name}} <button
+
+                      <td>Time Required</td>
+                      <td>
+                        <input type="number" name="timeRequired" [(ngModel)]="newRecipe.timeRequired">
+                      </td>
+
+                    </tr>
+                    <tr></tr>
+
+                    <tr>
+                      <td>Recipe Name: </td>
+                      <td>
+                        <input type="text" name="name" [(ngModel)]="newRecipe.name">
+                      </td>
+                      </tr>
+                      <tr>
+                        <td>Calories</td>
+                        <td>{{recipeNutrients.calories}}</td>
+                      </tr>
+                      <tr>
+                        <td>Carbs</td>
+                        <td>{{recipeNutrients.carbs }}</td>
+                      </tr>
+                      <tr>
+                        <td>Protein</td>
+                        <td>{{recipeNutrients.protein }}</td>
+                      </tr>
+                      <tr>
+                        <td>Fats</td>
+                        <td>{{recipeNutrients.fats }}</td>
+                      </tr>
+                      <tr>
+                        <td>Sugar</td>
+                        <td>{{recipeNutrients.sugar }}</td>
+                      </tr>
+                      <tr>
+                        <td>Cholesterol</td>
+                        <td>{{recipeNutrients.cholesterol }}</td>
+
+                      </tr>
+                      <tr>
+                        <td>Sodium </td>
+                        <td>{{recipeNutrients.sodium }}</td>
+
+                      </tr>
+                      <tr>
+                        <td>Time required:</td>
+                        <td>
+                          <input type="number" name="timeRequired" [(ngModel)]="newRecipe.timeRequired">
+                        </td>
+                      </tr>
+
+                    <tr>
+                      <td colspan="2">Ingredients: </td>
+                      <td colspan="6">
+                        <form>
+                          <label>Search Foods: </label><input (keypress)="search(searchQuery)" type="text" name="name"
+                            [(ngModel)]="searchQuery">
+                        </form>
+                        <span *ngFor="let ing of newRecipeIngredients">{{ing.name}} <button
                             (click)="removeIngredient(ing)">X</button> </span></td>
                     </tr>
                     <tr>
-                      <td>Instructions: </td>
-                      <td colspan="8"><textarea name="recipeText" cols="30" rows="10"
+                      <td colspan="2" >Instructions: </td>
+                      <td colspan="6"><textarea name="recipeText" cols="30" rows="5"
                           [(ngModel)]="newRecipe.recipeText"></textarea></td>
-                    </tr>
+                      </tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
-
-        <button (click)="cancelCreate()">Cancel</button>
-        <button (click)="createRecipeNutrients(recipeNutrients,newRecipe)">Add Recipe</button>
-        <form>
-          <label>Search Foods: </label><input (keypress)="search(searchQuery)" type="text" name="name"
-            [(ngModel)]="searchQuery">
-        </form>
       </div>
 
 

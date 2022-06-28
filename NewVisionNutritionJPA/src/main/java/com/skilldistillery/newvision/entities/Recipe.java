@@ -66,7 +66,7 @@ public class Recipe {
 	private List<User> users;
 	
 	@JsonIgnoreProperties({"recipes", "meals"})
-	@ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(cascade= {CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinTable(name = "recipe_ingredient", joinColumns = @JoinColumn(name = "recipe_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
 	private List<Ingredient> ingredients;
 

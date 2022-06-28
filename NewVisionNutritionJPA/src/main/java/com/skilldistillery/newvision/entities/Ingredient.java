@@ -30,7 +30,7 @@ public class Ingredient {
 	
 //	@JsonIgnore
 	@JsonIgnoreProperties({"recipe", "meal", "ingredient"})
-	@OneToOne(cascade= {CascadeType.PERSIST})
+	@OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="nutrients_id")
 	private Nutrients nutrients;
 

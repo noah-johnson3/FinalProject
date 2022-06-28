@@ -2,6 +2,10 @@
   border-right: 2px solid lightgray;
   background-color: rgba(232, 230, 223,.3) ;
 }
+input{
+  width: 40%;
+}
+
 
 .display-blog{
   padding:10px

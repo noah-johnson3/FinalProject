@@ -33,3 +33,6 @@ tr {
 button{
   margin: 2px;
 }
+.search-form button{
+  width: 50%;
+}

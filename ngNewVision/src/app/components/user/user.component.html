@@ -21,7 +21,7 @@
       <div class="row">
         <h3>Your Goals: </h3>
         <ul>
-          <li *ngFor="let goal of loggedInUser?.goals"><span *ngIf="!goal.achieved">{{goal.name}}
+          <li *ngFor="let goal of notAchievedGoals"><span >{{goal.name}}
             <ul>
               <li>{{goal.description}}</li>
               <li>Goal Weight: {{goal.weight}} lbs</li>
@@ -32,7 +32,7 @@
         </ul>
         <h3>Your Achievements: </h3>
         <ul>
-          <li *ngFor="let goal of loggedInUser?.goals"><span *ngIf="goal.achieved">{{goal.name}}
+          <li *ngFor="let goal of achievedGoals"><span >{{goal.name}}
             <ul>
               <li>{{goal.description}}</li>
               <li>{{goal.dateAchieved}}</li>

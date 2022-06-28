@@ -2,6 +2,15 @@
   border-right: 1px solid gray;
 }
 
+.display-blog{
+  padding:10px
+}
+.display-blog-info{
+  padding: 5px;
+  background-color: rgba(232, 230, 223,.2) ;
+
+}
+
 .comment{
   text-align: center;
   background-color: rgba(232, 230, 223,.45);
@@ -14,6 +23,7 @@
   padding: 10px;
   background-color: rgba(232, 230, 223,.45);
   border-top: white;
+  margin: 5px;
 }
 
 .comment-row{
@@ -29,9 +39,6 @@ button{
   text-align: center;
 }
 
-#editingComment{
-  text-align: center;
-}
 
 .submit-button{
   align-content:center

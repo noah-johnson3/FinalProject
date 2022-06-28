@@ -65,3 +65,9 @@ button{
 #filter-option{
   margin-left: 6px;
 }
+#blog-content{
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-wrap:normal;
+  overflow:visible;
+  white-space:pre-wrap;
+}

@@ -161,9 +161,9 @@
               <div class="col-sm-8 comment">{{comment.content}} <br>
               </div>
               <div class="col-sm-2 comment">
-                <p *ngIf="loggedInUser?.id == comment.user?.id"><button class=""
+                <p *ngIf="loggedInUser?.id == comment.user?.id"><button class="btn btn-outline-success btn-sm"
                     (click)="showEditComment(comment)">Edit</button><br>
-                  <button class="" (click)="deleteComment(comment.id)">Delete</button>
+                  <button class="btn btn-outline-danger btn-sm" (click)="deleteComment(comment.id)">Delete</button>
                 </p>
               </div>
             </div>

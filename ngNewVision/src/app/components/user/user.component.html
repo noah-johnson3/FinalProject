@@ -40,7 +40,7 @@
             <ul>
               <li>{{goal.description}}</li>
               <li>{{goal.dateAchieved}}</li>
-              <li><button class="btn btn-primary btn-sm" (click)="deleteGoal(goal.id)">Delete</button></li>
+              <li><button class="btn btn-outline-danger btn-sm" (click)="deleteGoal(goal.id)">Delete</button></li>
             </ul>
           </span>
           </li>
@@ -153,7 +153,8 @@
                     <div class="panel-body" *ngFor="let result of searchResults" class="table"  >
                       <h4>{{result.description}}</h4>
                       <p>Serving size: {{result.servingSize}} {{result.servingSizeUnit}}</p>
-                      <input type="number" min="0" max="10000" name="amount" [(ngModel)]="selectedIngredient.amount" >[g/oz]<button (click)="addFoodToMealOrRecipe(result)" >Add</button>
+                      <input type="number" min="0" max="10000" name="amount" [(ngModel)]="selectedIngredient.amount" >
+                      [g/oz/ Number of Servings if Serving Size is empty]<button class="btn btn-outline-primary btn-sm"(click)="addFoodToMealOrRecipe(result)" >Add</button>
                       <table>
                         <thead>
                           <tr>
@@ -207,7 +208,7 @@
                     <td>{{meal.nutrients?.sugar}}</td>
                     <td>{{meal.nutrients?.sodium}}</td>
                     <td>{{meal.nutrients?.cholesterol}}</td>
-                    <td> <button (click)="removeMeal(meal)" >X</button></td>
+                    <td> <button class="btn btn-outline-danger btn-sm" (click)="removeMeal(meal)" >X</button></td>
                   </tr>
                   <tr>
                     <td><strong>Daily Total</strong></td>
@@ -269,7 +270,7 @@
         </ul>
         <div *ngIf="selectedRecipe" >
             <h3>{{selectedRecipe.name}}</h3>
-            <p>{{selectedRecipe.recipeText}}</p>
+            <pre class="recipe-text">{{selectedRecipe.recipeText}}</pre>
 
         </div>
       </div>

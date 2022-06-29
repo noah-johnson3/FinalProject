@@ -47,19 +47,20 @@
       <div *ngIf="!creatingBlog" class="display-blog"  >
         <div class="row">
           <div class="col-sm-6">
-            <h3>{{displayBlog.title}</h3>
+            <h3>{{displayBlog?.title}}</h3>
           </div>
           <div class="col-sm-6">
             <img *ngIf="!displayBlog?.imageLink" src="" >
+            <img *ngIf="displayBlog?.imageLink" src="displayBlog.imageLink" >
           </div>
         </div>
         <div class="row">
 
-          <p  *ngIf="loggedInUser?.id == displayBlog?.user?.id"  ><button *ngIf="displayBlog" class="btn btn-primary"(click)="startEditBlog(displayBlog)" >Edit</button>
-            <button *ngIf="displayBlog" class="btn btn-danger"(click)="deleteBlog(displayBlog.id)"  >Delete</button>
-          </p>
           <pre id="blog-content">{{displayBlog?.content}}</pre>
         </div>
+        <p  *ngIf="loggedInUser?.id == displayBlog?.user?.id"  ><button *ngIf="displayBlog" class="btn btn-primary"(click)="startEditBlog(displayBlog)" >Edit</button>
+          <button *ngIf="displayBlog" class="btn btn-danger"(click)="deleteBlog(displayBlog.id)"  >Delete</button>
+        </p>
       </div>
 
 

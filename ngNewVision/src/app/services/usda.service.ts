@@ -66,7 +66,9 @@ export class UsdaService {
     if(food.foodNutrients){
 
         for(let n of food.foodNutrients){
-
+          if(!food.servingSize){
+            food.servingSize = ing.amount;
+          }
           switch(n.nutrientName){
               case 'Protein':
                 nutri.protein = Math.round((ing.amount/food.servingSize)* n.value)

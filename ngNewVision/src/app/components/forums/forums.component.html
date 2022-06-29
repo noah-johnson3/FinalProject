@@ -1,10 +1,20 @@
 <main class="container-fluid">
-  <div class="row">
-    <div class="row" id="forum-navigation" >
+  <div class="row"  >
+    <div class="row" >
+      <div>
 
+      </div>
     </div>
     <div class="col-sm-2">
       <div class="row">
+        <div class="row" id="forum-navigation" >
+          <div class="input-group mb3">
+            <input type="text" class="form-control" placeholder="Topic" name="topic" [(ngModel)]="topic" >
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" (click)="getForumsByTopic(topic)" id="basic-addon2">Search</button>
+            </div>
+          </div>
+        </div>
 
       </div>
       <div class="row">
@@ -17,11 +27,13 @@
 
       </div>
       <div class="row " id="start-new-post">
-
+        <button (click)="startCreatePost()" >Create Post</button>
       </div>
     </div>
     <div class="col-sm-10">
       <!-- **************************************** Post List ***************************** -->
+      <div id="post-list" *ngIf="!displayForum">
+
         <div class="row single-post" *ngFor="let post of forums" (click)="display(post)" >
           <hr>
           <div class="col-sm-1 post-info-preview">
@@ -33,10 +45,19 @@
           </div>
           <hr>
         </div>
+        </div>
 
         <!-- ****************************************** Create Post ************************************** -->
         <div class="row" id="create-post-section" *ngIf="creatingPost" >
           <div class="col-sm-12">
+            <span *ngIf="!responding">
+              <label for="topic">Topic:</label>
+              <input class="form-control" type="text" name="topic" [(ngModel)]="newPost.topic">
+            </span>
+            <span *ngIf="responding && displayForum">
+              <label for="topic">Topic:</label>
+              <input class="form-control" disabled type="text" name="topic" [(ngModel)]="displayForum.topic">
+            </span>
             <textarea name="content" id="" cols="45" rows="15" placeholder="Your post here" [(ngModel)]="newPost.content" ></textarea><br>
             <button class="btn btn-outline-primary btn-sm" (click)="createForum(newPost)" >Post</button>
             <hr>
@@ -46,25 +67,28 @@
         <div class="row" id="edit-post-section" *ngIf="editPost && editing" >
           <div class="col-sm-12">
             <textarea name="content" id="" cols="45" rows="15" placeholder="Your post here" [(ngModel)]="editPost.content" ></textarea><br>
-            <button class="btn btn-outline-primary btn-sm" (click)="editForum(editPost)" >Post</button>
+            <button class="btn btn-outline-primary btn-sm" (click)="editForum(editPost)" >Confirm</button>
+            <button class="btn btn-outline-primary btn-sm" (click)="cancelEditPost()" >Cancel</button>
             <hr>
           </div>
         </div>
         <!-- ********************************************* Display Post ******************************* -->
-        <div class="row" id="display-post" *ngIf="displayForum" >
+        <div class="row" id="display-post" *ngIf="displayForum && !editing" >
           <div class="col-sm-12" >
             <p>{{displayForum.user?.username}}</p><br>
             <p>{{displayForum.content}}</p>
-            <button class="btn btn-outline-primary btn-sm" (click)="startReply(displayForum)" >Post</button>
+            <button class="btn btn-outline-primary btn-sm" (click)="cancelDisplay()" >Back</button>
+            <button class="btn btn-outline-primary btn-sm" (click)="startReply(displayForum)" >Reply</button>
             <span *ngIf="displayForum.user?.id == loggedInUser?.id" >
-              <button class="btn btn-outline-warning btn-sm" (click)="cancelCreatePost()" >Edit</button>
-              <button class="btn btn-outline-danger btn-sm" (click)="deleteForum(displayForum.id)" >Deletet</button>
+              <button class="btn btn-outline-warning btn-sm" (click)="startEditPost(displayForum)" >Edit</button>
+              <button class="btn btn-outline-danger btn-sm" (click)="deleteForum(displayForum.id)" >Delete</button>
             </span>
             <!-- Responses -->
             <div class="row post-response" *ngFor="let response of displayForumResponses" >
               <div class="col-sm-12">
                 <p>{{response.user?.username}}</p><br>
                 <p>{{response.content}}</p>
+                <button (click)="display(response)" >View Replies</button>
                 <button (click)="startReply(response)" >Reply</button>
                 <hr>
               </div>

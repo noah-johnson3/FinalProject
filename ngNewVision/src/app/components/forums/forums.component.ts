@@ -20,6 +20,7 @@ export class ForumsComponent implements OnInit {
   editing: boolean = false;
   newPost: ForumPost = new ForumPost();
   creatingPost: boolean = false;
+  topic: string = '';
 
 
   //*********************************** Setup **************************************** */
@@ -27,6 +28,7 @@ export class ForumsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMainForums();
+    this.getUser();
   }
 
   // ***************************************** Page Dynamics **********************************
@@ -35,7 +37,7 @@ export class ForumsComponent implements OnInit {
     this.editPost = post;
     this.editing = true;
   }
-  cancelEditPost(post: ForumPost){
+  cancelEditPost(){
     this.editPost = null;
     this.editing = false;
   }
@@ -120,11 +122,14 @@ createForum(forum: ForumPost){
     next: (results) => {
       if(this.responding){
         if(this.displayForum){
+
           this.getForumResponses(this.displayForum.id);
         }
       }else{
         this.displayForum = results;
       }
+      this.newPost = new ForumPost();
+      this.creatingPost = false;
     },
     error: (problem) => {
       console.error('HttpComponent.loadProducts(): error loading products:');
@@ -166,8 +171,21 @@ deleteForum(id: number){
     }
   });
 
+
 }
 
+getUser(){
+  this.userServ.getLoggedInUser().subscribe({
+    next: (user) => {
+      this.loggedInUser = user;
+
+    },
+    error: (problem) => {
+      console.error('HttpComponent.loadProducts(): error loading products:');
+      console.error(problem);
+    }
+  });
+}
 
 
 

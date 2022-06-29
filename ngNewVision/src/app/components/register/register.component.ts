@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Gender } from 'src/app/models/gender';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { NgModule } from '@angular/core';
+import {MatDialogModule } from '@angular/material/dialog' ;'@material/button';
 
 @Component({
   selector: 'app-register',
@@ -48,6 +50,18 @@ export class RegisterComponent implements OnInit {
         console.error(problem);
       }
     });
+  }
+
+  terms(){
+    let termsText = "I hereby acknowledge that Potatoes are the best of all carbs, " +
+    "and failiure to agree with this will prevent you from creating an account. " +
+
+   "Furthermore, after creation of this account, if user were to mock, belittle, and/or defame the Potato, " +
+    "user WILL be subjected to legal litigation. " +
+
+    "By clicking I Agree, user will acknowledge all statements and agree to the terms and conditions " +
+     "as stated above.";
+    confirm();
   }
 
 }

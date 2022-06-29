@@ -66,7 +66,7 @@
         <!-- ****************************************** Edit Post ************************************** -->
         <div class="row" id="edit-post-section" *ngIf="editPost && editing" >
           <div class="col-sm-12">
-            <textarea name="content" id="" cols="10" rows="100%" placeholder="Your post here" [(ngModel)]="editPost.content" ></textarea><br>
+            <textarea name="content" id="" cols="80" rows="10" placeholder="Your post here" [(ngModel)]="editPost.content" ></textarea><br>
             <button class="btn btn-outline-primary btn-sm" (click)="editForum(editPost)" >Confirm</button>
             <button class="btn btn-outline-primary btn-sm" (click)="cancelEditPost()" >Cancel</button>
             <hr>

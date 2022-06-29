@@ -275,7 +275,7 @@ DROP TABLE IF EXISTS `ingredient` ;
 
 CREATE TABLE IF NOT EXISTS `ingredient` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(500) NOT NULL,
+  `name` VARCHAR(300) NOT NULL,
   `nutrients_id` INT NULL,
   `portion` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
@@ -728,7 +728,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `nutritiondb`;
-INSERT INTO `forum_post` (`id`, `topic`, `content`, `user_id`, `created_at`, `in_reply_to_id`) VALUES (1, 'Tests', 'THIS IS A TEST... Your exam will begin now. If you see this - you passed', 1, '2022-06-21 21:00:00', NULL);
+INSERT INTO `forum_post` (`id`, `topic`, `content`, `user_id`, `created_at`, `in_reply_to_id`) VALUES (1, 'Diet', 'I\'m trying to lose weight, but I love a mcdouble - What advice can you all give on cutting calories without cutting mcdonalds?', 3, '2022-06-21 21:00:00', NULL);
+INSERT INTO `forum_post` (`id`, `topic`, `content`, `user_id`, `created_at`, `in_reply_to_id`) VALUES (2, 'Diet', 'I don\'t know, man... Maybe fewer salads?', 2, '2022-06-21 22:00:00', 1);
 
 COMMIT;
 

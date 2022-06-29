@@ -66,3 +66,8 @@ button{
   overflow:visible;
   white-space:pre-wrap;
 }
+
+.recipe-search{
+  border-right: 2px solid lightgray;
+  background-color: rgba(232, 230, 223,.3) ;
+}

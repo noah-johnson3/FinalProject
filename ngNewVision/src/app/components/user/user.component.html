@@ -1,8 +1,8 @@
 <main class="container-fluid">
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-4 user-info">
       <div class="row">
-        <h3>{{loggedInUser?.username}}</h3>
+        <h3>Username: {{loggedInUser?.username}}</h3>
 
       </div>
       <div class="row">
@@ -14,8 +14,12 @@
       </div>
       <div class="row">
 
-        <h5>{{loggedInUser?.email}}</h5>
-        <h5>{{loggedInUser?.firstName}} {{loggedInUser?.lastName}}</h5>
+        <h5>Email: {{loggedInUser?.email}}</h5>
+        <h5>Full Name: {{loggedInUser?.firstName}} {{loggedInUser?.lastName}}</h5>
+        <div class="row">
+          <h5>Height: {{loggedInUser?.height}}" <br> Weight: {{loggedInUser?.weight}}lbs <br>Age: {{age}} <br> BMR: {{calculateMetabolicRate()}} Calories  <br> AMR: {{amr}} Calories
+          </h5>
+        </div>
 
       </div>
       <div class="row">
@@ -25,7 +29,7 @@
             <ul>
               <li>{{goal.description}}</li>
               <li>Goal Weight: {{goal.weight}} lbs</li>
-              <li><button class="bg bg-success" (click)="achieveGoal(goal)">Achieve!</button></li>
+              <li><h6 class="btn btn-success btn-sm" (click)="achieveGoal(goal)">Achieve!</h6></li>
             </ul>
           </span>
           </li>
@@ -54,7 +58,7 @@
 
     </div>
     <div class="col-sm-8">
-      <div class="row">
+      <div class="row text-center justify-content-center">
         <h3>
         <button (click)="showTracker()">Nutrition Tracker</button>
         <button (click)="showAddMeal()">Add Meal</button>
@@ -73,42 +77,65 @@
                       <table class="table"  >
                         <thead>
                           <tr>
-                            <th>Meal Type: </th>
-                            <th>Calories</th>
-                            <th>Carbs</th>
-                            <th>Protein</th>
-                            <th>Fats</th>
-                            <th>Sugar</th>
-                            <th>Chol</th>
-                            <th>Sodium </th>
+                            <td>
+                              <button class="btn btn-outline-primary" (click)="addMeal(newMeal)" >Add Meal</button>
+                            </td>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
+                            <td>Meal Type: </td>
                             <td>
                               <select name="mealType" [(ngModel)]="newMeal.mealType">
                                 <option *ngFor="let item of mealTypes" [ngValue]="item">{{item.name}}</option>
                               </select>
                             </td>
-                            <td>{{mealNutrients.calories}}</td>
-                            <td>{{mealNutrients.carbs}}</td>
-                            <td>{{mealNutrients.protein}}</td>
-                            <td>{{mealNutrients.fats}}</td>
-                            <td>{{mealNutrients.sugar}}</td>
-                            <td>{{mealNutrients.cholesterol}}</td>
-                            <td>{{mealNutrients.sodium}}</td>
-                          </tr>
-                          <tr>
                             <td>
                               Manually enter Nutrients:
                             </td>
+                          </tr>
+                          <tr>
+                            <td>Calories</td>
+                            <td>{{mealNutrients.calories}}</td>
                             <td><input type="number" min="0" max="10000" name="calories" [(ngModel)]="mealNutrients.calories"></td>
+                          </tr>
+                          <tr>
+                            <td>Carbs</td>
+                            <td>{{mealNutrients.carbs}}</td>
                             <td><input type="number"  min="0" max="10000" name="carbs" [(ngModel)]="mealNutrients.carbs"></td>
+                          </tr>
+                          <tr>
+                            <td>Protein</td>
+                            <td>{{mealNutrients.protein}}</td>
                             <td><input type="number"   min="0" max="10000" name="protein" [(ngModel)]="mealNutrients.protein"></td>
+                          </tr>
+                          <tr>
+                            <td>Fats</td>
+                            <td>{{mealNutrients.fats}}</td>
                             <td><input type="number"  min="0" max="10000"  name="fats" [(ngModel)]="mealNutrients.fats"></td>
+                          </tr>
+                          <tr>
+                            <td>Sugar</td>
+                            <td>{{mealNutrients.sugar}}</td>
                             <td><input type="number" min="0" max="10000" name="sugar" [(ngModel)]="mealNutrients.sugar"></td>
+                          </tr>
+                          <tr>
+                            <td>Chol</td>
+                            <td>{{mealNutrients.cholesterol}}</td>
                             <td><input type="number"  min="0" max="10000" name="cholesterol" [(ngModel)]="mealNutrients.cholesterol"></td>
+
+                          </tr>
+                          <tr>
+                            <td>Sodium </td>
+                            <td>{{mealNutrients.sodium}}</td>
                             <td><input type="number"  min="0" max="10000" name="sodium" [(ngModel)]="mealNutrients.sodium"></td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <form>
+                                <label>Search Foods: </label><input (keypress)="search(searchQuery)"  type="text" name="name" [(ngModel)]="searchQuery">
+                              </form>
+                            </td>
                           </tr>
                         </tbody>
                       </table>
@@ -117,11 +144,7 @@
             </div>
           </div>
 
-          <button (click)="addMeal(newMeal)" >Add Meal</button>
 
-          <form>
-            <label>Search Foods: </label><input (keypress)="search(searchQuery)"  type="text" name="name" [(ngModel)]="searchQuery">
-          </form>
 <!-- ********************************************************************************************** -->
 
             <div class="container">
@@ -235,7 +258,7 @@
           </select><br>
           <label>Make profile public? (Other users will see your real name for blog posts and recipes that you create)</label>
           <input type="checkbox" name="publicProfile" [(ngModel)]="editUser.publicProfile"/><br>
-          <button (click)="updateUser(editUser)">Update</button><button (click)="cancelEdit()">Cancel</button>
+          <button class="btn btn-outline-primary" (click)="updateUser(editUser)">Update</button><button class="btn btn-outline-primary" (click)="cancelEdit()">Cancel</button>
         </form>
       </div>
 
@@ -256,9 +279,7 @@
 
 
   </div>
-  <div class="row">
-    <h5>Height: {{loggedInUser?.height}}" Weight: {{loggedInUser?.weight}}lbs Age: {{age}}  BMR: {{calculateMetabolicRate()}} AMR: {{amr}}</h5>
-  </div>
+
   <div class="row">
 
   </div>

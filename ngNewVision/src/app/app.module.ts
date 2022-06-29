@@ -1,4 +1,3 @@
-import { MatDialogModule } from '@angular/material/dialog'; '@material/button';
 import { UserService } from './services/user.service';
 import { TrackedDayService } from './services/tracked-day.service';
 import { TopicService } from './services/topic.service';
@@ -30,7 +29,6 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { FoodFinderComponent } from './components/food-finder/food-finder.component';
 import { BaseBarComponent } from './components/base-bar/base-bar.component';
 import { ForumsComponent } from './components/forums/forums.component';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -49,17 +47,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FoodFinderComponent,
     BaseBarComponent,
     ForumsComponent,
-    ConfirmDialogComponent
-  ],
-  entryComponents: [
-    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    MatDialogModule,
     BrowserAnimationsModule
 
   ],
@@ -77,9 +70,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
    TrackedDayService,
    UserService
   ],
-  exports: [
-    MatDialogModule
-  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

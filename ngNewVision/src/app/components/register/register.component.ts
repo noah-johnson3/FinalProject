@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { Gender } from 'src/app/models/gender';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { NgModule } from '@angular/core';
-import {MatDialogModule } from '@angular/material/dialog' ;'@material/button';
 
 @Component({
   selector: 'app-register',

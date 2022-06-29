@@ -127,6 +127,7 @@ createForum(forum: ForumPost){
         }
       }else{
         this.displayForum = results;
+        this.getMainForums();
       }
       this.newPost = new ForumPost();
       this.creatingPost = false;

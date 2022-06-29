@@ -22,21 +22,23 @@ export class RegisterComponent implements OnInit {
 
 
   register(u: User): void{
-    this.authServ.register(u).subscribe({
-      next: (registeredUser) => {
-        if(u.username && u.password){
-        this.authServ.login(u.username, u.password).subscribe({
-          next:(loggedInUser)=>{
-            this.router.navigateByUrl('/home')
-          }
-        })
-      }
-      },
-      error: (problem) => {
-        console.error('HttpComponent.reload(): error registering');
-        console.error(problem);
-      }
-    });
+    if(this.terms()){
+      this.authServ.register(u).subscribe({
+        next: (registeredUser) => {
+          if(u.username && u.password){
+          this.authServ.login(u.username, u.password).subscribe({
+            next:(loggedInUser)=>{
+              this.router.navigateByUrl('/user')
+            }
+          })
+        }
+        },
+        error: (problem) => {
+          console.error('HttpComponent.reload(): error registering');
+          console.error(problem);
+        }
+      });
+    }
   }
   indexGender(): void{
     this.genderServ.index().subscribe({
@@ -50,7 +52,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  terms(){
+  terms():boolean{
     let termsText = "I hereby acknowledge that Potatoes are the best of all carbs, " +
     "and failiure to agree with this will prevent you from creating an account. " +
 
@@ -59,7 +61,7 @@ export class RegisterComponent implements OnInit {
 
     "By clicking I Agree, user will acknowledge all statements and agree to the terms and conditions " +
      "as stated above.";
-    confirm();
+    return confirm(termsText);
   }
 
 }

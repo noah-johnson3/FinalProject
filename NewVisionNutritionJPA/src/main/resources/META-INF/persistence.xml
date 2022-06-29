@@ -18,6 +18,7 @@
 	<class>com.skilldistillery.newvision.entities.TrackedDay</class>
 	<class>com.skilldistillery.newvision.entities.User</class>
 	<class>com.skilldistillery.newvision.entities.Nutrients</class>
+	<class>com.skilldistillery.newvision.entities.ForumPost</class>
 
     
     <!-- end entities  -->

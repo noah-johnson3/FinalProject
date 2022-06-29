@@ -2,41 +2,58 @@
   <div class="row">
     <div class="col-sm-4">
       <div class="row">
-        <div class="top-left  display-blog-info"  >
-        <h3>{{displayBlog?.title}}</h3>
-        <h3>By: <span *ngIf="!displayBlog?.user?.publicProfile">{{displayBlog?.user?.username}}</span ><span *ngIf="displayBlog?.user?.publicProfile" >{{displayBlog?.user?.firstName}} {{displayBlog?.user?.lastName}}</span></h3>
-        <h4>Covered Topics:</h4>
-        <ul>
-          <li (click)="searchByTopic(topic)" *ngFor="let topic of displayBlog?.topics" > {{topic.name}}</li>
-        </ul>
-          </div>
+        <div class="top-left  display-blog-info">
+          <h3>{{displayBlog?.title}}</h3>
+          <h3>By: <span *ngIf="!displayBlog?.user?.publicProfile">{{displayBlog?.user?.username}}</span><span
+              *ngIf="displayBlog?.user?.publicProfile">{{displayBlog?.user?.firstName}}
+              {{displayBlog?.user?.lastName}}</span></h3>
+          <h4>Covered Topics:</h4>
+          <ul>
+            <li (click)="searchByTopic(topic)" *ngFor="let topic of displayBlog?.topics"> {{topic.name}}</li>
+          </ul>
+        </div>
 
       </div>
-      <div class="row search-options">
-        <h5 id="filter-option">Filter:</h5>
+      <div class="row text-center justify-content-center">
+        <h4>Contribute to our library!</h4>
+        <button id="create-btn-blog" type="button" class="btn btn-outline-secondary" (click)="startCreateBlog()">Create
+          Blog</button>
+      </div>
+      <!-- ***************************************** Search Options *********************************** -->
+      <div class="row search-options text-center justify-content-center ">
+        <h5 id="filter-option">Search Our Library:</h5>
 
 
         <form>
-          <button class="col  btn btn-outline-primary"(click)="searchByTopic(searchTopic)">Topic Search</button>
-          <select name="topic" [(ngModel)]="searchTopic">
-            <option *ngFor="let topic of topics" [ngValue]="topic">{{topic.name}}</option>
-          </select><br>
+          <div class="input-group">
+            <select class="custom-select form-control" id="inputGroupSelect04" name="topic" [(ngModel)]="searchTopic">
+              <option selected hidden disabled [ngValue]="searchTopic" >Select Topic</option>
+              <option *ngFor="let topic of topics" [ngValue]="topic">{{topic.name}}</option>
+            </select>
+            <div class="input-group-append">
+              <button id="topic-search-button" class="btn btn-outline-secondary" (click)="searchByTopic(searchTopic)" type="button"> Search</button>
+            </div>
+          </div>
+          <br>
 
-          <input name="author" type="search" class="form-control rounded" [(ngModel)]="author" placeholder="Search By Author" aria-label="Search" aria-describedby="search-addon" />
-         <button type="button" class="btn btn-outline-primary" (click)="searchByAuthor(author)" >Author Search</button>
 
+          <div class="input-group mb3">
+            <input type="text" class="form-control" placeholder="Author Username" name="author" [(ngModel)]="author" >
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" (click)="searchByAuthor(author)" id="basic-addon2">Search</button>
+            </div>
+          </div>
 
+          <button class="btn btn-outline-secondary btn-sm" (click)="indexBlogs()" >Clear Search</button>
 
-
-          <!-- <button class="col form-control btn btn-info" (click)="searchByAuthor(author)">Author Search:</button><br> -->
-          <!-- <input class="col form-control" type="text" name="author" [(ngModel)]="author" placeholder="Ex: Geralt of Rivia"> -->
-          <button id="create-btn-blog" type="button" class="btn btn-primary" (click)="startCreateBlog()" >Create Blog</button>
         </form>
       </div>
-      <div class="row">
+      <!-- ************************************ Search Results ************************************** -->
+      <div class="row search-results">
         <h5>Search Results:</h5>
-        <p (click)="selectBlog(blog)" *ngFor="let blog of blogs">{{blog.title}}</p>
+        <p class="blog-list" (click)="selectBlog(blog)" *ngFor="let blog of blogs">{{blog.title}}</p>
       </div>
+      <!-- ************************************ End Search Results ************************************** -->
     </div>
 
 
@@ -44,120 +61,141 @@
 
     <div class="col-sm-8">
 
-      <div *ngIf="!creatingBlog" class="display-blog"  >
+      <!-- ************************************* Display Blog ******************************************** -->
+      <div *ngIf="!creatingBlog && !editingBlog" class="display-blog">
         <div class="row">
           <div class="col-sm-6">
             <h3>{{displayBlog?.title}}</h3>
           </div>
-          <div class="col-sm-6">
-            <img *ngIf="!displayBlog?.imageLink" src="" >
-            <img *ngIf="displayBlog?.imageLink" src="displayBlog.imageLink" >
+          <div class="col-sm-6 blog-image ">
+            <img *ngIf="!displayBlog?.imageLink" src="assets/images/FinalProjectLogo.png" width="80%">
+            <img *ngIf="displayBlog?.imageLink" src="displayBlog.imageLink">
           </div>
         </div>
         <div class="row">
-
+          <hr>
           <pre id="blog-content">{{displayBlog?.content}}</pre>
         </div>
-        <p  *ngIf="loggedInUser?.id == displayBlog?.user?.id"  ><button *ngIf="displayBlog" class="btn btn-primary"(click)="startEditBlog(displayBlog)" >Edit</button>
-          <button *ngIf="displayBlog" class="btn btn-danger"(click)="deleteBlog(displayBlog.id)"  >Delete</button>
+        <p *ngIf="loggedInUser?.id == displayBlog?.user?.id"><button *ngIf="displayBlog" class="btn btn-outline-warning align-left"
+            (click)="startEditBlog(displayBlog)">Edit</button>
+          <button *ngIf="displayBlog" class="btn btn-outline-danger align-right" (click)="deleteBlog(displayBlog.id)">Delete</button>
         </p>
+        <hr>
+
+
       </div>
 
-
+      <!-- ************************************* Editing Blog ******************************************** -->
       <div *ngIf="editingBlog">
         <form>
           <label for="title">Blog Title</label>
-          <input class="col form-control" type ="text" name="title" [(ngModel)]="blogUnderEdit.title" ><br>
+          <input class="col form-control" type="text" name="title" [(ngModel)]="blogUnderEdit.title"><br>
           <label for="content">Content</label>
-          <textarea class="col form-control" name="content" [(ngModel)]="blogUnderEdit.content">Blog Content</textarea><br>
+          <textarea cols="auto" rows="80%" class="col form-control" name="content"
+            [(ngModel)]="blogUnderEdit.content">Blog Content</textarea><br>
           <label for="imageLink">Image URL</label>
-          <input class="col form-control" type ="text" name="imageLink" [(ngModel)]="blogUnderEdit.imageLink" ><br>
-          <select name="newBlogTopic" [(ngModel)]="newBlogTopic">
-              <option *ngFor="let topic of topics" [ngValue]="topic" > {{topic.name}}</option>
-          </select>
-          <button class="btn btn-primary btn-sm" (click)="addTopic(newBlogTopic)">Add topic</button><br>
-          <label>Custom Topic</label>
-          <label>Name:</label><input class="col form-control" type="text" name="name" [(ngModel)]="newTopic.name" >
-          <label>Description:</label><input class="col form-control" type="text" name="description" [(ngModel)]="newTopic.description" >
-          <p><button class="btn btn-primary btn-sm" (click)="createTopic(newTopic)">Add topic</button></p>
+          <input class="col form-control" type="text" name="imageLink" [(ngModel)]="blogUnderEdit.imageLink"><br>
+          <h6 style="color:darkgray" > Covered Topics:</h6>
+          <hr>
+
+          <div class="input-group">
+            <select class="custom-select form-control" id="inputGroupSelect04" name="newBlogTopic" [(ngModel)]="newBlogTopic">
+              <option selected hidden disabled [ngValue]="newBlogTopic" >Select Topic</option>
+              <option *ngFor="let topic of topics" [ngValue]="topic">{{topic.name}}</option>
+            </select>
+            <div class="input-group-append">
+              <button id="topic-search-button" class="btn btn-outline-secondary" (click)="addTopic(newBlogTopic)" type="button">Add Topic</button>
+            </div>
+          </div>
+          <label>Custom Topic Name:</label>
+          <input class="col form-control" type="text" name="name" [(ngModel)]="newTopic.name">
+          <label>Description:</label><input class="col form-control" type="text" name="description"
+            [(ngModel)]="newTopic.description"><br>
+            <button class="btn btn-primary" (click)="createTopic(newTopic)">Add Custom topic</button><br>
           <p *ngFor="let topic of newBlogTopics">{{topic.name}}</p>
         </form>
-
-        <button class="btn btn-primary" (click)="updateBlog(blogUnderEdit)" >Submit</button>
-        <button class="btn btn-danger" (click)="cancelEditBlog()">Cancel</button>
+        <hr>
+        <button class="btn btn-primary" (click)="updateBlog(blogUnderEdit)">Submit</button>
+        <button class="btn btn-outline-danger" (click)="cancelEditBlog()">Cancel</button>
+        <hr>
       </div>
 
-
+      <!-- ****************************** Create Blog ************************ -->
       <div *ngIf="creatingBlog">
         <form>
           <label for="title">Blog Title</label>
-          <input class="col form-control" type ="text" name="title" [(ngModel)]="newBlog.title"><br>
+          <input class="col form-control" type="text" name="title" placeholder="Title" [(ngModel)]="newBlog.title"><br>
           <label for="content">Content</label>
-          <textarea class="col form-control" name="content" [(ngModel)]="newBlog.content">Blog Content</textarea><br>
+          <textarea class="col form-control"  cols="auto" rows="40%" placeholder="Write your article here!"
+          name="content" [(ngModel)]="newBlog.content">Blog Content</textarea><br>
           <label for="imageLink">Image URL</label>
-          <input class="col form-control" type ="text" name="imageLink" [(ngModel)]="newBlog.imageLink"><br>
-          <select name="newBlogTopic" [(ngModel)]="newBlogTopic">
-            <option *ngFor="let topic of topics" [ngValue]="topic" > {{topic.name}}</option>
-          </select><br>
-          <button class="btn btn-primary" (click)="addTopic(newBlogTopic)">Add topic</button><br>
-          <label>Custom Topic</label>
-          <label>Name:</label><input class="col form-control" type="text" name="name" [(ngModel)]="newTopic.name" ><br>
-          <label>Description:</label><input class="col form-control" type="text" name="description" [(ngModel)]="newTopic.description" ><br>
-          <button class="btn btn-primary" (click)="createTopic(newTopic)">Add topic</button><br>
+          <input placeholder="Have a custom image to display? Put a link here!" class="col form-control" type="text" name="imageLink" [(ngModel)]="newBlog.imageLink"><br>
+          <h6 style="color:darkgray" > Covered Topics:</h6>
+          <hr>
+          <div class="input-group">
+            <select class="custom-select form-control" id="inputGroupSelect04" name="newBlogTopic" [(ngModel)]="newBlogTopic">
+              <option selected hidden disabled [ngValue]="newBlogTopic" >Select Topic</option>
+              <option *ngFor="let topic of topics" [ngValue]="topic">{{topic.name}}</option>
+            </select>
+            <div class="input-group-append">
+              <button id="topic-search-button" class="btn btn-outline-secondary" (click)="addTopic(newBlogTopic)" type="button">Add Topic</button>
+            </div>
+          </div>
+          <label>Custom Topic Name:</label><input class="col form-control" type="text" name="name" [(ngModel)]="newTopic.name">
+          <label>Description:</label><input class="col form-control" type="text" name="description"
+            [(ngModel)]="newTopic.description"><br>
+          <button class="btn btn-primary" (click)="createTopic(newTopic)">Add Custom topic</button><br>
           <p *ngFor="let topic of newBlogTopics">{{topic.name}}</p>
         </form>
 
-        <button class="btn btn-primary" (click)="createBlog(newBlog)" >Submit</button>
+        <button class="btn btn-primary" (click)="createBlog(newBlog)">Submit Article</button>
         <button class="btn btn-danger" (click)="cancelCreateBlog()">Cancel</button>
+        <hr>
       </div>
-    </div>
-  </div>
-
-
-
-
-
-    <div id="commentDisplay" *ngIf="!editingComment">
-      <div *ngFor="let comment of comments" class=" row">
-        <div class="col-sm-4 " ></div>
-        <div class="col-sm-8">
-          <div class="row comment-row ">
-            <div class="col-sm-2 comment">{{comment.user?.username}}<br></div>
-            <div class="col-sm-8 comment">{{comment.content}} <br>
-            </div>
-            <div class="col-sm-2 comment" >
-              <p  *ngIf="loggedInUser?.id == comment.user?.id" ><button class="" (click)="showEditComment(comment)" >Edit</button><br>
-                <button class="" (click)="deleteComment(comment.id)" >Delete</button>
-              </p>
+      <!-- ****************************** Comment Section ************************ -->
+      <div id="commentDisplay" *ngIf="!editingComment && !creatingBlog">
+        <div *ngFor="let comment of comments" class=" row">
+          <div class="col-sm-12">
+            <div class="row comment-row ">
+              <div class="col-sm-2 comment">{{comment.user?.username}}<br></div>
+              <div class="col-sm-8 comment">{{comment.content}} <br>
+              </div>
+              <div class="col-sm-2 comment">
+                <p *ngIf="loggedInUser?.id == comment.user?.id"><button class=""
+                    (click)="showEditComment(comment)">Edit</button><br>
+                  <button class="" (click)="deleteComment(comment.id)">Delete</button>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
 
-    <div id="editingComment" *ngIf="editingComment" class="row" >
-    <div class="col-sm-4" > </div>
-    <div class="col-sm-8 "  >
-      <div class="row">
-        <div class="col-sm-12 editComment">
-          <textarea cols="60" rows="5" name="content" [(ngModel)]="commentUnderEdit.content"></textarea><br>
-          <p><button class="btn btn-primary" (click)="cancelEditComment()" >Cancel</button>
-          <button class="btn btn-primary" (click)="editComment(commentUnderEdit)" >Submit Updated Comment</button></p>
+      <div id="editingComment" *ngIf="editingComment" class="row"  >
+        <div class="col-sm-12 ">
+          <div class="row">
+            <div class="col-sm-12 editComment">
+              <textarea cols="60" rows="5" name="content" [(ngModel)]="commentUnderEdit.content"></textarea><br>
+              <p><button class="btn btn-primary" (click)="cancelEditComment()">Cancel</button>
+                <button class="btn btn-primary" (click)="editComment(commentUnderEdit)">Submit Updated Comment</button>
+              </p>
+            </div>
+
+          </div>
         </div>
+      </div>
 
+      <div id="addComment" class="row"  *ngIf=" !creatingBlog" >
+        <div class="col-sm-12">
+
+          <textarea name="content" cols="60" rows="5" placeholder="Comment on the blog"
+            [(ngModel)]="newComment.content"></textarea><br>
+          <button class="btn btn-primary" (click)="createComment(newComment)">Submit</button>
+        </div>
       </div>
     </div>
-    </div>
-
-    <div id="addComment" class="row" >
-      <div class="col-sm-4" ></div>
-      <div class="col-sm-8" >
-
-        <textarea name="content" cols="60" rows="5" placeholder="Comment on the blog" [(ngModel)]="newComment.content"></textarea><br>
-        <button class="btn btn-primary" (click)="createComment(newComment)" >Submit</button>
-      </div>
-    </div>
+  </div>
 
 
   <div class="row">

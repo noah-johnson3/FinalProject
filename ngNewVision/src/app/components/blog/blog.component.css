@@ -2,9 +2,7 @@
   border-right: 2px solid lightgray;
   background-color: rgba(232, 230, 223,.3) ;
 }
-input{
-  width: 40%;
-}
+
 
 
 .display-blog{
@@ -36,12 +34,20 @@ input{
  margin: 5px;
 }
 
-button{
-  margin: 5px;
+#topic-search-button{
+  margin: 0px;
+
+}
+#basic-addon2{
+  margin: 0px;
+
 }
 
 #addComment{
   text-align: center;
+}
+button{
+  margin: 5px;
 }
 
 
@@ -59,15 +65,32 @@ button{
 
 .search-options{
   border-bottom: 2px lightgrey solid;
+  border-top: 2px lightgrey solid;
   padding: 5px;
 }
 
 #filter-option{
-  margin-left: 6px;
+  text-align: left;
 }
 #blog-content{
   font-family: Arial, Helvetica, sans-serif;
   overflow-wrap:normal;
   overflow:visible;
   white-space:pre-wrap;
+}
+.blog-image{
+  padding: 10px;
+}
+.align-left{
+  text-align: left;
+}
+.align-right{
+  text-align: right;
+}
+.search-results{
+  padding: 10px;
+
+}
+.blog-list:hover {
+  text-decoration: underline;
 }

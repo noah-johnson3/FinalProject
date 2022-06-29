@@ -1,32 +1,51 @@
 <main class="container-fluid">
   <div class="row">
     <div class="col-sm-4">
-      <div class="row">
-        <a class="nav-link"><span (click)="getRecipes()">Recipes</span>
-          <span *ngIf="ingredientName" (click)="getRecipesByIngredient(ingredientName)"> > {{ingredientName}}</span>
-          <span *ngIf="authorName"> > {{authorName}}</span>
-          <span *ngIf="selectedRecipe"> > {{selectedRecipe?.name}}</span>
-          <span *ngIf="time"> > by time: {{time}}</span>
+      <div class="row" id="recipe-nav">
+        <a  class="nav-link"><span class="recipe-nav-content" (click)="getRecipes()">Recipes</span>
+          <span  class="recipe-nav-content" *ngIf="ingredientName"  (click)="cancelSelect()" (click)="getRecipesByIngredient(ingredientName)"> > {{ingredientName}}</span>
+          <span  class="recipe-nav-content" *ngIf="authorName"  (click)="cancelSelect()" (click)="getRecipesByAuthor(authorName)" > > {{authorName}}</span>
+          <span  class="recipe-nav-content" *ngIf="selectedRecipe"> > {{selectedRecipe?.name}}</span>
+          <span  class="recipe-nav-content" *ngIf="time"> > by time: {{time}}</span>
         </a>
-
       </div>
+      <!-- ******************************* Search Options *********************************** -->
       <div class="row">
-        <form name="searchForm" class="search-form">
-          <input type="text" name="ingredientName" placeholder="Egg, Potato, Chicken.." [(ngModel)]="ingredientName">
-          <button (click)="getRecipesByIngredient(ingredientName)">Search By Ingredient</button><br>
-          <input type="number" min=0 name="time" placeholder="10" [(ngModel)]="time">
-          <button (click)="getRecipesByTime(time)">Search By Time</button><br>
-          <input type="text" name="authorName" placeholder="Author's Name" [(ngModel)]="authorName">
-          <button (click)="getRecipesByAuthor(authorName)">Search By Author</button>
+        <h4 id="search-form-header" >Search Our Recipes:</h4>
+        <form name="searchForm" class="search-form text-center justify-content-center">
+
+
+
+          <div class="input-group mb3">
+            <input type="number" class="form-control" placeholder="20 mins" min="0" name="time" [(ngModel)]="time">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary search-button" (click)="getRecipesByTime(time)" id="basic-addon2">Search</button>
+            </div>
+          </div>
+          <div class="input-group mb3">
+            <input type="text" class="form-control" placeholder="Ingredient Name" name="ingredientName" [(ngModel)]="ingredientName">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary search-button" (click)="getRecipesByIngredient(ingredientName)" id="basic-addon2">Search</button>
+            </div>
+          </div>
+          <div class="input-group mb3">
+            <input type="text" class="form-control" placeholder="Author Username" name="authorName" [(ngModel)]="authorName">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary search-button" (click)="getRecipesByAuthor(authorName)" id="basic-addon2">Search</button>
+            </div>
+          </div>
+
+          <button class="btn btn-outline-secondary btn-sm" (click)="getRecipes()" >Clear Search</button>
         </form>
       </div>
-      <div class="row">
+      <!-- **************************************** Contribution *********************************** -->
+      <div class="row justify-content-center " id="addSection">
         <img src="https://farm8.staticflickr.com/7037/6802898136_932e900b5e_z.jpg" style="height:auto; width:85%" />
 
       </div>
-      <div class="row">
-        <h1>Have something you want to add?</h1>
-        <button (click)="creatingRecipe()">Create Recipe</button>
+      <div class="row  " id="contributions-section">
+        <h4>Contribute Something New!</h4>
+        <button class="btn btn-outline-success " (click)="creatingRecipe()">Create Recipe</button>
       </div>
       <div class="row">
       </div>
@@ -45,7 +64,7 @@
         </div>
       </div>
       <!-- ************************************************* View Details ******************************************************** -->
-      <div *ngIf="selectedRecipe">
+      <div *ngIf="selectedRecipe && !updating">
         <form>
           <table style="max-width:1300px;" class="table">
             <thead>
@@ -92,19 +111,25 @@
                 <td>{{selectedRecipe.nutrients?.cholesterol}}mg</td>
               </tr>
               <tr>
-                <td>Ingredients:</td>
+                <td>Ingredients (if tagged):</td>
                 <td colspan="2"><span *ngFor="let ing of selectedRecipe.ingredients">{{ing.name}}, </span></td>
               </tr>
               <tr>
 
-                <td class="recipe-text" rowspan="2">Directions: {{selectedRecipe.recipeText}}</td>
+                <td rowspan="2">Directions: <pre class="recipe-text">{{selectedRecipe.recipeText}}</pre></td>
+              </tr>
+              <tr>
+                <td>
+
+                  <button class="btn btn-outline-primary btn-sm" (click)="cancelSelect()">Back</button>
+                  <button class="btn btn-outline-primary btn-sm" (click)="addSelect(selectedRecipe)">Favorite</button>
+                  <button class="btn btn-outline-primary btn-sm" (click)="updateSelect()">Update</button>
+                  <button class="btn btn-outline-danger btn-sm" (click)="deleteSelect(selectedRecipe.id)">Delete</button>
+                </td>
               </tr>
             </tbody>
           </table>
-          <button (click)="cancelSelect()">Back</button>
-          <button (click)="updateSelect()">Update</button>
-          <button (click)="deleteSelect(selectedRecipe.id)">Delete</button>
-          <button (click)="addSelect(selectedRecipe)">Favorite</button>
+
         </form>
       </div>
       <!-- ************************************************* Update Form ************************************************************* -->
@@ -117,77 +142,67 @@
                 <table class="table" style="width: 100%">
                   <thead>
                     <tr>
-                      <th> <button (click)="cancelUpdate()">Cancel</button>
-                        <button (click)="createRecipeNutrients(recipeNutrients, selectedRecipe)" >Update</button></th>
-                      <th>Calories</th>
-                      <th>Carbs</th>
-                      <th>Protein</th>
-                      <th>Fats</th>
-                      <th>Sugar</th>
-                      <th>Cholesterol</th>
-                      <th>Sodium </th>
+                      <th> <button class="btn btn-outline-warning btn-sm" (click)="cancelUpdate()">Cancel</button>
+                        <button class="btn btn-outline-success btn-sm" (click)="createRecipeNutrients(recipeNutrients, selectedRecipe)" >Update</button></th>
+
                     </tr>
                   </thead>
                   <tbody>
-
-                    <tr>
-                      <td >
-                        Manual Nutrients:
-                      </td>
-                      <td><input type="number" min="0" max="10000" name="calories"
-                          [(ngModel)]="recipeNutrients.calories"></td>
-                      <td><input type="number" min="0" max="10000" name="carbs" [(ngModel)]="recipeNutrients.carbs">
-                      </td>
-                      <td><input type="number" min="0" max="10000" name="protein" [(ngModel)]="recipeNutrients.protein">
-                      </td>
-                      <td><input type="number" min="0" max="10000" name="fats" [(ngModel)]="recipeNutrients.fats"></td>
-                      <td><input type="number" min="0" max="10000" name="sugar" [(ngModel)]="recipeNutrients.sugar">
-                      </td>
-                      <td><input type="number" min="0" max="10000" name="cholesterol"
-                          [(ngModel)]="recipeNutrients.cholesterol"></td>
-                      <td><input type="number" min="0" max="10000" name="sodium" [(ngModel)]="recipeNutrients.sodium">
-                      </td>
-                    </tr>
                     <tr>
                       <td>Recipe Name: </td>
                       <td>
                         <input type="text" name="name" [(ngModel)]="selectedRecipe.name">
                       </td>
-                      </tr>
-                      <tr>
-                        <td>Calories</td>
-                        <td>{{selectedRecipe.nutrients?.calories}}</td>
+                      <td >
+                        Manual Nutrients:
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Calories</td>
+                      <td>{{selectedRecipe.nutrients?.calories}}</td>
+                      <td><input type="number" min="0" max="10000" name="calories"
+                        [(ngModel)]="recipeNutrients.calories"></td>
                       </tr>
                       <tr>
                         <td>Carbs</td>
                         <td>{{selectedRecipe.nutrients?.carbs }}</td>
+                        <td><input type="number" min="0" max="10000" name="carbs" [(ngModel)]="recipeNutrients.carbs">
+                        </td>
                       </tr>
                       <tr>
                         <td>Protein</td>
                         <td>{{selectedRecipe.nutrients?.protein }}</td>
-                      </tr>
-                      <tr>
-                        <td>Fats</td>
-                        <td>{{selectedRecipe.nutrients?.fats }}</td>
-                      </tr>
-                      <tr>
-                        <td>Sugar</td>
-                        <td>{{selectedRecipe.nutrients?.sugar }}</td>
-                      </tr>
-                      <tr>
-                        <td>Cholesterol</td>
-                        <td>{{selectedRecipe.nutrients?.cholesterol }}</td>
+                        <td><input type="number" min="0" max="10000" name="protein" [(ngModel)]="recipeNutrients.protein">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Fats</td>
+                          <td>{{selectedRecipe.nutrients?.fats }}</td>
+                          <td><input type="number" min="0" max="10000" name="fats" [(ngModel)]="recipeNutrients.fats"></td>
+                        </tr>
+                        <tr>
+                          <td>Sugar</td>
+                          <td>{{selectedRecipe.nutrients?.sugar }}</td>
+                          <td><input type="number" min="0" max="10000" name="sugar" [(ngModel)]="recipeNutrients.sugar">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Cholesterol</td>
+                          <td>{{selectedRecipe.nutrients?.cholesterol }}</td>
+                          <td><input type="number" min="0" max="10000" name="cholesterol"
+                            [(ngModel)]="recipeNutrients.cholesterol"></td>
 
-                      </tr>
-                      <tr>
-                        <td>Sodium </td>
-                        <td>{{selectedRecipe.nutrients?.sodium }}</td>
-
-                      </tr>
-                      <tr>
-                        <td>Time required:</td>
-                        <td>
-                          <input type="number" name="timeRequired" [(ngModel)]="selectedRecipe.timeRequired">
+                          </tr>
+                          <tr>
+                            <td>Sodium </td>
+                            <td>{{selectedRecipe.nutrients?.sodium }}</td>
+                            <td><input type="number" min="0" max="10000" name="sodium" [(ngModel)]="recipeNutrients.sodium">
+                            </td>
+                          </tr>
+                        <tr>
+                          <td>Time required:</td>
+                          <td>
+                            <input type="number" name="timeRequired" [(ngModel)]="selectedRecipe.timeRequired">
                         </td>
                       </tr>
 
@@ -203,7 +218,7 @@
                     </tr>
                     <tr>
                       <td colspan="2" >Instructions: </td>
-                      <td colspan="6"><textarea name="recipeText" cols="30" rows="5"
+                      <td colspan="6"><textarea name="recipeText" rows="60" class="form-control flex-grow"
                           [(ngModel)]="selectedRecipe.recipeText"></textarea></td>
                     </tr>
                   </tbody>
@@ -227,8 +242,8 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th><button (click)="cancelCreate()">Cancel</button>
-                        <button (click)="createRecipeNutrients(recipeNutrients,newRecipe)">Create</button></th>
+                      <th><button class="btn btn-outline-warning btn-sm" (click)="cancelCreate()">Cancel</button>
+                        <button class="btn btn-outline-success btn-sm" (click)="createRecipeNutrients(recipeNutrients,newRecipe)">Create</button></th>
                       <th>Calories</th>
                       <th>Carbs</th>
                       <th>Protein</th>
@@ -322,7 +337,7 @@
                     </tr>
                     <tr>
                       <td colspan="2" >Instructions: </td>
-                      <td colspan="6"><textarea name="recipeText" cols="30" rows="5"
+                      <td colspan="6"><textarea  rows="25" class="form-control flex-grow"name="recipeText"
                           [(ngModel)]="newRecipe.recipeText"></textarea></td>
                       </tr>
                   </tbody>

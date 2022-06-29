@@ -49,6 +49,7 @@ export class BlogComponent implements OnInit {
   //********************** Page Dynamics ********************************** */
   selectBlog(blog: Blog){
     this.displayBlog = blog;
+    this.commentsByBlog();
   }
 
   startCreateBlog(){
@@ -57,6 +58,7 @@ export class BlogComponent implements OnInit {
   cancelCreateBlog(){
     this.creatingBlog = false;
     this.newBlog = new Blog();
+    this.newBlogTopics = []
   }
 
   startEditBlog(blog: Blog){
@@ -66,6 +68,7 @@ export class BlogComponent implements OnInit {
   cancelEditBlog(){
     this.blogUnderEdit = new Blog();
     this.editingBlog = false;
+    this.newBlogTopics = []
   }
 
   addNewBlogTopic(topic : Topic){

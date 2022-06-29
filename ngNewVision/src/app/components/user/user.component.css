@@ -29,3 +29,9 @@ tr {
   table-layout: fixed;
 }
 
+.recipe-text{
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-wrap:normal;
+  overflow:visible;
+  white-space:pre-wrap;
+}

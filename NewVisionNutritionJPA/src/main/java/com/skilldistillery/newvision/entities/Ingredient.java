@@ -29,10 +29,10 @@ public class Ingredient {
 	
 	
 //	@JsonIgnore
-	@JsonIgnoreProperties({"recipe", "meal", "ingredient"})
-	@OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn(name="nutrients_id")
-	private Nutrients nutrients;
+//	@JsonIgnoreProperties({"recipe", "meal", "ingredient"})
+//	@OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE})
+//	@JoinColumn(name="nutrients_id")
+//	private Nutrients nutrients;
 
 	@JsonIgnore
 	@ManyToMany
@@ -86,13 +86,13 @@ public class Ingredient {
 	}
 	
 
-	public Nutrients getNutrients() {
-		return nutrients;
-	}
-
-	public void setNutrients(Nutrients nutrients) {
-		this.nutrients = nutrients;
-	}
+//	public Nutrients getNutrients() {
+//		return nutrients;
+//	}
+//
+//	public void setNutrients(Nutrients nutrients) {
+//		this.nutrients = nutrients;
+//	}
 	
 
 	public List<Meal> getMeals() {

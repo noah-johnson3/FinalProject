@@ -1,0 +1,30 @@
+#forum-navigation{
+  padding: 20px;
+
+}
+#add-space{
+  margin: 10px;
+}
+#start-new-post{
+  padding: 20px;
+}
+#main{
+  padding: 30px;
+  border-style:groove;
+  background-color: rgba(225,153,137,.15);
+}
+#create-post-section{
+
+}
+#basic-addon2{
+  margin: 0px;
+}
+button{
+  margin: 5px;
+}
+.single-post{
+  background-color: rgba(255,255,255,.5);
+  margin-top: 20px;
+  border: 1px lightgrey solid;
+  border-radius: 5px;
+}

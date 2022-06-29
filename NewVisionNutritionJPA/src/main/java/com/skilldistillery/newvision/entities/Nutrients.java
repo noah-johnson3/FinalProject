@@ -38,9 +38,9 @@ public class Nutrients {
 	@OneToOne(mappedBy="nutrients")
 	private Recipe recipe;
 	
-	@JsonIgnore
-	@OneToOne(mappedBy="nutrients")
-	private Ingredient ingredient;
+//	@JsonIgnore
+//	@OneToOne(mappedBy="nutrients")
+//	private Ingredient ingredient;
 	
 	@JsonIgnore
 	@OneToOne(mappedBy="nutrients")
@@ -159,14 +159,14 @@ public class Nutrients {
 	}
 
 
-	public Ingredient getIngredient() {
-		return ingredient;
-	}
-
-
-	public void setIngredient(Ingredient ingredient) {
-		this.ingredient = ingredient;
-	}
+//	public Ingredient getIngredient() {
+//		return ingredient;
+//	}
+//
+//
+//	public void setIngredient(Ingredient ingredient) {
+//		this.ingredient = ingredient;
+//	}
 
 
 
@@ -189,7 +189,7 @@ public class Nutrients {
 	public String toString() {
 		return "Nutrients [id=" + id + ", protein=" + protein + ", carbs=" + carbs + ", fats=" + fats + ", sodium="
 				+ sodium + ", sugar=" + sugar + ", calories=" + calories + ", cholesterol=" + cholesterol + ", recipe="
-				+ recipe + ", ingredient=" + ingredient + ", meal=" + meal + "]";
+				+ recipe + ", ingredient="+ ", meal=" + meal + "]";
 	}
 	
 	

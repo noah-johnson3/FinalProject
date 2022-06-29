@@ -53,10 +53,10 @@ public class NutrientServiceImpl implements NutrientService {
 		return nr.findByMeal_IdEquals(mealId);
 	}
 
-	@Override
-	public Nutrients findByIngredientId(int ingredientId) {
-		return nr.findByIngredient_IdEquals(ingredientId);
-	}
+//	@Override
+//	public Nutrients findByIngredientId(int ingredientId) {
+//		return nr.findByIngredient_IdEquals(ingredientId);
+//	}
 
 	@Override
 	public Nutrients addNutrients(Nutrients nutrients, String username) {
@@ -89,39 +89,39 @@ public class NutrientServiceImpl implements NutrientService {
 		return updatedNutrients;
 	}
 
-	@Override
-	public List<Nutrients> findByMealWithIngredients(int mealId) {
-		Meal meal = null;
-		List<Nutrients> ingNutrients = new ArrayList<>();
-		Optional<Meal> op = mr.findById(mealId);
-		if(op.isPresent()) {
-			meal = op.get();
-			if(meal.getIngredients() != null) {
-				for(Ingredient ing : meal.getIngredients()) {
-					ingNutrients.add(ing.getNutrients());
-				}
-			}
-		}
-		
-		return ingNutrients;
-	}
+//	@Override
+//	public List<Nutrients> findByMealWithIngredients(int mealId) {
+//		Meal meal = null;
+//		List<Nutrients> ingNutrients = new ArrayList<>();
+//		Optional<Meal> op = mr.findById(mealId);
+//		if(op.isPresent()) {
+//			meal = op.get();
+//			if(meal.getIngredients() != null) {
+//				for(Ingredient ing : meal.getIngredients()) {
+//					ingNutrients.add(ing.getNutrients());
+//				}
+//			}
+//		}
+//		
+//		return ingNutrients;
+//	}
 
-	@Override
-	public List<Nutrients> findByRecipeWithIngredients(int recipeId) {
-		Recipe recipe = null;
-		List<Nutrients> ingNutrients = new ArrayList<>();
-		Optional<Recipe> op = rr.findById(recipeId);
-		if(op.isPresent()) {
-			recipe = op.get();
-			if(recipe.getIngredients() != null) {
-				for(Ingredient ing : recipe.getIngredients()) {
-					ingNutrients.add(ing.getNutrients());
-				}
-			}
-		}
-		
-		return ingNutrients;
-	}
+//	@Override
+//	public List<Nutrients> findByRecipeWithIngredients(int recipeId) {
+//		Recipe recipe = null;
+//		List<Nutrients> ingNutrients = new ArrayList<>();
+//		Optional<Recipe> op = rr.findById(recipeId);
+//		if(op.isPresent()) {
+//			recipe = op.get();
+//			if(recipe.getIngredients() != null) {
+//				for(Ingredient ing : recipe.getIngredients()) {
+//					ingNutrients.add(ing.getNutrients());
+//				}
+//			}
+//		}
+//		
+//		return ingNutrients;
+//	}
 	
 	
 	

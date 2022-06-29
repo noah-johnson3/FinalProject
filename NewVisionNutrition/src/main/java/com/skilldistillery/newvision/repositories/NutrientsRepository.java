@@ -9,7 +9,7 @@ public interface NutrientsRepository extends JpaRepository <Nutrients, Integer> 
 		
 	Nutrients findByMeal_IdEquals(@Param("Id") int id);
 	
-	Nutrients findByIngredient_IdEquals(@Param("id") int id);
+//	Nutrients findByIngredient_IdEquals(@Param("id") int id);
 	
 	
 	

@@ -29,7 +29,7 @@
             <ul>
               <li>{{goal.description}}</li>
               <li>Goal Weight: {{goal.weight}} lbs</li>
-              <li><h6 class="btn btn-success btn-sm" (click)="achieveGoal(goal)">Achieve!</h6></li>
+              <li><h6 class="btn btn-outline-success btn-sm" (click)="achieveGoal(goal)">Achieve!</h6></li>
             </ul>
           </span>
           </li>
@@ -60,10 +60,10 @@
     <div class="col-sm-8">
       <div class="row text-center justify-content-center">
         <h3>
-        <button (click)="showTracker()">Nutrition Tracker</button>
-        <button (click)="showAddMeal()">Add Meal</button>
-        <button (click)="viewRecipes()" >View Recipes</button>
-        <button (click)="showEdit()" >Update Info</button>
+        <button class="btn btn-outline-secondary btn-lg" (click)="showTracker()">Nutrition Tracker</button>
+        <button class="btn btn-outline-secondary btn-lg" (click)="showAddMeal()">Add Meal</button>
+        <button class="btn btn-outline-secondary btn-lg" (click)="viewRecipes()" >View Recipes</button>
+        <button class="btn btn-outline-secondary btn-lg" (click)="showEdit()" >Update Info</button>
         </h3>
       </div>
       <div class="tracker">
@@ -181,7 +181,7 @@
 
         <div  *ngIf="showingTracker">
           <div *ngFor="let day of trackedDays" class="row"  >
-            <button (click)="showDayDetails(day)" >{{day.day.toString().substring(0,10)}}  </button>
+            <button class="btn btn-outline-secondary btn-lg" (click)="showDayDetails(day)" >{{day.day.toString().substring(0,10)}}  </button>
             <div id="dayDetails" *ngIf="displayDay == day"  >
               <table>
                 <thead>

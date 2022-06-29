@@ -11,8 +11,8 @@ public interface ForumPostRepository extends JpaRepository<ForumPost, Integer> {
 	
 	List<ForumPost> findByInReplyTo_IdEquals(@Param("Id")int id);
 	
-	List<ForumPost> findByInReplyToIsEmptyAndTopicEquals(String topic);
+	List<ForumPost> findByInReplyToIsNullAndTopicEquals(String topic);
 	
-	List<ForumPost> findByInReplyToIsEmpty();
+	List<ForumPost> findByInReplyToIsNull();
 
 }

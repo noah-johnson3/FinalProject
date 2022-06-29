@@ -27,12 +27,12 @@ public class ForumServiceImpl implements ForumService {
 
 	@Override
 	public List<ForumPost> getMainPosts() {
-		return fpr.findByInReplyToIsEmpty();
+		return fpr.findByInReplyToIsNull();
 	}
 
 	@Override
 	public List<ForumPost> getMainPostsByTopic(String topic) {
-		return fpr.findByInReplyToIsEmptyAndTopicEquals(topic);
+		return fpr.findByInReplyToIsNullAndTopicEquals(topic);
 	}
 
 	@Override

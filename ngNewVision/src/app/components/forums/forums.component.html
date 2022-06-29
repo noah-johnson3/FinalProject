@@ -1,1 +1,85 @@
-<p>forums works!</p>
+<main class="container-fluid">
+  <div class="row">
+    <div class="row" id="forum-navigation" >
+
+    </div>
+    <div class="col-sm-2">
+      <div class="row">
+
+      </div>
+      <div class="row">
+
+
+      </div>
+      <div class="row">
+        <img src="https://farm8.staticflickr.com/7037/6802898136_932e900b5e_z.jpg"
+        style=" width:100%" />
+
+      </div>
+      <div class="row " id="start-new-post">
+
+      </div>
+    </div>
+    <div class="col-sm-10">
+      <!-- **************************************** Post List ***************************** -->
+        <div class="row single-post" *ngFor="let post of forums" (click)="display(post)" >
+          <hr>
+          <div class="col-sm-1 post-info-preview">
+            <p>{{post.topic}}</p><br>
+            <p>{{post.user?.username}}</p>
+          </div>
+          <div class="col-sm-11">
+            <p class="post-content-preview">{{post.content}}</p>
+          </div>
+          <hr>
+        </div>
+
+        <!-- ****************************************** Create Post ************************************** -->
+        <div class="row" id="create-post-section" *ngIf="creatingPost" >
+          <div class="col-sm-12">
+            <textarea name="content" id="" cols="45" rows="15" placeholder="Your post here" [(ngModel)]="newPost.content" ></textarea><br>
+            <button class="btn btn-outline-primary btn-sm" (click)="createForum(newPost)" >Post</button>
+            <hr>
+          </div>
+        </div>
+        <!-- ****************************************** Edit Post ************************************** -->
+        <div class="row" id="edit-post-section" *ngIf="editPost && editing" >
+          <div class="col-sm-12">
+            <textarea name="content" id="" cols="45" rows="15" placeholder="Your post here" [(ngModel)]="editPost.content" ></textarea><br>
+            <button class="btn btn-outline-primary btn-sm" (click)="editForum(editPost)" >Post</button>
+            <hr>
+          </div>
+        </div>
+        <!-- ********************************************* Display Post ******************************* -->
+        <div class="row" id="display-post" *ngIf="displayForum" >
+          <div class="col-sm-12" >
+            <p>{{displayForum.user?.username}}</p><br>
+            <p>{{displayForum.content}}</p>
+            <button class="btn btn-outline-primary btn-sm" (click)="startReply(displayForum)" >Post</button>
+            <span *ngIf="displayForum.user?.id == loggedInUser?.id" >
+              <button class="btn btn-outline-warning btn-sm" (click)="cancelCreatePost()" >Edit</button>
+              <button class="btn btn-outline-danger btn-sm" (click)="deleteForum(displayForum.id)" >Deletet</button>
+            </span>
+            <!-- Responses -->
+            <div class="row post-response" *ngFor="let response of displayForumResponses" >
+              <div class="col-sm-12">
+                <p>{{response.user?.username}}</p><br>
+                <p>{{response.content}}</p>
+                <button (click)="startReply(response)" >Reply</button>
+                <hr>
+              </div>
+            </div>
+            <!-- Responses End -->
+          </div>
+        </div>
+      </div>
+
+
+  </div>
+
+  <div class="row">
+
+  </div>
+
+
+</main>

@@ -1,3 +1,4 @@
+import { ForumsComponent } from './components/forums/forums.component';
 import { UserComponent } from './components/user/user.component';
 import { RecipesComponent } from './components/recipes/recipes.component';
 import { BlogComponent } from './components/blog/blog.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'user', component: UserComponent },
   {path: 'register' , component: RegisterComponent},
   {path: 'login' , component: LoginComponent},
+  {path: 'forums' , component: ForumsComponent},
   //{path: '**' , component: NotFoundComponent}
 ];
 

@@ -177,6 +177,7 @@ export class RecipesComponent implements OnInit {
       this.recipeServ.findRecipeByAuthor(authorName).subscribe({
         next: (recipeArray) => {
           this.allRecipes = recipeArray;
+          this.authorName = '';
           this.sortRecipes();
         },
         error: (problem) => {
@@ -188,6 +189,7 @@ export class RecipesComponent implements OnInit {
   }
   createRecipe(recipe: Recipe){
     console.log(recipe.nutrients?.id);
+    console.log(recipe)
     this.recipeServ.createRecipe(recipe).subscribe({
       next: (recipeArray) => {
         this.newRecipe = null;

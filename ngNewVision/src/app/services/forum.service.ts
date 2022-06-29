@@ -78,7 +78,7 @@ export class ForumService {
     );
   }
   deleteForum(id: number): Observable<ForumPost> {
-    return this.http.put<ForumPost>(this.url + "/" + id ,this.getHttpOptions()).pipe(
+    return this.http.delete<ForumPost>(this.url + "/" + id ,this.getHttpOptions()).pipe(
       catchError((err: any) => {
       console.log(err);
       return throwError(

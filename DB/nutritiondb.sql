@@ -276,15 +276,8 @@ DROP TABLE IF EXISTS `ingredient` ;
 CREATE TABLE IF NOT EXISTS `ingredient` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(300) NOT NULL,
-  `nutrients_id` INT NULL,
-  `portion` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_ingredient_nutrients1_idx` (`nutrients_id` ASC),
-  CONSTRAINT `fk_ingredient_nutrients1`
-    FOREIGN KEY (`nutrients_id`)
-    REFERENCES `nutrients` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  `amount` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -716,9 +709,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `nutritiondb`;
-INSERT INTO `ingredient` (`id`, `name`, `nutrients_id`, `portion`) VALUES (1, 'egg', 1, NULL);
-INSERT INTO `ingredient` (`id`, `name`, `nutrients_id`, `portion`) VALUES (2, 'potatoes', 2, NULL);
-INSERT INTO `ingredient` (`id`, `name`, `nutrients_id`, `portion`) VALUES (3, 'vegetable oil', 3, NULL);
+INSERT INTO `ingredient` (`id`, `name`, `amount`) VALUES (1, 'egg', NULL);
+INSERT INTO `ingredient` (`id`, `name`, `amount`) VALUES (2, 'potatoes', NULL);
+INSERT INTO `ingredient` (`id`, `name`, `amount`) VALUES (3, 'vegetable oil', NULL);
 
 COMMIT;
 

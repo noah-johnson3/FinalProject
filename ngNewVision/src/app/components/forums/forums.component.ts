@@ -122,15 +122,15 @@ createForum(forum: ForumPost){
     next: (results) => {
       if(this.responding){
         if(this.displayForum){
-
           this.getForumResponses(this.displayForum.id);
         }
       }else{
         this.displayForum = results;
-        this.getMainForums();
       }
       this.newPost = new ForumPost();
       this.creatingPost = false;
+      this.getMainForums();
+      this.responding= false;
     },
     error: (problem) => {
       console.error('HttpComponent.loadProducts(): error loading products:');
@@ -149,6 +149,8 @@ editForum(forum: ForumPost){
       }else{
         this.displayForum = results;
       }
+      this.editing = false;
+      this.editPost = null;
     },
     error: (problem) => {
       console.error('HttpComponent.loadProducts(): error loading products:');
@@ -158,13 +160,10 @@ editForum(forum: ForumPost){
 }
 deleteForum(id: number){
   this.forumServ.deleteForum(id).subscribe({
-    next: (results) => {
-        if(this.displayForum){
-          this.getForumResponses(this.displayForum.id);
-        }
-      else{
-        this.displayForum = results;
-      }
+    next: () => {
+        this.getMainForums();
+        this.displayForum = null;
+        this.displayForumResponses = [];
     },
     error: (problem) => {
       console.error('HttpComponent.loadProducts(): error loading products:');

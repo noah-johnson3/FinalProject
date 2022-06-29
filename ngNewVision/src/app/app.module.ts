@@ -27,6 +27,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { FoodFinderComponent } from './components/food-finder/food-finder.component';
+import { BaseBarComponent } from './components/base-bar/base-bar.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { FoodFinderComponent } from './components/food-finder/food-finder.compon
     LoginComponent,
     RegisterComponent,
     LogoutComponent,
-    FoodFinderComponent
+    FoodFinderComponent,
+    BaseBarComponent
   ],
   imports: [
     BrowserModule,

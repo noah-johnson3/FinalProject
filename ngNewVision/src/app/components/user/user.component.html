@@ -1,8 +1,8 @@
 <main class="container-fluid">
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-4 user-info">
       <div class="row">
-        <h3>{{loggedInUser?.username}}</h3>
+        <h3>Username: {{loggedInUser?.username}}</h3>
 
       </div>
       <div class="row">
@@ -14,8 +14,12 @@
       </div>
       <div class="row">
 
-        <h5>{{loggedInUser?.email}}</h5>
-        <h5>{{loggedInUser?.firstName}} {{loggedInUser?.lastName}}</h5>
+        <h5>Email: {{loggedInUser?.email}}</h5>
+        <h5>Full Name: {{loggedInUser?.firstName}} {{loggedInUser?.lastName}}</h5>
+        <div class="row">
+          <h5>Height: {{loggedInUser?.height}}" <br> Weight: {{loggedInUser?.weight}}lbs <br>Age: {{age}} <br> BMR: {{calculateMetabolicRate()}} Calories  <br> AMR: {{amr}} Calories
+          </h5>
+        </div>
 
       </div>
       <div class="row">
@@ -25,7 +29,7 @@
             <ul>
               <li>{{goal.description}}</li>
               <li>Goal Weight: {{goal.weight}} lbs</li>
-              <li><button class="bg bg-success" (click)="achieveGoal(goal)">Achieve!</button></li>
+              <li><h6 class="btn btn-success btn-sm" (click)="achieveGoal(goal)">Achieve!</h6></li>
             </ul>
           </span>
           </li>
@@ -256,9 +260,7 @@
 
 
   </div>
-  <div class="row">
-    <h5>Height: {{loggedInUser?.height}}" Weight: {{loggedInUser?.weight}}lbs Age: {{age}}  BMR: {{calculateMetabolicRate()}} AMR: {{amr}}</h5>
-  </div>
+
   <div class="row">
 
   </div>

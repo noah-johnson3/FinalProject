@@ -1,6 +1,6 @@
 <main class="container-fluid">
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-4 recipe-search">
       <div class="row">
         <a class="nav-link"><span (click)="getRecipes()">Recipes</span>
           <span *ngIf="ingredientName" (click)="getRecipesByIngredient(ingredientName)"> > {{ingredientName}}</span>

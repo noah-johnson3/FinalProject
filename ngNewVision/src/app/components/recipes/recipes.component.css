@@ -36,3 +36,8 @@ button{
 .search-form button{
   width: 50%;
 }
+
+.recipe-search{
+  border-right: 2px solid lightgray;
+  background-color: rgba(232, 230, 223,.3) ;
+}

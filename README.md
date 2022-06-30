@@ -1,10 +1,10 @@
-# FinalProject - Nu-Track
+# FinalProject: Nu-Track
 
-##Overview
+## Overview
 
 Nu-Track is an application designed for everyday people who are looking for ways to improve their overall health via nutrient tracking, health blogs, and articles all in one central place.
 
-##Technologies Used
+## Technologies Used
 
 * Java
 * JPA
@@ -21,7 +21,7 @@ Nu-Track is an application designed for everyday people who are looking for ways
 * Trello
 
 
-##How To Use Nu-tracking
+## How To Use Nu-tracking
 
 1. Click on the sign up button on the Home page or click on the Register tab on the nav bar.
 
@@ -38,7 +38,7 @@ Nu-Track is an application designed for everyday people who are looking for ways
 7. All users have the option to edit or delete their OWN Recipes, Blogs/Articles, and replies only.
 
 
-##Created By:
+## Created By:
 * Katherine Remick
 * Noah Johnson
 * Nick Gonzalez
